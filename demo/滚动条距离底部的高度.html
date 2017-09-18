@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+ <div style="height:300px" id="box">
+        呵呵呵呵好
+    </div>
+
+    <div style="height:500px">
+        打开咯对你可拉倒克拉克
+    </div>
+
+    <div>
+        外面的世界真精彩
+    </div>
+    
+      <div style="height:500px">
+        打开咯对你可拉倒克拉克
+    </div>
+   
+         <div style="height:600px">
+        呵呵呵呵好
+    </div>
+
+<body>
+    <script>
+        function buttomDistance( len ) {
+            var docheight = Math.max(document.body.scrollHeight,
+                document.body.offsetHeight);
+            var viewheight = window.innerHeight ||
+                document.documentElement.clientHeight ||
+                document.body.clientHeight || 0;
+            var scrollheight = window.pageYOffset ||
+                document.documentElement.scrollTop||
+                document.body.scrollTop || 0;
+                console.log(docheight - viewheight - scrollheight)
+            return  docheight - viewheight - scrollheight > len;
+        }
+
+        function checkHeight(){
+            if(buttomDistance(0)){
+              return console.log('没到')
+            }
+            console.log(1);
+        }
+      
+        window.addEventListener('scroll',checkHeight)
+        console.log(document.getElementById('box').offsetWidth)
+    </script>
+
+</body>
+
+</html>

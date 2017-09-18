@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./jquery-2.1.0.min.js"></script>
+    <script src="./jquery.scrollLoading.js"></script>
+    <style>
+        .load {
+            width: 600px;
+            height: 600px;
+            background: url(loading-icon.gif) no-repeat center;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="height:800px;background:black">
+    </div>
+    <div style="height:600px;background:orangered"></div>
+   
+   
+    <img class="scrollLoading" data-url="http://rescdn.qqmail.com/dyimg/20140630/7D38689E0A7A.jpg" src="http://www.zhangxinxu.com/study/image/pixel.gif"
+        width="600" height="600" style="background:url(loading-icon.gif) no-repeat center;"
+    />
+    <img class="scrollLoading" data-url="http://img4.imgtn.bdimg.com/it/u=2777907793,655627036&fm=214&gp=0.jpg" src="http://www.zhangxinxu.com/study/image/pixel.gif"
+        width="600" height="600" style="background:url(loading-icon.gif) no-repeat center;"
+    />
+    <img class="scrollLoading" data-url="http://rescdn.qqmail.com/dyimg/20140630/7D38689E0A7A.jpg" src="http://www.zhangxinxu.com/study/image/pixel.gif"
+        width="600" height="600" style="background:url(loading-icon.gif) no-repeat center;"
+    />
+    <script>
+        $(function () {
+            $(".scrollLoading").scrollLoading({
+                callback:function(){
+                   console.log(123)
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

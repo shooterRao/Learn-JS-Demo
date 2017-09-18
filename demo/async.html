@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./jquery-2.1.0.min.js"></script>
+    <script>
+        var url = 'https://hq.tigerbrokers.com/fundamental/finance_calendar/getType/2017-02-26/2017-06-10';
+        var baidu  = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=1&json=1&p=3&sid=&req=2&csor=1'
+        // var sleep = function(time){
+        //     return new Promise((resolve,reject)=>{
+        //         setTimeout(()=>{
+        //             resolve('nice')
+        //         },time)
+        //     })
+        // }
+        // var start = async () => {
+        //     let result = await sleep(2000)//await返回的是resolve里的值
+        //     console.log(result)
+        //     return result //返回的是一个Promise对象
+        //     //async函数内部return语句返回的值，会成为then方法回调函数的参数
+        // }
+        // start().then(ret=>{
+        //     console.log(ret)
+        // });
+        $.ajax({
+            url:url,
+            type:'get',
+            success:function(data){
+               // console.log(data)
+            }
+        })
+        //$.get(url).done(function(data){console.log( data )})
+        const fn = async function(){
+            var data = await fetch(url).then( ret => ret.json());
+            console.log(data)
+            console.log('done');
+        }
+        fn();//异步，不会阻塞
+        console.log('no done');
+        //其实await跟.then是一样的
+ 
+        //async配合promise模拟
+        var a = 1;
+        const asyncFn = async () =>{
+           const promise = function(){
+            return new Promise((resolve,reject)=>{
+                 if(a == 1){
+                     setTimeout(()=>resolve('done'),10000)
+                     //在setTimeout中，如果resolve要传参的话，切记不能直接resolve(),因为这样就相当于直接执行了，传参要加层闭包
+
+                 }else{
+                    reject('error');
+                 }
+             })
+           }  
+           try {
+             const done = await promise();
+             console.log(done)  
+           } catch (error) {
+              console.error(error)   
+           }//reject可以被catch捕获
+        }
+        //asyncFn();
+
+        const promise = function(){
+            return new Promise(function (rel,rej) {
+                setTimeout(()=>rel('done'),5000)
+            })
+        }
+        //promise().then(val => console.log(val))
+        // function test(){
+        //     console.log('lalala')
+        // }
+        // setTimeout(test,2000)
+
+        // var num  = 10;
+        // new Promise((rel,rej)=>{
+        //     if(num == 10){
+        //         rel()
+        //     }else{
+        //         rej('error')
+        //     }
+            
+        // }).then(()=>console.log(666)).catch(error => console.log(error))
+    </script>
+</body>
+</html>

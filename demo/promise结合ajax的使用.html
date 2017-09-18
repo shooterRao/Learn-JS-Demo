@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var url = 'https://hq.tigerbrokers.com/fundamental/finance_calendar/getType/2017-02-26/2017-06-10';
+        var result;
+        var XHR = new XMLHttpRequest();
+        XHR.open('GET', url, true);
+        XHR.send();
+
+        XHR.onreadystatechange = function () {
+            if (XHR.readyState == 4 && XHR.status == 200) {
+                result = XHR.response;
+                //TODO:处理数据的函数...
+            
+                // 伪代码
+                var url2 = 'http:xxx.yyy.com/zzz?ddd=' + result.someParams;
+                var XHR2 = new XMLHttpRequest();
+                XHR2.open('GET', url, true);
+                XHR2.send();
+                XHR2.onreadystatechange = function () {
+
+                }
+            }
+        }
+
+        //Promise
+        //首先封装一个get请求方法
+        function getJSON(url){
+            return new Promise(function(resolve,reject){
+                var XHR = new XMLHttpRequest();
+                XHR.open('GET',url,true);
+                XHR.send();
+                XHR.onreadystatechange =function(){
+                    if(this.readyState == 4){
+                        if(this.status == 200){
+                            try{ 
+                                var response = JSON.parse(this.responseText);
+                                resolve(response);//resolved(Fulfilled): 已经完成，表示得到了我们想要的结果，可以继续往下执行
+                            } catch (e){
+                                 reject(e)
+                            }
+                        }else{
+                            reject(new Error(XHR.statusText))
+                        }
+                    }
+                }
+            })
+        }
+        getJSON(url).then( resp => {console.log(resp)}).catch(error => console.log(error))
+        //必须记住，resolve函数的参数装的是等待处理的数据，会传给then或者catch的参数中进行处理
+
+        /* 
+        创建一个方法来发送Ajax请求并将其封装在promise中。
+        这个promise对象分别在xhr.onload和xhr.onerror中指定了完成和拒绝状态的转变过程，请注意searchTwitter函数返回的正是promise对象。然后，在loadTweets中，使用then方法设置完成和拒绝状态对应的回调函数。
+         */
+         function searchTwitter(term) {
+             var url,xhr,results,promise;
+             url = 'http://search.twitter.com/search.json?rpp=100&q=' + term;
+             promise = new Promise();
+             xhr = new XMLHttpRequest();
+             xhr.open('GET',url,true);
+             xhr.onload = function (e) {
+                 if(this.status === 200){
+                     results = JSON.parse(this.responseText);
+                     promise.resolve(results);  
+                 }
+             }
+             xhr.onerror = function (e) {
+                 promise.reject(e)
+             }
+             xhr.send();
+             return promise;
+         }
+          function handleError(error) {
+               /* handle the error */
+           }
+
+          function concatResults() {
+              /* order tweets by date */
+           }
+          function loadTweets(){
+              var container = document.getElementById('container');
+              searchTwitter('IE10').then(function(data){
+                   data.results.forEach(function (tweet) {
+                     var el = document.createElement('li');
+                    el.innerText = tweet.text;
+                    container.appendChild(el);
+              })  
+          },handleError(reason))
+          }
+          //多个ajax请求并发
+          var container, promise1, promise2;
+           container = document.getElementById('container');
+           promise1 = searchTwitter('#IE10');
+           promise2 = searchTwitter('#IE9');
+           Promise.all([promise1, promise2]).then(function (data) {
+
+           /* Reshuffle due to date */
+          var totalResults = concatResults(data[0].results, data[1].results);
+          totalResults.forEach(function (tweet) {
+          var el = document.createElement('li');
+          el.innerText = tweet.text;
+          container.appendChild(el);
+          });
+       }, handleError(reason));
+
+
+          //promise all 
+          var p1 = new Promise((resolve, reject) => {
+             setTimeout(resolve(1), 100);
+           }); 
+          var p2 = new Promise((resolve,reject)=>{
+              setTimeout(resolve(2),100)
+          })
+          var p3 = new Promise((resolve,reject)=>{
+              setTimeout(reject('error'),100)
+          })
+          Promise.all([p1,p2,p3]).then(data1=>{
+              console.log(data1[0],data1[1]);
+          }).catch(reason=>console.log(reason))
+          
+    </script>
+</body>
+
+</html>

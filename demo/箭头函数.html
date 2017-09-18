@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var  a = 2
+        function foo(){
+           
+           setTimeout(()=>{
+               console.log(this.a)//箭头函数里的this会继承foo(),此时foo()里的this指向window
+           },100)
+           
+        }
+
+        foo()
+       //总结，箭头函数会继承外层函数调用的this绑定，无论this绑定到什么
+      
+    </script>
+</body>
+</html>

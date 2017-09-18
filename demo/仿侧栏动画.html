@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    @-webkit-keyframes move_right {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translateX(120px);
+            transform: translateX(120px);
+        }
+    }
+
+    @keyframes move_right {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translateX(120px);
+            transform: translateX(120px);
+        }
+    }
+
+    @-webkit-keyframes move_left {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+            -webkit-transform: translateX(-120px);
+            transform: translateX(-120px);
+        }
+    }
+
+    @keyframes move_left {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+            -webkit-transform: translateX(-120px);
+            transform: translateX(-120px);
+        }
+    }
+
+    @-webkit-keyframes move_up {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translateY(-250px);
+            transform: translateY(-250px);
+        }
+    }
+
+    @keyframes move_up {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translateY(-250px);
+            transform: translateY(-250px);
+        }
+    }
+
+    .move_right {
+        -webkit-animation-name: move_right;
+        animation-name: move_right;
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-iteration-count: 1;
+        animation-iteration-count: 1;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
+
+    .move_left {
+        -webkit-animation-name: move_left;
+        animation-name: move_left;
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-iteration-count: 1;
+        animation-iteration-count: 1;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
+
+    .move_up {
+        -webkit-animation-name: move_up;
+        animation-name: move_up;
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-iteration-count: 1;
+        animation-iteration-count: 1;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
+
+    .fadeIn {
+        -webkit-transform: translateX(120px);
+        transform: translateX(120px);
+        opacity: 1;
+    }
+
+    .fadeInUp {
+        -webkit-transform: translateY(-250px);
+        transform: translateY(-250px);
+        opacity: 1;
+        -webkit-transition: -webkit-transform .2s ease-out, opacity .2s ease-out;
+        transition: transform .2s ease-out, opacity .2s ease-out;
+    }
+
+    .fadeOutLeft {
+        -webkit-transform: translateX(-120px);
+        transform: translateX(-120px);
+        opacity: 0.0;
+        -webkit-transition: -webkit-transform .2s ease-out, opacity .2s ease-out;
+        transition: transform .2s ease-out, opacity .2s ease-out;
+    }
+    .sidebar{
+        height: 500px;
+        width: 500px;
+        background-color: #1e624f;
+    }
+</style>
+
+<body class='fullHeight'>
+    <div class='sidebar fullHeight'></div>
+    <div class="controller">
+        <div>
+            <button onclick="fadeIn()">淡进</button>
+            <button onclick="fadeOut()">淡出</button>
+        </div>
+        <div>
+            <button onclick="fadeInUp()">向上淡进</button>
+            <button onclick="fadeOutLeft()">向左淡出</button>
+        </div>
+    </div>
+    <script>
+        var sidebarEl = document.querySelector(".sidebar");
+        function fadeIn(e) {
+            sidebarEl.className = 'sidebar fullHeight';
+            sidebarEl.style.top = '0px';
+            sidebarEl.style.left = '0px';
+            sidebarEl.classList.add('move_right');
+        }
+        function fadeOut(e) {
+            sidebarEl.className = 'sidebar fullHeight';
+            sidebarEl.style.left = '120px';
+            sidebarEl.classList.add('move_left');
+        }
+        function fadeInUp(e) {
+            sidebarEl.className = 'sidebar fullHeight';
+            sidebarEl.style.top = '250px';
+            sidebarEl.style.left = '120px';
+            sidebarEl.classList.add('move_up');
+        }
+        function fadeOutLeft(e) {
+            sidebarEl.className = 'sidebar fullHeight';
+            sidebarEl.style.top = '0px';
+            sidebarEl.style.left = '120px';
+            sidebarEl.classList.add('move_left');
+        }
+    </script>
+</body>
+
+</html>

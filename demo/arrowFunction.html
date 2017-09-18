@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //在箭头函数出现之前，每个新定义的函数都有其自己的 this 值
+        //（例如，构造函数的this指向了一个新的对象；严格模式下的函数的this值为 undefined；如果函数是作为对象的方法被调用的，则其 this 指向了那个调用它的对象）。
+        function Person(){
+            //构造函数定义this就是新实例的对象
+            this.age = 0;
+            console.log(this);//Person
+            setInterval(
+                function growUp(){
+                    // 在非严格模式下，growUp() 函数定义了其内部的 `this`为全局对象, 即为window
+                    // 不同于构造函数Person()的定义的 `this  
+                    this.age++;
+                   // console.log(this);//window
+                   // console.log(this.age)
+                }
+                
+            ,1000)
+        }
+        var p = new Person();
+        console.log(p)//Person
+
+        //在 ECMAScript 3/5 中，这个问题通过把this的值赋给变量，然后将该变量放到闭包中来解决。
+        function Person1(){
+            var that = this;
+            that.age = 0;
+            setInterval(
+                function growUp(){
+                    that.age++;
+                     //console.log(that.age);
+                }
+           
+            ,1000)   
+        }
+         var p1 = new Person1();
+         
+         //除此之外，还可以使用 bind 函数，把期望的 this 值传递给 growUp() 函数。
+
+         //箭头函数会捕获其所在上下文的  this 值，作为自己的 this 值，因此下面的代码将如期运行。
+         function Person2(){
+             this.age = 0;
+             setInterval(() => {
+                 this.age++;
+                 //console.log(this);//Person2
+                 //console.log(this.age);
+             }
+                 ,1000)
+         }
+         new Person2();
+
+    </script>
+</body>
+</html>

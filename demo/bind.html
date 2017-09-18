@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+     <div style="height:300px">
+        呵呵呵呵好
+    </div>
+    <div style="height:500px">
+        打开咯对你可拉倒克拉克
+    </div>
+    <div>
+        外面的世界真精彩
+    </div>
+      <div style="height:500px">
+        打开咯对你可拉倒克拉克
+    </div>
+         <div style="height:600px">
+        呵呵呵呵好
+    </div>
+    <script>
+        function foo(something){
+            console.log( this.a,something );
+            return this.a + something;
+        };
+        var obj = {
+            a:2
+        };
+        var bar = foo.bind(obj,3);
+        
+       
+        var b = bar( 3 );
+        console.log(b);
+    </script>
+</body>
+</html>

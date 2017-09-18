@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+     //将json string转换成object的方法
+     //1.eval
+     var  people1  = "{name: 'Michael', age: 20 }"; 
+     var  data    =  eval( '( '   +   people1   +   ') '); 
+     console.log(data);
+     console.log(JSON.stringify(data));
+
+     //2.JSON内置方法
+     var  people2  = "{name: 'Michael', age: 20 }";
+     //var obj = JSON.parse(people2);
+     //上面代码会报错，原因是JSON格式不对
+     //更改为
+     var  people3  = '{"name": "Michael", "age": 20 }';
+     var obj = JSON.parse(people3);
+     console.log(obj);
+     console.log(JSON.stringify(obj));
+     
+    </script>
+</body>
+</html>

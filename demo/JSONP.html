@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <button>click</button>
+    <script>
+        var button = document.getElementsByTagName('button')[0];
+        button.onclick = () => {
+            var text = document.getElementsByTagName('input')[0].value;
+            var url =
+                `https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=${text}&json=1&p=3&sid=&req=2&csor=1&cb=callback`;
+            var scriptdom = document.createElement('script');
+            scriptdom.type = "text/javascript";
+            scriptdom.src = url;
+            document.getElementsByTagName('head')[0].appendChild(scriptdom);
+        }
+        function callback(data) {
+                console.log(data)
+            }
+      
+        const clickes5 = function(){
+            return function(e){
+                console.log(e)
+            }
+        }
+
+        const click = () => (e)=>{
+            console.log(e)
+        }
+        click()(1)//执行
+        click(1)//函数体
+        //
+    </script>
+</body>
+
+</html>

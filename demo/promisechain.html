@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //含义3个异步处理的功能，实例化三个promise对象
+        function start() {
+            return new Promise((resolve, reject) => {
+                resolve('start')
+            })
+        }
+        start().then(data => {
+                //promise start
+                console.log(`resolve of start : ${data}`)
+                return Promise.resolve(1)
+            })
+            .then(data => {
+                console.log(`resolve of p1 : ${data}`)
+                return Promise.reject(2)
+            })
+            .then(data => {
+                console.log(`resolve of p2 : ${data}`)
+                return Promise.resolve(3)
+            })
+            .catch(ex => {
+                console.log(`error : ${ex}`)
+                return Promise.resolve(4)
+            })
+            .then(data => {
+                console.log(`resolve of p4 : ${data}`)
+            })
+
+        const findUserByName = (name, pwd) => {
+            return new Promise((resolve, reject) => {
+                //数据库查询操作
+                if (dbError) {
+                    //数据库查询出错，将 promise 设置为 rejected
+                    reject({
+                        code: 1000,
+                        message: '查询用户信息，数据库操作出现异常'
+                    })
+                }
+                //将查询结果赋给 userinfo 变量
+                if (userinfo.length === 0) {
+                    //数据库中不存在该用户
+                    resolve();
+                }
+                //数据库存在该用户，判断密码是否正确
+                if (pwd === userinfo[0].pwd) {
+                    //密码正确，终止promise执行
+                    reject({
+                        notRealPromiseException: true,
+                        data: {
+                            code: 0,
+                            message: '密码正确，登录成功'
+                        }
+                    });
+                }
+                //密码不正确,登录失败，将Promise设置为rejected状态
+                reject({
+                    code: 1001,
+                    message: '密码不正确,登录失败'
+                })
+            })
+        }
+
+        //模拟登录教务系统
+        const loginEducationSystem = (name, pwd) => {
+            //登录逻辑
+            //登录成功
+            resolve();
+            //登录失败
+            reject({
+                code: 1002,
+                message: '模拟登录教务系统失败'
+            })
+        }
+
+        //将用户名密码存入数据库
+        const saveUserToDB = (name, pwd) => {
+            //数据库存储操作
+            if (dbError) {
+                //数据库存储出错，将promise设置为rejected
+                reject({
+                    code: 1004,
+                    message: '数据库存储出错，将出现异常'
+                })
+            }
+            //数据库存储操作成功
+            resolve();
+        };
+
+        findUserByName(name)
+            .then(() => {
+                return loginEducationSystem(name, pwd);
+            })
+            .then(() => {
+                return saveUserToDB(name, pwd);
+            })
+            .catch(e => {
+                // 判断异常出现原因
+                if (e.notRealPromiseException) {
+                    // 正常中止 promise 而故意设置的异常
+                    return res.json(e.data);
+                }
+                // 出现错误或异常
+                return res.json(e);
+            });
+    </script>
+</body>
+
+</html>

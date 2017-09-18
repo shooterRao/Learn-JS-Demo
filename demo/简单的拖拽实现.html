@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    div {
+        width: 100px;
+        background-color: #5cc760;
+        text-align: center;
+        line-height: 100px;
+        position: absolute;
+    }
+
+    div:hover {
+        cursor: pointer
+    }
+</style>
+
+<body>
+    <div>
+        拖我
+    </div>
+    <script>
+        var offset = {};
+        var box = document.getElementsByTagName('div')[0];
+        box.addEventListener('mousedown', start, false)
+
+        function start(e) {
+            e = e || window.event;
+            offset = {
+                X: e.offsetX,
+                Y: e.offsetY
+            }
+            e.preventDefault();
+            document.addEventListener('mousemove', move, false)
+            document.addEventListener('mouseup', end, false)
+        }
+
+        function move(event) {
+            event = event || window.event
+            var client = {
+                X: event.clientX,
+                Y: event.clientY
+            }
+
+            box.style.left = client.X - offset.X + 'px'
+            box.style.top = client.Y - offset.Y + 'px'
+            //边界判断
+            if (box.offsetLeft < 0) {
+                box.style.left = 0;
+                //左上角判断
+                if (box.offsetTop < 0) {
+                    box.style.top = 0;
+                }
+                //左下角判断 
+                else if (box.offsetTop > (window.innerHeight - box.offsetHeight)) {
+                    box.style.top = (window.innerHeight - box.offsetHeight) + 'px'
+                }
+            } else if (box.offsetTop < 0) {
+                box.style.top = 0;
+                //右上角判断
+                if(box.offsetLeft > (window.innerWidth - box.offsetWidth)){
+                     box.style.left = (window.innerWidth - box.offsetWidth) + 'px'
+                }
+            } else if (box.offsetTop > (window.innerHeight - box.offsetHeight)) {
+                //右下角判断
+                if(box.offsetLeft > (window.innerWidth - box.offsetWidth)){
+                    box.style.left = (window.innerWidth - box.offsetWidth) + 'px'
+                }
+                box.style.top = (window.innerHeight - box.offsetHeight) + 'px'
+            } else if (box.offsetLeft > (window.innerWidth - box.offsetWidth)) {
+                box.style.left = (window.innerWidth - box.offsetWidth) + 'px'
+            }
+        }
+
+        function end(event) {
+            document.removeEventListener('mousemove', move);
+            document.removeEventListener('mouseup', end);
+            // do other things
+        }
+    </script>
+</body>
+
+</html>

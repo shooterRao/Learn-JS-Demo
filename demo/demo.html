@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body onload="addsome()">
+    
+   <!-- <div>
+        <iframe width="100%" height="600px"src="table套着iframe.html"></iframe>
+    </div>-->
+    <div id="paral" >原来的内容</div><hr>
+<script>
+    
+   function addsome()  
+ {  
+     document.all.paral.insertAdjacentHTML("afterBegin","<h1> 在文本前容器内插入内容1</h1>");  
+     document.all.paral.insertAdjacentHTML("beforeEnd","<h2> 在文本后容器内插入内容2</h2>");  
+     document.all.paral.insertAdjacentHTML("beforeBegin","<h4> 在文本前容器外插入内容4</h1>");  
+     document.all.paral.insertAdjacentHTML("afterEnd","<h5> 在文本后容器外插入内容5</h2>");  
+ }  
+</script>
+    
+</body>
+</html>

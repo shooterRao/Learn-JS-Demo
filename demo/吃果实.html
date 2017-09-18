@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        position: relative;
+        height: 100vh;
+    }
+    .eat{
+        position: absolute;
+        height: 100px;
+        width: 400px;
+        left: 50%;
+        top:50%;
+        margin-left: -150px;
+        margin-top: -50px;
+    }
+    .eat .chartBottom {
+        height: 0px;
+        width: 0px;
+        border: 50px solid skyblue;
+        border-right-color: transparent;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        display: inline-block
+    }
+    .fruit_one{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        background: skyblue;
+        position: absolute;
+        bottom: 40px;
+        animation-name: play;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite; 
+        animation-timing-function: linear;
+    }
+    .fruit_two{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        background: orangered ;
+        position: absolute;
+        bottom: 40px;
+         animation-name: play2; 
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite; 
+        animation-timing-function: linear;
+    }
+    .fruit_three{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        background: rebeccapurple ;
+        position: absolute;
+        bottom: 40px;
+        animation-name: play3; 
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite; 
+        animation-timing-function: linear;
+    }
+    @keyframes play{
+        0%{margin-left:210px}
+        50%{margin-left:110px}
+        100%{margin-left:-30px}
+    }
+    @keyframes play2{
+        0%{margin-left:160px}
+        50%{margin-left:60px}
+        100%{margin-left:-40px}
+    }
+    @keyframes play3{
+        0%{margin-left:110px}
+        50%{margin-left:10px}
+        100%{margin-left:-50px}
+    }
+</style>
+<body>
+    <div class="eat">
+        <div class="chartBottom"></div>
+        <span class="fruit_one"></span>
+        <span class="fruit_two"></span>
+        <span class="fruit_three"></span>
+    </div>
+</body>
+</html>

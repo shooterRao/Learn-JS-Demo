@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .animateEle {
+        height: 300px;
+        width: 300px;
+        background-color: #86e857;
+    }
+</style>
+
+<body>
+    <div class="animateEle"></div>
+    <script src="./jquery-2.1.0.min.js"></script>
+    <script>
+        // $('.animateEle').animate({
+        //     opacity: '.5'
+        // }, 2000, function () {
+        //     $('.animateEle').animate({
+        //         width: '100px'
+        //     }, 2000, function () {
+        //         $('.animateEle').animate({
+        //             height: '0'
+        //         }, 2000);
+        //     });
+        // });
+        var animate1 = function () {
+            return $('.animateEle').hide(1000).promise();//他可以返回一个受限的Deferred对象,没有resolve、reject等方法
+        };
+        var animate2 = function () {
+            return $('.animateEle').show(1000).animate({
+                width: '100px'
+            }, 2000).promise();
+        };
+        var animate3 = function () {
+            return $('.animateEle').animate({
+                height: '0'
+            }, 2000).promise();
+        };
+
+        　var wait = function(){
+　　　　   var dtd = $.Deferred(); //在函数内部，新建一个Deferred对象
+　　　   　var tasks = function(){
+　　　　　 　alert("开始动画！");
+　　　　　　dtd.resolve(); // 改变Deferred对象的执行状态
+　　　 　};
+
+　　      setTimeout(tasks,2000)
+　　　　  return dtd.promise(); // 返回promise对象
+　　};
+         
+
+        //$.when(animate1()).done(animate2).done(animate3)
+        $.when(wait()).then(animate1).then(animate2).then(animate3)
+
+    </script>
+</body>
+
+</html>

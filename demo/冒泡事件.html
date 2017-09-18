@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <p>哈哈哈</p>
+    </div>
+    <script>
+        var div =document.getElementsByTagName('div')[0]
+        var p = document.getElementsByTagName('p')[0]
+        p.onclick =function(e){
+            alert('这是P')
+            console.log(e)
+            e.stopPropagation();
+        }
+        div.onclick =function(){
+            alert('这是div')
+        }
+    </script>
+</body>
+</html>
