@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function person(){}
+        person.prototype.name = "a";
+        var p = new person();
+        //p.name = "b";//这样只是为p添加属性
+        console.log(p.name);
+          
+        person.prototype.car = {name:"abc"}
+        person.prototype.bike = [1,2,3];
+        var p1 = new person();
+        var temp = p1.car;
+        var temp1 = p1.bike;
+        temp1.push(4);
+        temp.name = "123";
+        console.log(p1.car.name);//123
+        console.log(p1.bike);//1234
+
+        /*总结：构造函数中原型属性如果是基本类型的，只能读取不能修改原型里面的属性值
+               属性如果是引用类型的，原型里面的属性可以读取并修改，注意不能直接读取修改，要var一个变量去获取然后修改
+               归根到底还是基本类型和引用类型的问题 
+        */
+        
+          
+    
+       
+    </script>
+</body>
+</html>

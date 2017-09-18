@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function is(type, obj) {
+            var clas = Object.prototype.toString.call(obj).slice(8, -1);
+            return obj !== undefined && obj !== null && clas === type;
+        }
+        console.log(is('String', 'text'));
+        console.log(is('Object', {}))
+    </script>
+    <script>
+        //常用数组和字符串的方法
+        //1.slice()方法,可从已有的数组中返回选定的元素,返回一个新的数组
+        var arr = [1, 2, 3, 4]
+        console.log(arr.slice(1, -1))//[2,3]
+        //注意,字符串同样拥有slice方法，不同的是返回的是一个新的字符串
+
+        //2.字符串substr()方法,可在字符串中抽取从 start 下标开始的指定数目的字符
+        //语法：stringObject.substr(start,length)
+
+       //3.substring()方法,用于提取字符串中介于两个指定下标之间的字符
+       //语法：stringObject.substring(start,stop)
+
+       //4.join()方法,用于把数组中的所有元素放入一个字符串。元素是通过指定的分隔符进行分隔的。
+       //语法：arrayObject.join(separator)，separator可选。指定要使用的分隔符。如果省略该参数，则使用逗号作为分隔符。
+
+       //5.split()方法,用于把一个字符串分割成字符串数组。
+       //语法：stringObject.split(separator,howmany)
+       /*separator	必需。字符串或正则表达式，从该参数指定的地方分割 stringObject。
+        howmany	可选。该参数可指定返回的数组的最大长度。如果设置了该参数，返回的子串不会多于这个参数指定的数组。
+        如果没有设置该参数，整个字符串都会被分割，不考虑它的长度。
+        如果把空字符串 ("") 用作 separator，那么 stringObject 中的每个字符之间都会被分割。
+        */
+
+        //6.reverse()方法,用于颠倒数组中元素的顺序。
+        //语法：arrayObject.reverse(),该方法会改变原来的数组，而不会创建新的数组。
+
+        //7.unshift()方法,可向数组的开头添加一个或更多元素，并返回新的长度
+        //语法：arrayObject.unshift(newelement1,newelement2,....,newelementX)
+        //返回值 arrayObject 的新长度
+    </script>
+</body>
+
+</html>

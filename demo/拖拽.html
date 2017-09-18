@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+*{
+    padding: 0;
+    margin: 0;
+}
+#bBox{
+    width: 500px;
+    height: 638px;
+    border: 1px solid black;
+    position: relative
+}
+#sBox{
+    width: 250px;
+    height: 638px;
+    background: orange;
+    position: absolute;
+    
+}
+</style>
+<body>
+    <div id="bBox">
+        <div id="sBox">
+            拖我
+        </div>
+    </div>
+    <script>
+        var bBox =document.getElementById('bBox');
+        var sBox =document.getElementById('sBox');
+
+        sBox.onmousedown =function(e){
+             e = e||window.event
+             var offset={
+                 x:e.offsetX,
+                 y:e.offsetY
+             }
+           bBox.onmousemove =function(evt){
+              evt = evt||window.event;
+              console.log(evt.clientX)
+              sBox.style.left = evt.clientX-offset.x+'px';
+              if(sBox.style.left > 0+'px'){
+                  console.log("大了")
+                  sBox.style.left = 0+'px';
+              }    
+              evt.preventDefault()?evt.preventDefault():evt.returnValue = false;
+           }
+        }
+        sBox.onmouseup =function(){
+            bBox.onmousemove = null
+        }
+      
+    </script>
+</body>
+</html>

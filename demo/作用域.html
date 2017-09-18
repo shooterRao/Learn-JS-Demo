@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*var num = 123;
+        function foo() {
+            var num = 456;
+            function func() {
+                console.log(num);
+            }
+
+            func();
+        }
+
+        foo();//456*/
+        var num1 = 123;
+        function foo1() {
+            var num1 = 456;
+            function foo2() {
+                num1 = 789;
+                function foo3() {
+                    console.log(num1);
+                }
+                foo3();//console.log(789);
+            }
+            foo2();
+        }
+        foo1();
+        console.log(num1);
+
+        var num = 123;
+        function func1() {
+            console.log(num);//123
+        }//写好不执行，作用范围就已经确定好了，所以无论放到哪都是输出123；
+
+        function func2() {
+            var num = 456;
+            func1();
+            function func3(){
+              console.log(num);
+            }   
+            func3();
+        }
+        func2();//123,456
+        /*词法( 代码 )作用域, 就是代码在编写过程中体现出来的作用范围. 代码一旦写好, 不用执行, 作用范围就已经确定好了. 这个就是所谓词法作用域.*/
+    </script>
+</body>
+
+</html>

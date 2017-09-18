@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            position: absolute;
+            /*  left: 50%;
+        top: 50%;
+        margin-left:-50px;
+        margin-top: -50px; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <!-- <script>
+        var box = document.getElementById('box');
+        box.style.left = (document.documentElement.clientWidth/2)-box.offsetWidth/2+'px';
+        box.style.top = (document.documentElement.clientHeight/2)-box.offsetHeight/2+'px';
+    </script>-->
+    <script>
+        var box = document.getElementById('box');
+        box.style.left = 50 + '%';
+        box.style.top = 50 + '%';
+        box.style.marginLeft = -box.offsetWidth / 2 + 'px';
+        box.style.marginTop = -box.offsetHeight / 2 + 'px';
+    </script>
+</body>
+
+</html>

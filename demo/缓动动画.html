@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="height: 100px;width: 100px;background-color: black;position: relative" id="box"></div>
+    <button onclick="slide()">点击</button>
+    <script>
+        function slide() {
+            var leader = 0;
+            var target = 500;
+            var box = document.getElementById('box');
+            var timer = setInterval(move, 30);
+            function move() {
+                leader = leader + Math.ceil((target - leader) / 10);
+                box.style.left = leader + 'px';
+                if ((target - leader) == 0) {
+                    console.log(leader);
+                    clearInterval(timer);
+                }
+
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
