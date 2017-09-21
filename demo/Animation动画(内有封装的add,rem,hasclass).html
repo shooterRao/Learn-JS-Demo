@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Animation动画</title>
+    <style>
+        .box1,
+        .box2 {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            line-height: 100px
+        }
+
+        .animated {
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0)
+            }
+            to {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none
+            }
+        }
+
+        @-webkit-keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0)
+            }
+            to {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none
+            }
+        }
+
+        .fadeInDown {
+            -webkit-animation-name: fadeInDown;
+            animation-name: fadeInDown
+        }
+
+        @keyframes zoomIn {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale3d(.3, .3, .3);
+                transform: scale3d(.3, .3, .3)
+            }
+            100% {
+                opacity: 1
+            }
+        }
+
+        @-webkit-keyframes zoomIn {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale3d(.3, .3, .3);
+                transform: scale3d(.3, .3, .3)
+            }
+            100% {
+                opacity: 1
+            }
+        }
+
+        .zoomIn {
+            -webkit-animation-name: zoomIn;
+            animation-name: zoomIn
+        }
+        
+
+    </style>
+</head>
+
+<body>
+    <div class="box1 animated">fadeInDown</div>
+    <p><button class="btn1">动起来</button></p>
+
+    <div class="box2 animated">zoomIn</div>
+    <p><button class="btn2">动起来</button></p>
+
+    <div>
+
+    </div>
+
+    <script>
+        var btn1 = document.querySelector('.btn1');
+        btn1.onclick = function () {
+            var box1 = document.querySelector('.box1');
+            toggleClass(box1,'fadeInDown');
+        }
+        var btn2 = document.querySelector('.btn2');
+        btn2.onclick = function () {
+            var box2 = document.querySelector('.box2');
+            toggleClass(box2,'zoomIn');
+        }
+
+        //toggleClass
+        function toggleClass(obj,cls){
+            hasClass(obj,cls) ? removeClass(obj,cls) : addClass(obj,cls);
+        }
+
+        //加class
+        function addClass(obj, cls) {
+            //如果原来没有class;
+            if (obj.className == '') {
+                obj.className = cls;
+            } else {
+                var arrClassName = obj.className.split(' ');
+                var index = arrIndexOf(arrClassName, cls);
+                if (index == -1) {
+                    obj.className += ' ' + cls;
+                }
+            }
+        }
+
+        //删class
+        function removeClass(obj, cls) {
+            //判断是否有class
+            if (obj.className != '') {
+                var arrClassName = obj.className.split(' ');
+                var index = arrIndexOf(arrClassName, cls);
+                //如果有需要移除的class
+                if (index != -1) {
+                    arrClassName.splice(index, 1); //删除class
+                    obj.className = arrClassName.join(' ');
+                }
+            } else {
+                return;
+            }
+        }
+
+        //ES6检测数组中是否有相同的值存在，并且返回它的位置:
+        function arrIndexOf(arr, ele) {
+            var index = arr.findIndex(x => x === ele);
+            return index;
+        }
+
+        //判断是否拥有class
+        function hasClass(obj, cls) {
+            let obj_class = obj.className, //获取 class 内容.
+                obj_class_lst = obj_class.split(/\s+/); //通过split空字符将cls转换成数组.
+                console.log(obj_class_lst);
+            for (let x of obj_class_lst) {
+                if (x == cls) {
+                    //循环数组, 判断是否包含cls
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+
+</html>

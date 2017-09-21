@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Transition动画</title>
+    <style>
+        #timing-demo {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 400px;
+            width: 400px;
+        }
+
+        .demo-box {
+            width: 100px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            text-align: center;
+            color: #fff;
+            background: #96c;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            -moz-box-shadow: inset 0 0 5px rgba(102, 153, 0, 0.5);
+            -webkit-box-shadow: inset 0 0 5px rgba(102, 153, 0, 0.5);
+            box-shadow: inset 0 0 5px rgba(102, 153, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .page1 {
+            height: 600px;
+            width: 400px;
+            background-color: orange;
+            position: absolute;
+            left: 300px;
+            top: 0
+        }
+
+        .page2 {
+            height: 600px;
+            width: 400px;
+            background-color: skyblue;
+            position: absolute;
+            left: 700px;
+            top: 0
+        }
+
+        .page1-move {
+            opacity: 0;
+            transform: translate(-100%);
+        }
+
+        .page2-move {
+            opacity: 0;
+            transform: translate(100%);
+        }
+
+        #move {
+            transition: all 1s ease;
+        }
+
+
+        #ease {
+            -moz-transition: all 5s ease 0.3s;
+            -webkit-transition: all 5s ease 0.3s;
+            -o-transition: all 5s ease 0.3s;
+            transition: all 5s ease 0.3s;
+            background: #f36;
+        }
+
+        #ease-in {
+            -moz-transition: all 3s ease-in 0.5s;
+            -webkit-transition: all 3s ease-in 0.5s;
+            -o-transition: all 3s ease-in 0.5s;
+            transition: all 3s ease-in 0.5s;
+            background: #369;
+        }
+
+        #ease-out {
+            -moz-transition: all 5s ease-out 0s;
+            -webkit-transition: all 5s ease-out 0s;
+            -o-transition: all 5s ease-out 0s;
+            transition: all 5s ease-out 0s;
+            background: #636;
+        }
+
+        #ease-in-out {
+            -moz-transition: all 1s ease-in-out 2s;
+            -webkit-transition: all 1s ease-in-out 2s;
+            -o-transition: all 1s ease-in-out 2s;
+            transition: all 1s ease-in-out 2s;
+            background: #3e6;
+        }
+
+        #linear {
+            -moz-transition: all 6s linear 0s;
+            -webkit-transition: all 6s linear 0s;
+            -o-transition: all 6s linear 0s;
+            transition: all 6s linear 0s;
+            background: #999;
+        }
+
+        #cubic-bezier {
+            -moz-transition: all 4s cubic-bezier 1s;
+            -webkit-transition: all 4s cubic-bezier 1s;
+            -o-transition: all 4s cubic-bezier 1s;
+            transition: all 4s cubic-bezier 1s;
+            background: #6d6;
+        }
+
+        .demo-box:hover {
+            -moz-transform: rotate(360deg) scale(1.2);
+            -webkit-transform: rotate(360deg) scale(1.2);
+            -o-transform: rotate(360deg) scale(1.2);
+            transform: rotate(360deg) scale(1.2);
+            background: #369;
+            border: 1px solid rgba(255, 230, 255, 08);
+            -moz-border-radius: 25px;
+            -webkit-border-radius: 25px;
+            border-radius: 25px;
+            margin-left: 280px;
+            height: 30px;
+            line-height: 30px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        css的transition允许css的属性值在一定的时间区间内平滑地过渡。
+        这种效果可以在鼠标单击、获得焦点、被点击或对元素任何改变中触发，并圆滑地以动画效果改变CSS的属性值。
+     -->
+    <!-- transition一个速记法：transition: <property> <duration> <animation type> <delay> -->
+    <!--
+         transition-property 是用来指定当元素其中一个属性改变时执行transition
+         transition-duration 是用来指定元素转换过程的持续时间
+         transition-timing-function 根据时间的推进去改变属性值的变换速率，注意，cubic-bezier是贝塞尔曲线
+         transition-delay是用来指定一个动画开始执行的时间,属性改变多久后开始执行
+    -->
+    <div id="timings-demo">
+        <div id="ease" class="demo-box">Ease</div>
+        <div id="ease-in" class="demo-box">Ease-in</div>
+        <div id="ease-out" class="demo-box">Ease-out</div>
+        <div id="ease-in-out" class="demo-box">Ease-in-out</div>
+        <div id="linear" class="demo-box">Linear</div>
+        <div id="cubic-bezier" class="demo-box">Cubic-bezier</div>
+    </div>
+    <div id="move" class="page1">Page-One</div>
+    <div id="move" class="page2">Page-Two</div>
+    <button id="btn1" style="position:absolute;left:450px;top:600px">点我向左滑动</button>
+    <button id="btn2" style="position:absolute;left:850px;top:600px">点我向右滑动</button>
+</body>
+<script src="./jquery-2.1.0.min.js"></script>
+<script>
+    $(function () {
+        $('#btn1').click(
+            function (){
+                if($('.page1').hasClass('page1-move')){
+                    $('.page1').removeClass('page1-move');
+                }else {
+                    $('.page1').addClass('page1-move');
+                }    
+            }  
+    )
+    $('#btn2').click(
+            function (){
+                if($('.page2').hasClass('page2-move')){
+                    $('.page2').removeClass('page2-move');
+                }else {
+                    $('.page2').addClass('page2-move');
+                }    
+            }  
+    )
+    })
+</script>
+
+</html>
