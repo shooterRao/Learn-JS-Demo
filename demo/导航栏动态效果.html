@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .nav {
+        height: 100px;
+        width: 100%;
+        background-color: #000000;
+        transition: all .5s ease;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        transform: translate3d(0,-100%,0);
+        -webkit-transform: translate3d(0,-100%,0);
+    }
+    .visible {
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+    }
+    .wrapper {
+        height: 2000px;
+    }
+</style>
+<body>
+    <div class="wrapper">
+            <div class="nav">
+                    
+            </div>
+    </div>
+   <script>
+     window.onscroll = function() {
+        //  if(document.scrollingElement.scrollTop > 600) {
+        //      document.querySelector('.nav').style.height = 0;
+        //  }else {
+        //     document.querySelector('.nav').style.height = 100+ 'px' ;
+        //  }
+        var nav = document.querySelector('.nav');
+        if(document.scrollingElement.scrollTop > 600) {
+            if(!hasClass(nav,'visible')) {
+                addClass(nav,'visible');
+            }
+        }else {
+                removeClass(nav,'visible');
+        }
+     }
+
+      //toggleClass
+      function toggleClass(obj,cls){
+            hasClass(obj,cls) ? removeClass(obj,cls) : addClass(obj,cls);
+    }
+
+      //加class
+      function addClass(obj, cls) {
+            //如果原来没有class;
+            if (obj.className == '') {
+                obj.className = cls;
+            } else {
+                var arrClassName = obj.className.split(' ');
+                var index = arrIndexOf(arrClassName, cls);
+                if (index == -1) {
+                    obj.className += ' ' + cls;
+                }
+            }
+    }  
+
+    //删class
+    function removeClass(obj, cls) {
+            //判断是否有class
+            if (obj.className != '') {
+                var arrClassName = obj.className.split(' ');
+                var index = arrIndexOf(arrClassName, cls);
+                //如果有需要移除的class
+                if (index != -1) {
+                    arrClassName.splice(index, 1); //删除class
+                    obj.className = arrClassName.join(' ');
+                }
+            } else {
+                return;
+            }
+        }
+
+        //ES6检测数组中是否有相同的值存在，并且返回它的位置:
+        function arrIndexOf(arr, ele) {
+            var index = arr.findIndex(x => x === ele);
+            return index;
+        }
+
+        //判断是否拥有class
+        function hasClass(obj, cls) {
+            let obj_class = obj.className, //获取 class 内容.
+                obj_class_lst = obj_class.split(/\s+/); //通过split空字符将cls转换成数组.
+                // console.log(obj_class_lst);
+            for (let x of obj_class_lst) {
+                if (x == cls) {
+                    //循环数组, 判断是否包含cls
+                    return true;
+                }
+            }
+            return false;
+        }
+   
+   </script>
+</body>
+</html>

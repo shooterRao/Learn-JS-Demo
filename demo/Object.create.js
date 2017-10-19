@@ -31,4 +31,4 @@ function Shape() {
     rect instanceof Shape); // true
   
   rect.move(1, 1); //Outputs, "Shape moved."
-
+  
