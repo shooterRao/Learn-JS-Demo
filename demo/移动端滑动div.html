@@ -1,0 +1,122 @@
+<html>
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+        <title>文章审核提交</title>
+    </head>
+      <style>
+          * {
+              padding: 0;
+              margin: 0
+          }
+         #app{
+            width: 100%;
+            height: 100%;
+         } 
+         .topDiv {
+             width: 100%;
+             background: orange;
+         }
+         .bottomDiv {
+             width: 100%;
+             height: 300px;
+             background: skyblue;
+             z-index: 9999;
+            
+         }
+         .line {
+             width: 100%;
+             height: 20px;
+             background: #999;
+         }
+         .operation-bar {
+             height: 40px;
+             width: 100%;
+             background: green;
+             bottom: 0;
+         }
+         .operation-button {
+             float: left;
+             height: 100%;
+             width: 50%;
+             text-align: center;
+             line-height: 40px;
+          
+         }
+         .totalDiv {
+             width: 100%;
+         }
+         .operation-bar{
+             position: fixed;
+             bottom: 0;
+             left: 0;
+         }
+      </style>  
+    <body>
+        <div id="app">
+  
+              <div class="topDiv"></div>
+              <div class="line"></div>
+              <div class="bottomDiv"></div>
+        
+          <!--   -->
+          <div class="operation-bar">
+              <div class="operation-button" onclick="agree">
+                       确定
+              </div>
+              <div class="operation-button" onclick="reject">
+                       退回
+              </div>
+          </div>
+        
+        </div>
+       
+        <script>
+             var line = document.querySelector('.line');
+             var bottomDiv = document.querySelector('.bottomDiv');
+             var topDiv = document.querySelector('.topDiv');
+           //  var tDiv = document.querySelector('.totalDiv');
+             var dh = document.body.offsetHeight;
+             var wh = window.screen.availHeight;
+             var lh = line.offsetHeight;
+             // 底部工具栏的高度
+             var bh = document.querySelector('.operation-bar').offsetHeight;
+            // tDiv.style.height = wh - 40;
+             var startY;
+             var topDivPreHeight;
+             
+             topDiv.style.height = wh -lh - bottomDiv.offsetHeight - bh +'px';
+              
+             line.addEventListener('touchstart',start,false);
+  
+             function move (e) {
+              var moveY = e.touches[0].pageY;
+                  if(moveY >= wh - (lh + bh)){
+                     topDiv.style.height = dh - bh - lh + 'px';
+                     return;
+                  }
+                //  var h = tDiv.offsetHeight;
+                  topDiv.style.height = moveY - startY + topDivPreHeight + 'px';
+                  // 计算剩余的高度
+                  bottomDiv.style.height =  wh - bh - lh - topDiv.offsetHeight  + 'px'; 
+  
+            }
+            function start(e) {
+              e.preventDefault();
+              startY = e.touches[0].pageY;
+              topDivPreHeight = topDiv.offsetHeight;
+              document.addEventListener('touchmove',move,false);
+              line.addEventListener('touchend',end,false);
+            }
+            function end(e) {
+                e.preventDefault();
+               document.removeEventListener('touchmove',move,false); 
+            }
+  
+           
+           
+        </script>
+    </body>
+    
+    </html>

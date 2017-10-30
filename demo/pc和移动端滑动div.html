@@ -1,0 +1,281 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <title>文章审核提交</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0
+    }
+
+    #app {
+        width: 100%;
+        height: 100%;
+    }
+
+    .topDiv {
+        width: 100%;
+        height: 200px;
+        background: orange;
+    }
+
+    .middleDiv {
+        width: 100%;
+        height: 200px;
+        background: rgb(190, 31, 31);
+        z-index: 9999;
+    }
+
+    .bottomDiv {
+        width: 100%;
+        height: 300px;
+        background: skyblue;
+        z-index: 9999;
+    }
+
+    .line-one {
+        width: 100%;
+        height: 30px;
+        background: rgb(223, 110, 110);
+        text-align: center;
+    }
+
+    .line-two,
+    .line-one:hover {
+        cursor: pointer;
+    }
+
+    .line-two {
+        width: 100%;
+        height: 30px;
+        background: rgb(26, 180, 90);
+        text-align: center;
+    }
+
+    .operation-bar {
+        height: 40px;
+        width: 100%;
+        background: green;
+        bottom: 0;
+    }
+
+    .operation-button {
+        float: left;
+        height: 100%;
+        width: 50%;
+        text-align: center;
+        line-height: 40px;
+    }
+
+    .operation-bar {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
+
+    .totalDiv {
+        width: 100%;
+    }
+</style>
+
+<body>
+    <div id="app">
+
+        <div class="totalDiv">
+            <div class="topDiv">
+
+            </div>
+            <!-- <hr size=10  width="100%"  color="#999" style="border:1 solid #999" /> -->
+            <div class="line-one">line1</div>
+            <div class="middleDiv">
+
+            </div>
+            <div class="line-two">line2</div>
+            <div class="bottomDiv">
+
+            </div>
+        </div>
+
+
+        <div class="operation-bar">
+            <div class="operation-button" onclick="agree">
+                确定
+            </div>
+            <div class="operation-button" onclick="reject">
+                退回
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var line1 = document.querySelector('.line-one');
+        var line2 = document.querySelector('.line-two');
+        var tDiv = document.querySelector('.totalDiv');
+        var middleDiv = document.querySelector('.middleDiv');
+        var bottomDiv = document.querySelector('.bottomDiv');
+        var topDiv = document.querySelector('.topDiv');
+        var wh = window.innerHeight;
+        var lineOneHeight = line1.offsetHeight;
+        var lineTwoHeight = line2.offsetHeight;
+
+        tDiv.style.height = wh - 40;
+        bottomDiv.style.height = tDiv.offsetHeight - middleDiv.offsetHeight - lineTwoHeight - topDiv.offsetHeight -
+            lineOneHeight;
+
+        // 移动端的变量
+        var startY; // 点击line1的位置 
+        var lineOneTop; // line1距离顶部的位置
+        var lineTwoTop; // line2距离顶部的位置
+        var topDivPreHeight;
+        var middleDivPreHeight;
+
+        //PC端的变量
+        var start_Y;
+        var top_Height;
+        var middle_Height;
+
+        var navJudge = /Android|webOS|iPhone|iPod|BlackBerry/i;
+        navJudge.test(navigator.userAgent) ? console.log('移动端') : console.log('PC端');
+        if (navJudge.test(navigator.userAgent)) {
+            line1.addEventListener('touchstart', lineOneStart, false);
+            line2.addEventListener('touchstart', lineTwoStart, false);
+        } else {
+            line1.addEventListener('mousedown', pcLineOneStart, false);
+            line2.addEventListener('mousedown', pcLineTwoStart, false);
+        }
+
+        /* 
+            ***
+            PC端的处理
+            ***
+         */
+        function pcLineOneStart(e) {
+            e.preventDefault();
+            start_Y = e.offsetY;
+            top_Height = topDiv.offsetHeight;
+            tDiv.addEventListener('mousemove', pcLineOneMove, false);
+            tDiv.addEventListener('mouseup', pcLineOneEnd, false);
+        }
+
+        function pcLineOneMove(e) {
+            e.preventDefault();
+            if (e.clientY >= wh - 40 - lineOneHeight - lineTwoHeight) {
+                middleDiv.style.height = 0;
+                topDiv.style.height = wh - lineOneHeight - lineTwoHeight - 40 + 'px';
+                return;
+            }
+            topDiv.style.height = e.clientY - start_Y + 'px';
+            middleDiv.style.height = tDiv.offsetHeight - topDiv.offsetHeight - bottomDiv.offsetHeight - lineOneHeight -
+                lineTwoHeight + 'px';
+            bottomDiv.style.height = tDiv.offsetHeight - topDiv.offsetHeight - middleDiv.offsetHeight - lineOneHeight -
+                lineTwoHeight + 'px';
+        }
+
+        function pcLineOneEnd() {
+            tDiv.removeEventListener('mousemove', pcLineOneMove, false);
+        }
+
+        function pcLineTwoStart(e) {
+            e.preventDefault();
+            start_Y = e.offsetY;
+            middle_Height = middleDiv.offsetHeight;
+            tDiv.addEventListener('mousemove', pcLineTwoMove, false);
+            tDiv.addEventListener('mouseup', pcLineTwoEnd, false);
+        }
+
+        function pcLineTwoMove(e) {
+            e.preventDefault();
+
+            if (e.clientY >= wh - 70) {
+                middleDiv.style.height = wh - 40 - lineOneHeight - lineTwoHeight - topDiv.offsetHeight + 'px';
+                return;
+            }
+            middleDiv.style.height = e.clientY - start_Y - topDiv.offsetHeight - lineOneHeight + 'px';
+            bottomDiv.style.height = tDiv.offsetHeight - topDiv.offsetHeight - middleDiv.offsetHeight - lineOneHeight -
+                lineTwoHeight + 'px';
+        }
+
+        function pcLineTwoEnd(e) {
+            tDiv.removeEventListener('mousemove', pcLineTwoMove, false);
+        }
+
+        /* 
+            ***
+            移动端的处理
+            ***
+       */
+        function lineOneStart(e) {
+            e.preventDefault();
+            startY = e.touches[0].pageY;
+            // lineOneTop = topDiv.offsetHeight;
+            topDivPreHeight = topDiv.offsetHeight;
+            tDiv.addEventListener('touchmove', lineOneMove, false);
+            line1.addEventListener('touchend', lineOneEnd, false);
+        }
+
+        // 拖动第一条线
+        function lineOneMove(e) {
+            var moveY = e.touches[0].pageY;
+            console.log('移动的位置' + moveY);
+            console.log('触摸时的位置' + startY);
+            console.log('实际移动的距离' + (moveY - startY));
+            var th = tDiv.offsetHeight;
+            if (moveY >= wh - 100) {
+                middleDiv.style.height = 0;
+                topDiv.style.height = wh - lineOneHeight - lineTwoHeight - 40 + 'px';
+                return;
+            }
+            topDiv.style.height = moveY - startY + topDivPreHeight + 'px';
+            // 计算剩余div的高度
+            middleDiv.style.height = (th - bottomDiv.offsetHeight - lineTwoHeight) - topDiv.offsetHeight -
+                lineOneHeight + 'px';
+            bottomDiv.style.height = th - middleDiv.offsetHeight - lineTwoHeight - topDiv.offsetHeight - lineOneHeight +
+                'px';
+            // }
+
+        }
+
+        function lineOneEnd(e) {
+            e.preventDefault();
+            tDiv.removeEventListener('touchmove', lineOneMove, false);
+        }
+
+        function lineTwoStart(e) {
+            e.preventDefault();
+            startY = e.touches[0].pageY;
+            // lineTwoTop = line2.offsetTop - topDiv.offsetHeight - lineOneHeight;
+            middleDivPreHeight = middleDiv.offsetHeight;
+            tDiv.addEventListener('touchmove', lineTwoMove, false);
+            line2.addEventListener('touchend', lineTwoEnd, false);
+        }
+
+        function lineTwoMove(e) {
+            var moveY = e.touches[0].pageY;
+            console.log('移动的位置' + moveY);
+            console.log('触摸时的位置' + startY);
+            console.log('实际移动的距离' + (moveY - startY));
+            var th = tDiv.offsetHeight;
+            var distance = moveY - startY;
+
+            if (moveY >= wh - 70) {
+                middleDiv.style.height = wh - 40 - lineOneHeight - lineTwoHeight - topDiv.offsetHeight + 'px';
+                return;
+            }
+            middleDiv.style.height = distance + middleDivPreHeight + 'px';
+            bottomDiv.style.height = th - middleDiv.offsetHeight - lineTwoHeight - topDiv.offsetHeight - lineOneHeight +
+                'px';
+        }
+
+        function lineTwoEnd(e) {
+            e.preventDefault();
+            tDiv.removeEventListener('touchmove', lineTwoMove, false);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .tab_wrap {
+        width: 400px;
+        margin: 30px auto;
+    }
+
+    .tab_nav {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .tab_nav .item {
+        padding: 0 10px;
+        text-align: center;
+        height: 30px;
+        line-height: 30px;
+        cursor: pointer;
+    }
+
+    .tab_nav .active {
+        color: #000;
+        border-bottom: 1px solid #ffe100;
+    }
+
+    .container {
+        position: relative;
+        height: 200px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    .container .content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        display: none;
+        text-align: center;
+        line-height: 200px;
+        font-size: 60px;
+    }
+
+    .container .content.active {
+        display: block;
+    }
+</style>
+
+<body>
+    <div class="tab_wrap">
+        <nav class="tab_nav">
+            <div class="item active" data-index="0">tab1</div>
+            <div class="item" data-index="1">tab2</div>
+            <div class="item" data-index="2">tab3</div>
+        </nav>
+        <div class="container">
+            <div class="content active">1</div>
+            <div class="content">2</div>
+            <div class="content">3</div>
+        </div>
+    </div>
+</body>
+<script>
+    var index = 0;
+    var navItems = document.querySelectorAll('.tab_nav .item');
+    var conItems = document.querySelectorAll('.container .content');
+
+    const navwrap = document.querySelector('.tab_nav');
+
+    navwrap.onclick = function (ev) {
+        var target = ev.target;
+        console.log(target.dataset);
+        console.log(navItems[index].classList);
+        if (target.className.indexOf('item') > -1) {
+            var newIndex = parseInt(target.dataset.index);
+            if (newIndex == index) {
+                return;
+            }
+            navItems[index].classList.remove('active');
+            conItems[index].classList.remove('active');
+
+            index = newIndex
+
+            navItems[index].classList.add('active');
+            conItems[index].classList.add('active');
+        }
+    }
+</script>
+
+</html>
