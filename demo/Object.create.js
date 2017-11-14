@@ -32,3 +32,26 @@ function Shape() {
   
   rect.move(1, 1); //Outputs, "Shape moved."
   
+function Fo(name) {
+    this.name = name;
+}
+Fo.prototype.getName = function (){
+    return this.name;
+}
+console.log(Object.getPrototypeOf(Fo));// Function.prototype
+
+function Bo(name,label) {
+  Fo.call(this,name);
+  this.label = label;
+}
+
+// 把Bo.prototype的__proto__关联到Fo.prototype中
+// 原本Bo.prototype.__proto__是关联Object.prototype中的
+Bo.prototype = Object.create(Fo.prototype);
+
+console.log(Bo.prototype.__proto__); //Fo { getName: [Function] }
+console.log(Bo.prototype.__proto__ === Fo.prototype);// true
+var b = new Bo('JJ','YY');
+console.log(b.getName());
+
+// 总结，所谓的关联，就是 === 的值为true，A===B，A可以共享B的所有东西

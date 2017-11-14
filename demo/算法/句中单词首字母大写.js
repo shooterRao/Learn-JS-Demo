@@ -3,15 +3,16 @@ function titleCase(str) {
         return;
     }
     var strArr = str.split(' ');
-    var formatArr = [];// 装载格式化的字符串
+   // var formatArr = [];// 装载格式化的字符串
   
-     strArr.forEach(function(val,index) {
+     strArr.forEach(function(val,index,arr) {
       if(typeof val == 'string') {
         // 遍历每一个字符串
-        formatArr.push(format(val));
+       // formatArr.push(format(val));
+       arr[index] = format(val);
       }
     });
-    return formatArr.join(' ');
+    return strArr.join(' ');
   }
 
 function format(str) {
@@ -20,14 +21,16 @@ function format(str) {
     }
     var arr = str.split('');
     var formatArr = [];
-     arr.forEach(function(v,i) {
+     arr.forEach(function(v,i,a) {
         if(i === 0) {
-            formatArr.push(v.toUpperCase());
+           // formatArr.push(v.toUpperCase());
+           a[i] = v.toUpperCase();
         }else {
-           formatArr.push(v.toLowerCase());
+          // formatArr.push(v.toLowerCase());
+          a[i] = v.toLowerCase();
         }
     });
-    return formatArr.join('');
+    return arr.join('');
 }
 
-console.log(titleCase('IAseD aa'));
+console.log(titleCase('IAseD aa bbb '));
