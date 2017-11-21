@@ -11,11 +11,12 @@ class A{
 class B extends A{
     constructor(){
         super();
-        console.log(this)//只有调用super()之后，才能使用this
+        console.log(this)//只有调用super()之后，才能使用this, 这是因为子类实例的构建，是基于对父类实例加工，只有super方法才能返回父类实例。
     }
 };
-new A();
-new B();//super执行时，super内的this指向B，A.prototype.constructor.call(this)
+// new A();
+new B();//super执行时，super内的this指向B，A.prototype.constructor.call(this), A.call(this)
+// Object.prototype.constructor 返回创建实例对象的 Object 构造函数的引用
 
 //2.super用在对象时,在普通方法中，指向父类的原型，在静态方法中，指向父类
 class C{

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+.demo-marquee {
+        width: 400px;
+        height: 200px;
+        overflow: hidden;
+        margin: 20px auto;
+    }
+.fllil {
+    list-style: none;
+    width: 2400px;
+    animation: ec-marquee-move 8s infinite linear;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.fllil:hover {
+    animation-play-state: paused;
+}
+.fllil li {
+    margin: 0;
+    padding: 0;
+    width: 400px;
+    height: 200px;
+   float: left
+}
+.fllil li img{
+    width: 400px;
+    height: 200px;
+}
+@keyframes ec-marquee-move {
+        0% {
+            transform: translateX(0px);
+        }
+        100% {
+            transform: translateX(-1200px);
+        }
+    }
+
+</style>
+<body>
+    <div class="demo-marquee">
+        <ul class="fllil">
+            <li><img src="./img.jpg"/>
+            </li>
+            <li><img src="./img2.jpg"/>
+            </li>
+            <li><img src="./img3.jpg"/>
+            </li>
+            <!--下面的四个li是复制内容-->
+            <li><img src="./img.jpg"/>
+            </li>
+            <li><img src="./img2.jpg"/>
+            </li>
+            <li><img src="./img3.jpg"/>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>
