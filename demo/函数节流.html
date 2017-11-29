@@ -10,43 +10,84 @@
 
 <body>
     <script>
-         let begin = 0;
-         let count = 0;
-        // document.onmousemove = function () {
+        //  let begin = 0;
+        //  let count = 0;
+        // // document.onmousemove = function () {
+        // //     count++;
+        // //     let now = Date.now();
+        // //     if (!begin) {
+        // //         begin = now;
+        // //         return;
+        // //     }
+        // //     if ((now - begin) % 3000 < 60) {
+        // //         console.log(now - begin,
+        // //             count / (now - begin) * 1000);
+        // //     }
+        // // };
+        // //节流方法，每次触发时立即执行,然后再设定一个计时器，把tId置成0,1秒执行10次
+        // function throttle(method, context) {
+        //     if (!method.tId) {
+        //         method.call(context);
+        //         method.tId = 1;
+        //         setTimeout(() => method.tId = 0, 100);//100毫秒执行一次
+        //     }
+        // }
+        // function resize(){
+        //    return window.onresize = function(){
         //     count++;
+        //     console.log(count)
         //     let now = Date.now();
         //     if (!begin) {
         //         begin = now;
         //         return;
         //     }
         //     if ((now - begin) % 3000 < 60) {
-        //         console.log(now - begin,
-        //             count / (now - begin) * 1000);
+        //        // console.log(now - begin);
         //     }
-        // };
-        //节流方法，每次触发时立即执行,然后再设定一个计时器，把tId置成0,1秒执行10次
-        function throttle(method, context) {
-            if (!method.tId) {
-                method.call(context);
-                method.tId = 1;
-                setTimeout(() => method.tId = 0, 100);//100毫秒执行一次
+        //    }
+        // }
+        // throttle(resize,this);
+    var t = function(func, wait, options) {
+    var timeout, context, args, result
+    var previous = 0
+    if (!options) options = {}
+
+    var later = function() {
+        previous = options.leading === false ? 0 : Date.now()
+        timeout = null
+        result = func.apply(context, args)
+        if (!timeout) context = args = null
+    }
+
+    var throttled = function() {
+        var now = Date.now()
+        if (!previous && options.leading === false) previous = now
+        var remaining = wait - (now - previous)
+        context = this
+        args = arguments
+        if (remaining <= 0 || remaining > wait) {
+            if (timeout) {
+                clearTimeout(timeout)
+                timeout = null
             }
+            previous = now
+            result = func.apply(context, args)
+            if (!timeout) context = args = null
+        } else if (!timeout && options.trailing !== false) {
+            timeout = setTimeout(later, remaining)
         }
-        function resize(){
-           return window.onresize = function(){
-            count++;
-            console.log(count)
-            let now = Date.now();
-            if (!begin) {
-                begin = now;
-                return;
-            }
-            if ((now - begin) % 3000 < 60) {
-               // console.log(now - begin);
-            }
-           }
-        }
-        throttle(resize,this);
+        return result
+    }
+
+    throttled.cancel = function() {
+        clearTimeout(timeout)
+        previous = 0
+        timeout = context = args = null
+    }
+
+    return throttled
+}
+
     </script>
 </body>
 

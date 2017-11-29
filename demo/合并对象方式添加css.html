@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            height: 2200px;
+            width: 100%;
+            background: #1dd0d6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    </div>
+    <button class="test">添加样式测试</button>
+    <button class="toTop">回到顶部</button>
+    <script>
+        var assign = function(target, varArgs) {
+            if(target == null) {
+                throw new TypeError('');
+            }
+
+            var to = new Object(target);
+
+            for(var index = 1; index < arguments.length; index++) {
+                var nextSource = arguments[index]
+                if(nextSource != null) {
+                    for(var nextKey in nextSource) {
+                        if(Object.prototype.hasOwnProperty.call(nextSource,nextKey)) {
+                            to[nextKey] = nextSource[nextKey]
+                        }
+                    }
+                }
+            }
+            return to
+        }
+        var setStyles = function(els, cssObj) {
+            if('transform' in cssObj) {
+                cssObj['webkitTransform'] = cssObj['transform']
+            }
+            if('transition' in cssObj) {
+                cssObj['webkitTransition'] = cssObj['transition']
+            }
+            els.forEach(element => {
+                // element.style 可以获取CSSStyleDeclaration对象(包含css所有属性)，然后通过合并对象方式动态更新css
+              typeof Object.assign != 'function' ? element && assign(element.style,cssObj) : element && Object.assign(element.style,cssObj);
+            });
+        }
+
+        document.querySelector('.test').addEventListener('click',function() {
+            var container = document.querySelector('.container');
+            setStyles([container],{height: '600px'})
+        })
+
+        var timer = null;
+        document.querySelector('.toTop').addEventListener('click',function() {
+             timer = setInterval(function() {
+                var distance = document.documentElement.scrollTop / 5;
+                if( document.documentElement.scrollTop < 10 ) {
+                    document.documentElement.scrollTop = 0;
+                }else {
+                    document.documentElement.scrollTop = distance;
+                }
+            },50)
+        })
+
+        window.addEventListener('scroll',scrollFn);
+        function scrollFn() {
+            if(document.documentElement.scrollTop == 0) {
+                clearInterval(timer);
+            }
+        }
+       
+    </script>
+</body>
+</html>
