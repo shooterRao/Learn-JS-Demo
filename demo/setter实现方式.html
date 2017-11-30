@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" q-value="value" id="input">
+    <div q-text="value" id="el">
+    </div>
+    <script>
+        var elems = [document.getElementById('el'),document.getElementById('input')];
+        var data = {
+            value: ''
+        };
+        var command = {
+            text: function(str) {
+                this.innerHTML = str;
+            },
+            value: function(str) {
+                this.setAttribute('value', str);
+            }
+        };
+
+        var scan = function() {
+            for(var i=0;i<elems.length;i++) {
+                var elem = elems[i];
+                elem.command = [];
+                for( var j=0;j<elem.attributes.length;j++) {
+                    var attr = elem.attributes[j];
+                    if(attr.nodeName.indexOf('q-') >= 0) {
+                        command[attr.nodeName.slice(2)].call(elem,data[attr.nodeValue]);
+                        elem.command.push(attr.nodeName.slice(2));
+                    }
+                }
+            }
+        };
+
+        var bValue;
+        // 定义属性设置劫持
+
+        var defineGetAndSet = function(obj, propName) {
+            try {
+                Object.defineProperty(obj, propName,{
+                    get: function() {
+                        return bValue;
+                    },
+                    set: function(newValue) {
+                        bValue = newValue;
+                        scan();
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
+
+        // 数据劫持监听
+        defineGetAndSet(data, 'value');
+
+        // 数据绑定监听
+        if(document.addEventListener) {
+            elems[1].addEventListener('keyup',function(e) {
+                data.value = e.target.value
+            })
+        }
+
+        /* 总结
+           这种方式主要通过监听input的keyup事件=>设置属性值时触发set()=>调用扫描函数scan()=>改变view层来实现
+        
+        */
+
+    </script>
+</body>
+</html>

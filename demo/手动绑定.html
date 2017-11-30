@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="input" q-value="value">
+    <div q-text="value" id="el"> 
+        
+    </div>
+    <script>
+        var elems = [document.querySelector('#el'),document.querySelector('#input')];
+        var data = {
+            value: '' 
+        };
+        var command = {
+            text: function(str) {
+                this.innerHTML = str;
+            },
+            value: function(str) {
+                this.setAttribute('value',str);
+            }
+        };
+        // 扫描
+        var scan = function() {
+            for(var i = 0,len = elems.length;i<len;i++) {
+                var elem = elems[i];
+                elem.command = [];
+                for(var j = 0;j < elem.attributes.length;j++) {
+                    var attr = elem.attributes[j];
+                    if( attr.nodeName.indexOf('q-') >= 0 ) {
+                        // 调用属性指令
+                        command[attr.nodeName.slice(2)].call(elem, data[attr.nodeValue]);
+                        elem.command.push(attr.nodeName.slice(2));
+                    }
+                }
+            }
+        }
+
+        // 设置数据后扫描
+        function mvSet(key, value) {
+            data[key] = value;
+            scan();
+        }
+
+        elems[1].addEventListener('keyup',function(e) {
+            mvSet('value',e.target.value)
+        },false);
+
+        /*  总结
+            这种方式主要通过监听input的keyup事件=>调用mvSet()=>扫描函数scan()=>改变view层来实现
+            改变data[value]的值, q-(alias)alias用来区分command执行的方法，然后改变value值
+            注意: q-(alias)的值对应data的字段，并且同名
+
+        */
+    </script>
+</body>
+</html>
