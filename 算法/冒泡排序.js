@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>冒泡排序</title>
-</head>
-<body>
-<script>
+
 	var arr = [7,4,6,2,8,5];
 	console.log(arr);
 	//var temp;
@@ -24,6 +17,3 @@
 	  console.log(...arr);  
 	  
 	
-</script>
-</body>
-</html>

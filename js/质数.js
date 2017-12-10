@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-</head>
-<body>
-	<script>
+
       // var i,j,s=0,m=0;
       // for(i=1;i<100;i++){
       // 	for(j=2;j<=Math.sqrt(i);j++){
@@ -50,6 +43,3 @@
 		}
 		return true;
 	}
-	</script>
-</body>
-</html>

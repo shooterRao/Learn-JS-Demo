@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-</head>
-<body>
-	<script>
+
      
      var name = "The Window";   
-　　var object = {   
+　　 var object = {   
 　　　　name : "My Object",   
 　　　　getNameFunc : function(){   
 　　　　　　return function(){   
@@ -36,6 +29,4 @@ function a() {
 
 
 
-	</script>
-</body>
-</html>
+	
