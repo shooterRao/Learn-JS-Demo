@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Image Preview Example</title>
+</head>
+<body>
+    <form name="uploadForm">
+        <table>
+            <tbody>
+                <tr>
+                    <td><img id="uploadPreview" style="width: 100px; height: 100px"></td>
+                    <td><input id="uploadImage" type="file" multiple name="myPhoto" onchange="loadImageFile()"/></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <input type="date" name="" id=""> -->
+    </form>
+    <script>
+        var oFReader = new FileReader(),
+        rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+        oFReader.onload = function (oFREvent) {
+            console.log(oFREvent)
+            console.log(oFReader.readyState)
+            document.getElementById("uploadPreview").src = oFREvent.target.result;
+        }
+        function loadImageFile() {
+            if(document.getElementById("uploadImage").files.length === 0) 
+            return
+            var oFile = document.getElementById("uploadImage").files[0];
+            if(!rFilter.test(oFile.type)) {
+                alert('You must select a vaild image file!')
+                return
+            }
+            oFReader.readAsDataURL(oFile)
+        }
+    </script>
+</body>
+</html>
