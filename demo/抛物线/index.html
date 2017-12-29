@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body,html {
+            height: 100%;
+            width: 100%;
+        }
+        .circle {
+            height: 30px;
+            width: 30px;
+            border-radius: 15px;
+            background: orange;
+            position: absolute;
+        }
+        .target {
+            height: 50px;
+            width: 100px;
+            background: skyblue;
+            position: fixed;
+            right: 0px;
+            bottom: 0px
+        }
+        .addCart {
+            height: 50px;
+            width: 100px;
+            margin-top: 300px;
+            border: 1px solid black;
+        }
+        .addCart.another{
+            margin-top: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;height: 1500px">
+        <div class="circle"></div>
+        <div class="target">购物车</div>
+        <div class="addCart">加入购物车</div>
+        <div class="addCart another">加入购物车</div>
+    </div>
+    <script src="./fly.js"></script>
+    <script>
+        var ele = document.querySelector('.circle'),target = document.querySelector('.target'),addCart = document.querySelectorAll('.addCart')
+        var parabola = funParabola(ele, target,{
+            speed: 600,
+            curvature: 0.001,
+            complete: function () {
+                ele.style.visibility = 'hidden'
+            }
+        }).mark();
+        addCart.forEach(e => e.addEventListener('click',function(event) {
+            // ele.style.transform = `translateX(100px) translateY(200px)`
+            // 判断addCart的位置
+            // ele.style.transform = 'translate(0, 0)'
+            var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+            ele.style.left = scrollLeft + event.clientX - 15 + 'px';
+            ele.style.top = scrollTop + event.clientY - 15 + 'px';
+            ele.style.visibility = 'visible';
+            parabola.position().move()
+        }))
+    </script>
+</body>
+</html>
