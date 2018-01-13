@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+    body {
+        font: 1em sans-serif;
+        text-align: center;
+    }
+    .stage {
+        border-bottom: 3px solid #444;
+        display: flex;
+        height: 330px;
+        width: 100%;
+    }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: #F44336;
+        align-self: flex-end;
+        transform-origin: bottom;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        margin: 0 auto
+    }
+    .bounce-2 {
+        animation-name: bounce-6;
+        animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);;
+    }
+    @keyframes bounce-2 {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-100px); }
+        100% { transform: translateY(0); }
+    }
+    @keyframes bounce-3 {
+        0% { transform: translateY(0); }
+        30% { transform: translateY(-100px); }
+        50% { transform: translateY(0); }
+        100% { transform: translateY(0); }
+    }
+    @keyframes bounce-4 {
+        0% { transform: scale(1,1) translateY(0); }
+        10% { transform: scale(1.1,.9) translateY(0); }
+        30% { transform: scale(.9,1.1) translateY(-100px); }
+        50% { transform: scale(1,1) translateY(0); }
+        100% { transform: scale(1,1) translateY(0); }
+    }
+    /* 结束时增加反弹 */
+    @keyframes bounce-5 {
+        0% { transform: scale(1,1) translateY(0); }
+        10% { transform: scale(1.1,.9) translateY(0); }
+        30% { transform: scale(.9,1.1) translateY(-100px); }
+        50% { transform: scale(1,1) translateY(0); }
+        57% { transform: scale(1,1) translateY(-7px); }
+        64% { transform: scale(1,1) translateY(0); }
+        100% { transform: scale(1,1) translateY(0); }
+    }
+    /* 加强 */
+    @keyframes bounce-6 {
+        0% { transform: scale(1,1) translateY(0); }
+        10% { transform: scale(1.1,.9) translateY(0); }
+        30% { transform: scale(.9,1.1) translateY(-100px); }
+        50% { transform: scale(1.05,.95) translateY(0); }
+        57% { transform: scale(1,1) translateY(-7px); }
+        64% { transform: scale(1,1) translateY(0); }
+        100% { transform: scale(1,1) translateY(0); }
+    }
+    /* 贝塞尔曲线 */
+    @keyframes bounce-7 {
+        0% { transform: scale(1,1) translateY(0); }
+        10% { transform: scale(1.1,.9) translateY(0); }
+        30% { transform: scale(.9,1.1) translateY(-100px); }
+        50% { transform: scale(1,1) translateY(0); }
+        57% { transform: scale(1,1) translateY(-7px); }
+        64% { transform: scale(1,1) translateY(0); }
+        100% { transform: scale(1,1) translateY(0); }
+    }
+</style>
+<body>
+    <div class="stage">
+        <div class="box bounce-2"></div>
+    </div>
+</body>
+</html>
