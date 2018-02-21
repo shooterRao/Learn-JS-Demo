@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            background: skyblue;
+        }
+
+        .button {
+            height: 60px;
+            width: 100px;
+            background-color: #4CAF50;
+            border: none;
+            font-size: 24px;
+            border-radius: 15px;
+            outline: none;
+        }
+
+        .button:active {
+            background-color: #3e8e41;
+            transform: translateY(4px);
+            outline: none;
+        }
+
+        .outView {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: orange;
+            transition: all .2s ease-out;
+            transform: translate3d(100%,0,0);
+            /* display: none; */
+        }
+        .move {
+            transform: translate3d(0,0,0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <button class="button">跳转</button>
+    </div>
+    <div class="outView">
+            <button class="button back">返回</button>
+    </div>
+    <script>
+        const container = document.querySelector('.container');
+        const button = document.querySelector('.button');
+        const outView = document.querySelector('.outView');
+        const backButton = document.querySelector('.back');
+        button.addEventListener('click',function(e) {
+            e.stopPropagation();
+            if(!hasClass(outView, 'move')) {
+                outView.style.display = 'block';
+                setTimeout(() => {
+                    addClass(outView, 'move')
+                },0)
+            }
+        })
+        backButton.addEventListener('click',function(e) {
+            e.stopPropagation();
+            if(hasClass(outView, 'move')) {
+                removeClass(outView, 'move')
+                setTimeout(() => {
+                    outView.style.display = 'none';
+                },100)
+            }
+        })
+        function hasClass(el, className) {
+            if(el.classList) {
+                return el.classList.contains(className);
+            }
+            let reg = new RegExp('(^|\\s)' + className + '(\\s|$)');
+            return reg.test(el.className);
+        }
+        function addClass(el, className) {
+            if(hasClass(el,className)) {
+                return;
+            }
+            if(el.classList) {
+                el.classList.add(className);
+                return;
+            }
+            let newClass = el.className.split(' ');
+            newClass.push(className);
+            el.className = newClass.join(' ');
+        }
+        function removeClass(el, className) {
+            if(!hasClass(el, className)) {
+                return;
+            }
+            if(el.classList) {
+                return el.classList.remove(className);
+            }
+            let reg = new RegExp('(^|\\s)' + className + '(\\s|$)','g');
+            el.className = el.className.replace(reg, ' ');
+        }
+    </script>
+</body>
+
+</html>

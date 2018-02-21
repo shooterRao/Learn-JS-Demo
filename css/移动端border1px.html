@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .border-box {
+      width: 100px;
+      height: 100px;
+      background-color: skyblue;
+    }
+    .border-1px {
+      position: relative;
+    }
+    .border-1px::after {
+      position: absolute;
+      content: ' ';
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      border-top: 1px solid black;
+      display: block;
+    }
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
+      .border-1px::after {
+        -webkit-transform: scaleY(0.7);
+        transform: scaleY(0.7);
+      }
+    }
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+      .border-1px::after {
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="border-box border-1px">
+
+  </div>
+</body>
+</html>

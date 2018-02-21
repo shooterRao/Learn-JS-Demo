@@ -9,31 +9,36 @@
       .one,.two{
           height: 100px;
           width: 100px;
-          background-color: #000;
+          background-color: green;
           float: left;
+      }
+      .wrapper {
+          width: 300px;
+          border: 1px solid black;
       }
     /*  .clearfix{
           overflow: hidden;
           *zoom: 1;
       }*/
       .clearfix{
+          display: inline-block;
           zoom: 1;
       }
-      .clearfix:before,.clearfix:after{
-          display: table;
-          content: '';
-      }
-      .clearfix:after{
-          clear: both
+      .clearfix::after{
+          display: block;
+          content: " ";
+          height: 0;
+          line-height: 0;
+          clear: both;
+          visibility: hidden;
       }
     </style>
 
 </head>
 <body>
-    <div>
+    <div class="wrapper clearfix">
         <div class="one"></div>
         <div class="two"></div>
-        <div class="clearfix"></div>
     </div>
 
 </body>

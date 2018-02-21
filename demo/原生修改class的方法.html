@@ -77,11 +77,11 @@
         };
 
         function addClass(el, className) {
-            if(el.classList) {
-                el.classList.add(className);
+            if(hasClass(el,className)) {
                 return;
             }
-            if(hasClass(el,className)) {
+            if(el.classList) {
+                el.classList.add(className);
                 return;
             }
             var newClass = el.className.split(' ');
@@ -90,12 +90,11 @@
         };
 
         function removeClass(el, className) {
-            if(el.classList) {
-                return el.classList.remove(className);
-            }
-
             if(!hasClass(el,className)) {
                 return;
+            }
+            if(el.classList) {
+                return el.classList.remove(className);
             }
             var reg = new RegExp('(^|\\s)' + className +'(\\s|$)', 'g');
             el.className = el.className.replace(reg, ' ');
