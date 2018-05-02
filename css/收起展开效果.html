@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .test_checkbox,
+    .test_more,
+    .test_hide,
+    .test_checkbox:checked~.test_label .test_show {
+      position: absolute;
+      left: -999em;
+    }
+
+    .test_checkbox:checked~.test_more,
+    .test_checkbox:checked~.test_label .test_hide {
+      position: static;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <input type="checkbox" id="testToggleCheckbox" class="test_checkbox" />
+  <span class="test_more">
+    <div style="height: 500px;width: 500px;background:#ccc"> 
+      哈哈哈
+    </div>
+  </span>
+  <label class="test_label" for="testToggleCheckbox">
+    <span class="test_hide">收起↑</span>
+    <span class="test_show">展开↓</span>
+  </label>
+
+</body>
+
+</html>

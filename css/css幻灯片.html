@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  
+<style>
+body {font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+
+@keyframes fade {
+  0%   { opacity: 0; }
+  11.11%   { opacity: 1; }
+  33.33%  { opacity: 1; }
+  44.44%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.fadein { position:relative; height:332px; width:500px; outline: 1px solid blue; }
+.fadein img { position:absolute; left:0; right:0; opacity:0; animation-name: fade; animation-duration: 9s; animation-iteration-count: infinite; }
+.fadein img:nth-child(1) { animation-delay: 0s;  }
+.fadein img:nth-child(2) { animation-delay: 3s;  }
+.fadein img:nth-child(3) { animation-delay: 6s;  }
+</style>
+<div class="fadein">
+  <img src="https://farm3.static.flickr.com/2610/4148988872_990b6da667.jpg">
+  <img src="https://farm3.static.flickr.com/2597/4121218611_040cd7b3f2.jpg">
+  <img src="https://farm3.static.flickr.com/2531/4121218751_ac8bf49d5d.jpg">
+</div>
+</body>
+</html>

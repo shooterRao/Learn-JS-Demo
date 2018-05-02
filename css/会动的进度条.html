@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    progress {
+
+      width: 400px;
+      border: 0;
+      /* for IE */
+      height: 60px;
+      background-color: white;
+      border: 1px solid blue;
+      overflow: hidden;
+    }
+
+    /* necessary to style the progress bar background */
+
+    ::-webkit-progress-bar {
+      background-color: white;
+    }
+
+    /** ---------
+   ANIMATED
+*/
+
+    .animated::-webkit-progress-value {
+      transition: width 1s;
+      background-color: blue;
+    }
+
+    .animated::-moz-progress-bar {
+      transition: padding-bottom 1s;
+      padding-left: 60px;
+      padding-bottom: var(--value);
+      background-color: blue;
+      height: 0;
+      transform-origin: 0 0;
+      transform: rotate(-90deg) translateX(-60px);
+    }
+
+    .animated::-ms-fill {
+      background-color: blue;
+      border: 0;
+    }
+
+
+    /** ---------
+   NOT animated
+*/
+
+    .animated-not::-webkit-progress-value {
+      background-color: blue;
+    }
+
+    .animated-not::-moz-progress-bar {
+      background-color: blue;
+    }
+
+    .animated-not::-ms-fill {
+      background-color: blue;
+      border: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Animating &lt;progress&gt;</h1>
+  <p>
+    <a href="https://snook.ca/archives/html_and_css/animating-progress">Check out the blog post</a>
+  </p>
+  <button>Change Value</button>
+
+  <h2> Animated</h2>
+  <progress value="20" max="100" class="animated"></progress>
+  <br>
+
+  <h2> Not Animated</h2>
+  <progress value="20" max="100" class="animated-not"></progress>
+  <script>
+    function ani() {
+      var x = Math.random();
+      var p = document.querySelectorAll('progress');
+      var val0 = Math.floor(x * p[0].getAttribute('max'));
+      p[0].setAttribute('value', val0);
+      p[0].style.setProperty('--value', val0 + '%');
+      var val1 = Math.floor(x * p[1].getAttribute('max'));
+      p[1].setAttribute('value', val1);
+      p[1].style.setProperty('--value', val1 + '%');
+    };
+
+    window.onload = function () {
+      document.querySelector('button').addEventListener('click', ani);
+      ani();
+    }
+  </script>
+</body>
+
+</html>
