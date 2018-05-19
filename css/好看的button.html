@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .btn1 {
+      color: #fff;
+      background-color: #0084ff;
+      padding: 0px 14px;
+      line-height: 30px;
+      border-color: #0084ff;
+      display: inline-block;
+      font-size: 14px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid;
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+      transition: all .3 ease;
+    }
+
+    .btn1:hover {
+      border-color: #0077e6;
+      background-color: #0077e6;
+    }
+
+
+    .btn2 {
+      color: #d7d7d7;
+      border: solid 1px #333;
+      background: #333;
+      background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));
+      display: inline-block;
+      zoom: 1;
+      vertical-align: baseline;
+      margin: 0 2px;
+      outline: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      font: 14px/100% Arial, Helvetica, sans-serif;
+      padding: .5em 2em .55em;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+      -webkit-border-radius: .5em;
+      -moz-border-radius: .5em;
+      border-radius: .5em;
+      -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+      -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    }
+
+    .btn2:hover {
+      text-decoration: none;
+      background: #000;
+      background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#000));
+    }
+
+    .btn2:active {
+      color: #666;
+      background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#444));
+      position: relative;
+      top: 1px;
+    }
+
+    .btn3 {
+      color: #fef4e9;
+      border: solid 1px #da7c0c;
+      background: #f78d1d;
+      background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+      background: -moz-linear-gradient(top, #faa51a, #f47a20);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+      -webkit-border-radius: 2em;
+      -moz-border-radius: 2em;
+      border-radius: 2em;
+      display: inline-block;
+      zoom: 1;
+      vertical-align: baseline;
+      margin: 0 2px;
+      outline: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      font: 14px/100% Arial, Helvetica, sans-serif;
+      padding: .5em 2em .55em;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+      -webkit-border-radius: .5em;
+      -moz-border-radius: .5em;
+      border-radius: .5em;
+      -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+      -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    }
+
+    .btn3:hover {
+      background: #f47c20;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
+      text-decoration: none;
+    }
+
+    .btn3:active {
+      color: #fcd3a5;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
+      background: -moz-linear-gradient(top, #f47a20, #faa51a);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
+      position: relative;
+      top: 1px;
+    }
+
+    .btn4 {
+      border-style: solid;
+      border-width: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: bold;
+      line-height: normal;
+      margin: 0 0 1.25em;
+      position: relative;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      padding-top: 0.75em;
+      padding-right: 1.5em;
+      padding-bottom: 0.8125em;
+      padding-left: 1.5em;
+      font-size: 1em;
+      color: white;
+      padding-top: 0.8125em;
+      padding-bottom: 0.75em;
+      -webkit-appearance: none;
+      animation-name: orangePulse;
+      animation-duration: 5s;
+      animation-iteration-count: infinite;
+      animation-direction: reverse;
+      border-radius: 4px;
+      box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset !important
+    }
+
+    @keyframes orangePulse {
+      from {
+        background-color: #fc9200;
+      }
+      50% {
+        background-color: #ffb515;
+        box-shadow: 0 0 18px #ffb515;
+      }
+      to {
+        background-color: #fc9200;
+        /* box-shadow: 0 0 9px #333; */
+      }
+    }
+
+    .btn5 {
+      border-style: solid;
+      border-width: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: bold;
+      line-height: normal;
+      margin: 0 0 1.25em;
+      position: relative;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      padding-top: 0.75em;
+      padding-right: 1.5em;
+      padding-bottom: 0.8125em;
+      padding-left: 1.5em;
+      font-size: 1em;
+      color: white;
+      padding-top: 0.8125em;
+      padding-bottom: 0.75em;
+      -webkit-appearance: none;
+      border-radius: 4px;
+      animation-name: magenta;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-direction: reverse;
+    }
+
+    @keyframes magenta {
+      from {
+        background-color: #630030;
+        -webkit-box-shadow: 0 0 9px #333;
+      }
+      50% {
+        background-color: #a9014b;
+        -webkit-box-shadow: 0 0 18px #a9014b;
+      }
+      to {
+        background-color: #630030;
+        -webkit-box-shadow: 0 0 9px #333;
+      }
+    }
+
+    .btn6 {
+      background: #222 url(overlay.png) repeat-x;
+      display: inline-block;
+      padding: 5px 10px 6px;
+      color: #fff;
+      text-decoration: none;
+      -moz-border-radius: 6px;
+      -webkit-border-radius: 6px;
+      -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+      text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      position: relative;
+      cursor: pointer;
+      background-color: #e22092; 
+    }
+  </style>
+</head>
+
+<body>
+  <button class="btn1">button</button>
+  <button class="btn2">button</button>
+  <a class="btn3">button</a>
+  <a class="btn4">button</a>
+  <a class="btn5">button</a>
+  <a class="btn6">button</a>
+
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+       html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        div#container {
+            position: relative;
+            left: 0px;
+            width: 300px;
+            height: 100px;
+            counter-reset: number -1;
+            transform: translateX(100px);
+            overflow: hidden;
+        }
+
+        div.item {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            float: left;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: yellow;
+            transition: left 1s;
+        }
+
+        .item::before {
+            content: counter(number);
+            counter-increment: number;
+        }
+
+        span {
+            cursor: pointer;
+            margin: 30px;
+        }
+
+        .buttonWrap {
+            position: relative;
+            margin-left: 100px;
+            padding: 20px;
+        }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="item" style="background: blue"></div>
+    <div class="item" style="background: yellow"></div>
+    <div class="item" style="background: brown"></div>
+    <div class="item" style="background: orange"></div>
+    <div class="item" style="background: purple"></div>
+    <div class="item" style="background: green"></div>
+</div>
+<div class='buttonWrap'>
+    <span class="prev">上一张</span>
+    <span class="next">下一张</span>
+</div>
+<script>
+  var items = document.querySelectorAll('.item'),
+    container = document.querySelector('#container'),
+    prevButton = document.querySelector('.prev'),
+    nextButton = document.querySelector('.next'),
+    currentNum = -1;
+
+
+const defaultState = Array(items.length).fill(0).map((item, index) => {
+    return {
+        key: `item${index}`,
+        style: {
+            left: (index + currentNum) * 100,
+            opacity: 1
+        }
+    }
+})
+const getState = (states, moveItemKey) => states.map((state, index) => {
+    return {
+        key: state.key,
+        style: {
+            left: (index + currentNum) * 100,
+            opacity: moveItemKey === state.key ? 0 : 1
+        }
+    }
+})
+const setState = (newStates, moveItemKey) => {
+    return getState(newStates, moveItemKey);
+}
+
+var states = defaultState;
+
+const setAttr = () => [...items].map((item, index) => {
+    item.setAttribute('key', states[index]['key']);
+});
+
+const render = () => {
+    [...items].map((item, index) => {
+        var key = item.getAttribute('key');
+        states.map((state, i) => {
+            if (state.key === key) {
+                item.style.left = state['style']['left'] + 'px';
+                item.style.opacity = state['style']['opacity'];
+            }
+        });
+    })
+}
+
+setAttr();
+render();
+
+const prev = () => {
+    var moveItem = states.slice(states.length - 1);
+
+    newStates = [...moveItem, ...states.slice(0, states.length - 1)];
+    states = setState(newStates, moveItem[0].key);
+    render();
+}
+
+const next = () => {
+    var moveItem = states.slice(0, 1);
+
+    newStates = [...states.slice(1), ...moveItem];
+    states = setState(newStates, moveItem[0].key);
+    render();
+}
+
+prevButton.onclick = prev;
+nextButton.onclick = next;
+
+
+window.states = states;
+
+</script>
+</body>
+</html>
