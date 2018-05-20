@@ -23,3 +23,9 @@ const newF2 = new newFn();
 newF1.data.pageQueue.push(4)
 
 console.log(newF2.data.pageQueue);// 123
+
+/* 
+  函数对象的原型prototype是可以给实例共享的，如果原型属性是数组或者对象时，它们的实例依旧使用同一个内存地址，
+  任何一个实例修改里面的值都会直接影响到所有实例
+  所以，要用一个函数解决这种问题
+*/
