@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id="btn">获取数据</button>
+  <script>
+    function getData() {
+      this.data = [];
+      this.data = new Array(10000000);
+      this.emptyData = function() {
+        this.data = null;// 手动触发垃圾回收
+      }
+    }
+    function dealData() {
+      // this.data = new getData();
+      // console.log(obj);// obj引用+1,没有被回收
+      // obj.emptyData();// 手动触发回收
+      // obj = new getData();// 又new了次，上次实例化的数据依旧保留
+      // console.log(obj)
+    }
+    // var arr = null;
+   
+    window.onload = function() {
+      var btn = document.getElementById('btn');
+      btn.addEventListener('click', () => {
+        var obj = new getData();
+        console.log(obj);// 对obj引用+1
+        // 再见吧大物
+        obj.emptyData();
+      })
+    }
+    // arr.resultArr = [];
+    //console.log(arr);
+    // Fn.prototype.resultArr = new Array(10000000)
+    // var obj = new Fn();
+    // console.log(obj);
+    // obj = null;
+  </script>
+</body>
+</html>

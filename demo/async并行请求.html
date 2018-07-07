@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const url = 'https://easy-mock.com/mock/5ae85f9561d6467bd702a0b7/monitor/systemNumber'
+    // 非并行
+    async function syncGetUrl() {
+      const res1 = await fetch(url).then(res => res.json());
+      const res2 = await fetch(url).then(res => res.json());
+      console.log(res1, res2);
+    }
+    // syncGetUrl();
+    
+    // 并行
+    async function asyncGetUrl() {
+      const promise1 = fetch(url).then(res => res.json());
+      const promise2 = fetch(url).then(res => res.json());
+      const res1 = await promise1;
+      const res2 = await promise2;
+      console.log(res1, res2);
+    }
+   // asyncGetUrl();
+
+    // promise.all并行
+    async function allGetUrl() {
+      const promise1 = fetch(url).then(res => res.json());
+      const promise2 = fetch(url).then(res => res.json());
+      const [res1, res2] =  await Promise.all([promise1, promise2]);
+      console.log(res1, res2);
+    }
+    allGetUrl();
+  </script>
+</body>
+</html>
