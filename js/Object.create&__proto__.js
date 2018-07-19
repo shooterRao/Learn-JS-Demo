@@ -6,6 +6,16 @@ if(!Object.create){
         return new F();
     }
 }
+
+//或者, 跟上面写法一样
+function ObjectCreate(prototype) {
+    var f = new Function();
+    f.prototype = prototype;
+    var o = new f();// o.__proto__ = f.prototype = prototype
+    f.prototype = null;// 清除引用
+    return o;
+}
+
 //这段代码使用一个一次性函数F，通过改写它的.prototype属性使其指向想要关联的对象,
 //然后再使用new F()来构造一个新对象进行关联
 //对象关联离不开new，new(创建对象,prototype关联,this绑定,返回对象)

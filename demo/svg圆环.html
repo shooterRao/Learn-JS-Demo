@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    svg {
+      -webkit-transform: rotate(-0.05deg);
+      transform: rotate(-0.05deg);
+    }
+    @keyframes shape {
+      from {
+        stroke-dasharray: 0 1068px;
+      }
+      to {
+        stroke-dasharray: 1068px 1068px;
+      }
+    }
+    #progress {
+      stroke-dasharray: 0 1068px;
+      animation: .8s shape 2s ease-in;
+      animation-fill-mode: both;
+      /* stroke-dasharray: 1068px 1068px;
+      transition: all .3s ease; */
+    }
+
+  </style>
+</head>
+<body>
+  <svg style="width: 440px; height: 440px;">
+    <!-- <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke="#e5e9f2" stroke-width="8" fill="none" class="el-progress-circle__track"></path>
+    <path d="M 50 50 m 0 -47 a 47 47 0 1 1 0 94 a 47 47 0 1 1 0 -94" stroke-linecap="round" stroke="#20a0ff" stroke-width="8" fill="none" class="el-progress-circle__path" style="stroke-dasharray: 299.08px, 299.08px; stroke-dashoffset: 224.31px; transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease;"></path> -->
+    <circle cx="220" cy="220" r="170" stroke-width="50" stroke="#D1D3D7" fill="none"></circle>
+    <circle id="progress" cx="220" cy="220" r="170" stroke-width="50" stroke="#00A5E0" fill="none" transform="matrix(0,-1,1,0,0,440)" ></circle>
+    <text x="50%" y="50%" text-anchor="middle" font-size="35">100%</text>
+  </svg>
+
+  <svg width="200" height="200" >
+    <path fill="red" stroke="none"
+      d="
+        M 50,80
+        c 0,-50 100,-50 100,0
+        q 0,20 -50,80 
+        q -50,-60 -50,-80
+        z
+      "/>
+      <text text-anchor="middle" x="50%" y="50%" class="text">
+        123
+    </text>
+  </svg>
+  
+  
+  <svg width="224px" height="307px" viewBox="0 0 224 307" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M112.383743,306.206395 C205.990914,190.501802 240.139288,110.391573 214.974178,65.98601 C191.75978,25.0226106 152.205437,0.518809731 112.001211,0.890603622 C72.6760715,1.25426804 33.6638005,25.2983572 8.95967556,65.9989251 C-17.1771425,109.059885 17.2454444,189.168363 112.383743,306.206395 Z" id="Rectangle" stroke="#979797" fill="#D8D8D8"></path>
+    </g>
+  </svg>
+
+  <svg width="440" height="440" viewBox="0 0 440 440" class="center">
+    <defs>
+        <linearGradient x1="1" y1="0" x2="0" y2="0" id="gradient1">
+            <stop offset="0%" stop-color="#e52c5c"></stop>
+            <stop offset="100%" stop-color="#ab5aea"></stop>
+        </linearGradient>
+       <linearGradient x1="1" y1="0" x2="0" y2="0" id="gradient2">
+            <stop offset="0%" stop-color="#4352f3"></stop>
+            <stop offset="100%" stop-color="#ab5aea"></stop>
+        </linearGradient>
+    </defs>
+    <g transform="matrix(0,-1,1,0,0,440)">
+        <circle cx="220" cy="220" r="170" stroke-width="50" stroke="#f0f1f5" fill="none" stroke-dasharray="1069 1069"></circle>
+        <circle cx="220" cy="220" r="170" stroke-width="50" stroke="url('#gradient1')" fill="none" stroke-dasharray="1069 1069"></circle>
+        <circle cx="220" cy="220" r="170" stroke-width="50" stroke="url('#gradient2')" fill="none" stroke-dasharray="534.5 1069"></circle>
+    </g>
+</svg>
+</body>
+</html>
