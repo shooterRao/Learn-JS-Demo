@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+    #scroll-wrapper {
+      width: 600px;
+      height: 100%;
+      margin: 0 auto;
+      overflow: scroll;
+    }
+    .scroller {
+      width: 100%;
+      height: 3500px;
+      background: orange;
+    }
+    .item {
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div id="scroll-wrapper">
+    <div class="scroller">
+      <div class="item item-1">
+          <p>1</p>
+      </div>
+      <div class="item item-2">
+        <p>2</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    const scroller = document.querySelector('#scroll-wrapper');
+    const itemList = document.getElementsByClassName('item');
+    const itemHeight = [];
+    Array.from(itemList).forEach(v => {
+      console.log(v.offsetTop);
+    })
+    
+    scroller.addEventListener('scroll', function(e) {
+      e.preventDefault();
+      // 判断到了那个节点
+      Array.from(itemList).forEach((v, i) => {
+        if(v.offsetTop <= this.scrollTop && this.scrollTop <= (v.clientHeight + v.offsetTop)) {
+          console.log(`当前是${i+1}节点`);
+        }
+      })
+      checkIsBottom(this) ? console.log('到底了') : null;
+    })
+    
+    function checkIsBottom(node) {
+      return node.scrollHeight - node.scrollTop === node.clientHeight;
+    }
+
+    console.log(scroller.scrollHeight);
+    console.log(scroller.scrollTop);
+    console.log(scroller.clientHeight);
+    /* 
+      scrollHeight: 此值等于在不使用滚动条情况下，为了适应视口中所用内容所需的最小高度
+      ** 就是dom的内容的总高度 **
+      scrollTop: 元素垂直滚动的距离，也就是距离元素本身顶部(最顶部可见内容)的具体距离
+      判断是否滚动到底部
+      scrollHeight - scrollTop === clientHeight
+    */
+  </script>
+</body>
+</html>

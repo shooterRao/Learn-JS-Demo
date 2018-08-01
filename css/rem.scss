@@ -1,0 +1,8 @@
+@function px2rem($px) {
+  $rem: 16px;
+  @return ($px/$rem) + rem;
+}
+.demo {
+  width: px2rem(32px);
+  height: px2rem(96px);
+}

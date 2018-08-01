@@ -48,4 +48,15 @@ const demo = new Event();
 demo.on("hh", () => {
   console.log("hh");
 });
-demo.off("hh").trigger("hh");
+demo.on("hh", () => {
+  console.log("hh");
+});
+var handle = () => {
+  console.log('xx');
+}
+demo.on("hh",handle);
+demo.on("hh",handle);// 只会装入一次
+demo.trigger("hh");
+// demo.off("hh").trigger("hh");
+// 往事件队列添加匿名函数或者函数声明，通过indexof检测匿名函数为-1
+// 函数表达式则会被indexof检测到

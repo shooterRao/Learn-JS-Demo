@@ -94,3 +94,23 @@ function deepClone(values) {
 
     throw new Error('Unable to copy.This type is not supported')
 }
+
+//对象深复制，不考虑循环引用的情况
+function cloneObj(from) {
+    return Object.keys(from)
+        .reduce((obj, key) => (obj[key] = clone(from[key]), obj), {});
+}
+//数组深复制，不考虑循环引用的情况
+function cloneArr(from) {
+    return from.map((n) => clone(n));
+}
+// 复制输入值
+function clone(from) {
+    if (from instanceof Array) {
+        return cloneArr(from);
+    } else if (from instanceof Object) {
+        return cloneObj(from);
+    } else {
+        return (from);
+    }
+}
