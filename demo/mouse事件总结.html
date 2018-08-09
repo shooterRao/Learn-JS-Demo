@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .wrapper {
+      height: 200px;
+      width: 200px;
+      background: orange;
+    }
+    .wrapper .box {
+      width: 150px;
+      height: 150px;
+      background: skyblue;
+    }
+    .wrapper .box2 {
+      width: 20px;
+      height: 20px;
+      background: rgb(71, 43, 230);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="box">
+    </div>
+    <div class="box2"></div>
+  </div>
+  <script>
+    const wrapper = document.querySelector('.wrapper');
+    const box = document.querySelector('.box');
+    wrapper.addEventListener('mouseenter', function() {
+      // console.log('wrapper-mouseenter');
+      // 只有enter到wrapper才触发，鼠标移到box不会再次触发
+    })
+    wrapper.addEventListener('mouseover', function() {
+      // console.log('wrapper-mouseover');
+      // 鼠标over到box时，会触发该方面
+    })
+    wrapper.addEventListener('mousemove', function() {
+      // console.log('wrapper-mousemove');
+      // 只要鼠标经过，都会触发
+    })
+    wrapper.addEventListener('mouseleave', function() {
+      // console.log('wrapper-mouseleave');
+      // 只有鼠标离开wrapper才触发，离开box不会再次触发
+    })
+    wrapper.addEventListener('mouseout', function() {
+      console.log('wrapper-mouseout');
+      // 只有鼠标离开wrapper才触发，离开box会再次触发
+      // 这里有个小细节要注意下
+      // 当鼠标移入box时，会触发一次该方法，因为移入box会被认为out出了wrapper
+      // 所以，移入box会触发一次，移出box再触发一次
+    })
+    /* 
+      mouseenter:
+      当鼠标经过被选元素才会触发，此方法不会冒泡，当鼠标经过被选元素的子元素时，不会再次触发mouseenter事件，对应mouseleave事件
+
+      mouseover:
+      当鼠标经过被选元素和被选元素的子元素时都会触发mouseover事件，对应mouseout事件。
+      over和enter的区别一定要知道！！
+      
+      mouseleave:
+      当鼠标移除被选元素才会触发，后代元素不会触发，该方法不会冒泡。
+      
+      .mouseout:
+      无论鼠标离开被选元素还是被选元素的子元素都会触发，进入子元素会被认为离开了被选元素，
+      所以会再触发一次
+
+      尽量不要把mouseout绑定到有子元素的元素上
+    */
+    
+  </script>
+</body>
+</html>

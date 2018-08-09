@@ -48,17 +48,15 @@ var obj5 = _extends({},obj1);
 console.log(obj5);
 
 // 深拷贝
-function deepCopy(p, c) {
-    　　　　var c = c || {};
-    　　　　for (var i in p) {
-    　　　　　　if (typeof p[i] === 'object') {
-    　　　　　　　　c[i] = (p[i].constructor === Array) ? [] : {};
-    　　　　　　　　deepCopy(p[i], c[i]);
-    　　　　　　} else {
-    　　　　　　　　　c[i] = p[i];
-    　　　　　　}
-    　　　　}
-    　　　　return c;
+var deepCopy = function(obj) {
+    if (typeof obj !== 'object') return;
+    var newObj = obj instanceof Array ? [] : {};
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
+        }
+    }
+    return newObj;
 }
 
 function deepClone(values) {
