@@ -52,6 +52,7 @@
   <script>
     function toggle(...actions) {
       return function (...args) {
+        console.log(args);
         let action = actions.shift();
         actions.push(action);
         return action.apply(this, args);

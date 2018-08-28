@@ -9,6 +9,7 @@ function assign(obj) {
     var dist = {};
     if(typeof obj === 'object') {
         for(var i in obj) {
+            // 加多层判断，防止负责对象原型上的属性，更加严谨
             if( obj.hasOwnProperty(i) )
             dist[i] = obj[i]
         }

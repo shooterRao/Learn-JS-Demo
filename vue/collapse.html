@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    #app {
+      width: 100%;
+      height: 100%;
+    }
+
+    #app .header {
+      width: 100%;
+      height: 30px;
+      background: skyblue;
+    }
+    .node {
+      height: 200px;
+      width: 100%;
+      background: gray;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="header" @click="toggle">
+    </div>
+      <Collapse>
+        <div v-show="open">
+          <div class="node">
+          </div>
+        </div>
+      </Collapse>
+  </div>
+  <script src="https://vuejs.org/js/vue.js"></script>
+  <script>
+    const elTransition = '0.3s height ease-in-out, 0.3s padding-top ease-in-out, 0.3s padding-bottom ease-in-out'
+    const Transition = {
+      'before-enter'(el) {
+        el.style.transition = elTransition
+        if (!el.dataset) el.dataset = {}
+
+        el.dataset.oldPaddingTop = el.style.paddingTop
+        el.dataset.oldPaddingBottom = el.style.paddingBottom
+
+        el.style.height = 0
+        el.style.paddingTop = 0
+        el.style.paddingBottom = 0
+      },
+
+      'enter'(el) {
+        el.dataset.oldOverflow = el.style.overflow
+        if (el.scrollHeight !== 0) {
+          el.style.height = el.scrollHeight + 'px'
+          el.style.paddingTop = el.dataset.oldPaddingTop
+          el.style.paddingBottom = el.dataset.oldPaddingBottom
+        } else {
+          el.style.height = ''
+          el.style.paddingTop = el.dataset.oldPaddingTop
+          el.style.paddingBottom = el.dataset.oldPaddingBottom
+        }
+
+        el.style.overflow = 'hidden'
+      },
+
+      'after-enter'(el) {
+        el.style.transition = ''
+        el.style.height = ''
+        el.style.overflow = el.dataset.oldOverflow
+      },
+
+      'before-leave'(el) {
+        if (!el.dataset) el.dataset = {}
+        el.dataset.oldPaddingTop = el.style.paddingTop
+        el.dataset.oldPaddingBottom = el.style.paddingBottom
+        el.dataset.oldOverflow = el.style.overflow
+
+        el.style.height = el.scrollHeight + 'px'
+        el.style.overflow = 'hidden'
+      },
+
+      'leave'(el) {
+        if (el.scrollHeight !== 0) {
+          el.style.transition = elTransition
+          el.style.height = 0
+          el.style.paddingTop = 0
+          el.style.paddingBottom = 0
+        }
+      },
+
+      'after-leave'(el) {
+        el.style.transition = ''
+        el.style.height = ''
+        el.style.overflow = el.dataset.oldOverflow
+        el.style.paddingTop = el.dataset.oldPaddingTop
+        el.style.paddingBottom = el.dataset.oldPaddingBottom
+      }
+    }
+
+    const Collapse = {
+      name: 'collapseTransition',
+      functional: true,
+      render(h, { children }) {
+        const data = {
+          on: Transition
+        }
+        return h('transition', data, children)
+      }
+    }
+
+    const app = new Vue({
+      el: '#app',
+      components: {
+        Collapse
+      },
+      data: {
+        open: true
+      },
+      methods: {
+        toggle() {
+          this.open = !this.open;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
