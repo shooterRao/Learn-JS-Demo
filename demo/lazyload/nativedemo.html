@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    .img-wrap {
+      width: 100%;
+      height: 600px;
+      text-align: center;
+      padding: 20px 0
+    }
+
+    .img-wrap img {
+      height: 100%;
+      width: 800px;
+      background: url('./loading-icon.gif') no-repeat center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="img-wrap">
+      <img alt="" data-src="./img/01.jpg">
+    </div>
+    <div class="img-wrap">
+      <img alt="" data-src="./img/01.jpg">
+    </div>
+    <div class="img-wrap">
+      <img alt="" data-src="./img/01.jpg">
+    </div>
+    <div class="img-wrap">
+      <img alt="" data-src="./img/01.jpg">
+    </div>
+    <div class="img-wrap">
+      <img alt="" data-src="./img/01.jpg">
+    </div>
+    <div class="img-wrap">
+      <img alt="" data-src="./img/01.jpg">
+    </div>
+  </div>
+  <script>
+    // 方法一： getBoundingClientRect()
+    // 缓存视口的高度
+    const clientHeight = window.innerHeight;
+    // 获取所有img
+    const imgsArray = Array.apply(null, document.querySelectorAll('img'));
+    // 判断图片是否在视口里面
+    const isInClient = (el) => {
+      // 距离视口顶部的位置
+      const top = el.getBoundingClientRect().top;
+      return clientHeight >= top;
+    }
+
+    // 加载图片
+    const loadImg = (el) => {
+      if (!el.src) {
+        if (el.dataset && el.dataset.src) {
+          const src = el.dataset.src;
+          el.src = src;
+          el.setAttribute('load', 'true');
+        }
+      }
+    }
+
+    // 检测图片
+    const checkImg = (imgs) => {
+      const preloadImgs = imgsArray.filter(element => !element.getAttribute('load'));
+      preloadImgs.forEach((element, index) => {
+        if (isInClient(element)) {
+          loadImg(element);
+        }
+      });
+    }
+
+    // 函数节流简单版
+    function throttle(fn, immediate = false, wait = 500, context = this) {
+      console.log('load');
+      let pre = null;// 闭包缓存上一次调用fn的时间戳
+      return function () {
+        const now = +new Date();
+        let args = arguments;
+        if (immediate) {
+          fn.apply(context, args);
+          immediate = false;
+          args = null;
+        }
+        if (!pre) {
+          pre = now;
+        }
+        const remain = now - pre;
+        if (remain >= wait) {
+          fn.apply(context, args);
+          args = null;
+          pre = now;
+        }
+      }
+    }
+    checkImg();
+    window.addEventListener('scroll', throttle(checkImg, true));
+    // 方案二
+    // function checkImgs() {
+    //   const imgs = Array.from(document.querySelectorAll("img"));
+    //   console.log(io);
+    //   imgs.forEach(item => io.observe(item));
+    // }
+
+    // function loadImg(el) {
+    //   if (!el.src) {
+    //     const source = el.dataset.src;
+    //     el.src = source;
+    //   }
+    // }
+
+    // const io = new IntersectionObserver(ioes => {
+    //   ioes.forEach(ioe => {
+    //     const el = ioe.target;
+    //     const intersectionRatio = ioe.intersectionRatio;
+    //     if (intersectionRatio > 0 && intersectionRatio <= 1) {
+    //       loadImg(el);
+    //     }
+    //     el.onload = el.onerror = () => io.unobserve(el);
+    //   });
+    // });
+    // checkImgs()
+  </script>
+</body>
+
+</html>

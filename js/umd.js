@@ -6,5 +6,6 @@
 })(this, (function () {
     'use strict';
      // doSomething......
-    return xxx
+    var xxx = 'xxx'; 
+    return xxx;
 }))

@@ -13,7 +13,9 @@ Promise.prototype.finally = function(callback) {
 };
 
 // Test
-const v = Promise.resolve("done").finally(() => {
+Promise.resolve("done").finally(() => {
   console.log("done");
 });
-console.log(v);
+// Promise.reject("error").finally(() => {
+//   console.log("error");
+// });
