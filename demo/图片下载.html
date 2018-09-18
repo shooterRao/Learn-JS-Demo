@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <img src="http://osutuwgm1.bkt.clouddn.com/testcat.png" alt="">
+    <button id="download">下载图片</button>
+  </div>
+  <script>
+    const dBtn = document.getElementById('download');
+    dBtn.addEventListener('click', saveImg);
+    function saveImg() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.setAttribute('crossOrigin', 'anonymous');
+      img.src = 'http://osutuwgm1.bkt.clouddn.com/testcat.png';
+      img.onload = function() {
+        const imgWidth = this.naturalWidth;
+        const imgHeight = this.naturalHeight;
+        canvas.width = imgWidth;
+        canvas.height = imgHeight;
+        ctx.drawImage(this, 0, 0, imgWidth, imgHeight);
+        downLoad();
+      };
+      function downLoad() {
+        const imgUrl = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+        let a = document.createElement('a');
+        a.download = '图片.png';// download可以添加文件后缀
+        a.style.display = 'none';
+        a.href = imgUrl;
+        a.click();
+        a = null;
+        // 另一种方法
+        // const event = document.createEvent('MouseEvents');
+        // event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        // a.dispatchEvent(event);
+      }
+    }
+  </script>
+</body>
+</html>

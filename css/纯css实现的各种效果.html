@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    @charset "UTF-8";
+body, html {
+  margin: 0;
+  font-family: arial;
+  height: 100vh;
+  background: #ccc;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.nav-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #181818;
+  color: #FFF;
+  padding: 0;
+  margin: 0;
+  cursor: auto;
+  font-size: 18px;
+  list-style-type: none;
+  z-index: 999999;
+  box-shadow: 0 5px 5px -5px #333;
+}
+.nav-mobile:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.nav-mobile svg {
+  height: 45px;
+  width: 65px;
+  padding: 9px;
+}
+.nav-mobile svg path {
+  fill: #fff;
+}
+.nav-mobile svg.icon-close {
+  display: none;
+  padding: 15px;
+}
+.nav-mobile li {
+  width: 100%;
+  height: 45px;
+  line-height: 46px;
+  text-align: center;
+  float: left;
+}
+.nav-mobile li a {
+  display: block;
+  color: #333;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+.nav-mobile .menu-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+  display: block;
+}
+.nav-mobile .menu-button:after {
+  opacity: 0;
+  top: 45px;
+  content: "";
+  width: 100vw;
+  display: block;
+  position: fixed;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  content: "";
+  z-index: 9;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0, 0, 0.3, 1);
+  transition-delay: 0.1s;
+}
+.nav-mobile #menu-toggle {
+  display: none;
+}
+.nav-mobile #menu-toggle.active ~ .menu-button .icon-close, .nav-mobile #menu-toggle:checked ~ .menu-button .icon-close {
+  display: block;
+}
+.nav-mobile #menu-toggle.active ~ .menu-button .icon-open, .nav-mobile #menu-toggle:checked ~ .menu-button .icon-open {
+  display: none;
+}
+.nav-mobile #menu-toggle.active ~ .menu-button:after, .nav-mobile #menu-toggle:checked ~ .menu-button:after {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
+}
+.nav-mobile #menu-toggle.active ~ .menu-sidebar, .nav-mobile #menu-toggle:checked ~ .menu-sidebar {
+  transform: translateX(0);
+  transition: transform 0.3s cubic-bezier(0, 0, 0.3, 1);
+}
+.nav-mobile .menu-container {
+  width: 65px;
+  float: left;
+  cursor: pointer;
+  position: absolute;
+}
+.nav-mobile .menu-container .menu-sidebar {
+  box-shadow: 5px 0 5px -5px #333;
+  display: block;
+  width: 65vw;
+  bottom: 0;
+  background: white;
+  color: #333;
+  position: fixed;
+  z-index: 9999999;
+  transform: translateX(-405px);
+  transition: transform 0.3s cubic-bezier(0, 0, 0.3, 1);
+  top: 45px;
+  list-style-type: none;
+  padding: 0;
+  max-width: 400px;
+}
+.nav-mobile .menu-container .menu-sidebar .arrow {
+  position: absolute;
+  line-height: 50px;
+  font-size: 32px;
+  color: #555;
+  top: 0;
+  z-index: 0;
+}
+.nav-mobile .menu-container .menu-sidebar .arrow.left {
+  left: 25px;
+}
+.nav-mobile .menu-container .menu-sidebar .arrow.right {
+  right: 25px;
+}
+.nav-mobile .menu-container .menu-sidebar li {
+  height: 55px;
+  line-height: 55px;
+  font-size: 16px;
+  text-align: left;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 20px;
+}
+.nav-mobile .menu-container .menu-sidebar li:hover {
+  background: #eee;
+}
+.nav-mobile .menu-container .menu-sidebar li .menu-sub {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  overflow: hidden;
+  background: white;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0, 0, 0.3, 1);
+  border-left: 1px solid #ccc;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  z-index: 2;
+  max-width: 400px;
+}
+.nav-mobile .menu-container .menu-sidebar li .menu-sub li {
+  overflow: hidden;
+}
+.nav-mobile .menu-container .menu-sidebar li .menu-sub .menu-sub-title {
+  padding-left: 50px;
+}
+.nav-mobile .menu-container .menu-sidebar li .submenu-label {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.nav-mobile .menu-container .menu-sidebar li .submenu-toggle {
+  display: none;
+}
+.nav-mobile .menu-container .menu-sidebar li .submenu-toggle.active ~ .menu-sub, .nav-mobile .menu-container .menu-sidebar li .submenu-toggle:checked ~ .menu-sub {
+  width: 65vw;
+  visibility: visible;
+  z-index: 1;
+  transition: width 0.35s cubic-bezier(0, 0, 0.3, 1);
+}
+
+.carousel-container {
+  list-style-type: none;
+  padding: 0;
+  margin: 30px auto;
+  width: 550px;
+  height: 338px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 0;
+}
+.carousel-container .arrow {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.5);
+  display: block;
+  width: 50px;
+  font-size: 62px;
+  text-align: center;
+  bottom: 0;
+  top: 0;
+  line-height: 330px;
+  position: absolute;
+  z-index: 9999;
+  padding-bottom: 4px;
+  padding-top: 2px;
+  border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.carousel-container .arrow.next {
+  left: 0px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+}
+.carousel-container .arrow.back {
+  right: 0px;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
+}
+.carousel-container .arrow:hover {
+  color: white;
+}
+.carousel-container li:nth-child(1) > .dot {
+  margin-left: 44.6%;
+}
+.carousel-container .carousel-content {
+  height: 0;
+  overflow: hidden;
+  line-height: 22px;
+  background: #000;
+  position: absolute;
+  top: 0px;
+  border-radius: 5px;
+  box-shadow: 0 5px 5px -5px #333;
+  list-style-type: none;
+  padding: 0;
+}
+.carousel-container .carousel-content img {
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  border-radius: 5px;
+  transition: 0.2s ease-in;
+}
+.carousel-container .dot {
+  float: left;
+  cursor: pointer;
+  opacity: 1;
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  margin-top: 56%;
+  border-radius: 50%;
+  z-index: 999;
+  margin-right: 8px;
+  display: block;
+}
+.carousel-container .dot:hover {
+  background: #fff;
+}
+.carousel-container .carousel-toggle {
+  display: none;
+}
+.carousel-container .carousel-toggle:checked + .dot, .carousel-container .carousel-toggle.active + .dot {
+  background: #fff;
+}
+.carousel-container .carousel-toggle:checked ~ .carousel-content, .carousel-container .carousel-toggle.active ~ .carousel-content {
+  height: 100%;
+  width: 100%;
+}
+.carousel-container .carousel-toggle:checked ~ .carousel-content img, .carousel-container .carousel-toggle.active ~ .carousel-content img {
+  opacity: 1;
+}
+
+.tab-container {
+  list-style-type: none;
+  padding: 0;
+  margin: 60px auto;
+  max-width: 350px;
+  position: relative;
+  background: #fff;
+}
+.tab-container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.tab-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+.tab-container .arrows {
+  display: block;
+  width: 60px;
+  font-size: 32px;
+  bottom: 10px;
+  right: 0px;
+  position: absolute;
+}
+.tab-container .arrows label {
+  display: inline-block;
+  cursor: pointer;
+  color: #aaa;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 5px;
+}
+.tab-container .arrows label:hover {
+  color: #333;
+}
+.tab-container .tab-content-container {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  line-height: 22px;
+  background: #fff;
+  position: absolute;
+  top: 42px;
+  padding: 0px 40px 0 20px;
+  border: 2px solid #181818;
+  border-top: 0;
+  box-shadow: 0 5px 5px -5px #333;
+}
+.tab-container .tab-content-container .tab-content {
+  opacity: 0;
+  padding: 15px 0;
+  min-height: 185px;
+  transition: opacity 0.1s ease-in;
+}
+.tab-container .tab {
+  outline: 0;
+  float: left;
+  cursor: pointer;
+  opacity: 1;
+  width: 25%;
+  line-height: 40px;
+  display: block;
+  margin: 0;
+  position: relative;
+  background: #181818;
+  color: #fff;
+  text-align: center;
+  border-top: 2px solid #181818;
+  border-right: 2px solid #181818;
+}
+.tab-container .tab.l-b {
+  border-left: 2px solid #181818;
+}
+.tab-container .tab:hover {
+  background: #000000;
+}
+.tab-container .tab-toggle {
+  display: none;
+}
+.tab-container .tab-toggle.active + .tab, .tab-container .tab-toggle:checked + .tab {
+  background: #fff;
+  color: #333;
+}
+.tab-container .tab-toggle.active ~ .tab-content-container, .tab-container .tab-toggle:checked ~ .tab-content-container {
+  height: auto;
+  opacity: 1;
+}
+.tab-container .tab-toggle.active ~ .tab-content-container .tab-content, .tab-container .tab-toggle:checked ~ .tab-content-container .tab-content {
+  opacity: 1;
+}
+.tab-container .tab-toggle.active ~ .tab-content-container .tab-content label, .tab-container .tab-toggle:checked ~ .tab-content-container .tab-content label {
+  opacity: 1;
+}
+
+.accordion-container {
+  width: 300px;
+  margin: 60px auto;
+  border: 2px solid #181818;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -5px #333;
+  list-style-type: none;
+  padding: 0;
+}
+.accordion-container ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.accordion-container .accordion-category {
+  position: relative;
+  background: #fff;
+}
+.accordion-container .accordion-category .accordion-title {
+  padding-left: 20px;
+  height: 40px;
+  font-size: 18px;
+  line-height: 40px;
+  background: #181818;
+  color: #fff;
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+.accordion-container .accordion-category .accordion-title:hover {
+  background: #000000;
+}
+.accordion-container .accordion-category .accordion-items {
+  max-height: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  transition: 0.6s ease-in;
+}
+.accordion-container .accordion-category .accordion-items li {
+  padding: 5px 20px;
+}
+.accordion-container .accordion-category .accordion-items li:first-child {
+  padding-top: 10px;
+}
+.accordion-container .accordion-category .accordion-items li:last-child {
+  padding-bottom: 10px;
+}
+.accordion-container .accordion-category input {
+  display: none;
+}
+.accordion-container .accordion-category input.active ~ .accordion-items, .accordion-container .accordion-category input:checked ~ .accordion-items {
+  height: auto;
+  max-height: 900px;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.accordion-container .accordion-category input.active ~ .accordion-title:after, .accordion-container .accordion-category input:checked ~ .accordion-title:after, .accordion-container .accordion-category input:hover ~ .accordion-title:after {
+  content: "›";
+  position: absolute;
+  width: 40px;
+  font-size: 32px;
+  right: 0;
+  padding-left: 15px;
+  top: 0;
+  bottom: 0;
+  transform: rotate(90deg);
+}
+
+.modal-container {
+  margin: 60px auto;
+  padding-top: 0px;
+  position: relative;
+  width: 160px;
+}
+.modal-container .modal-btn {
+  display: block;
+  margin: 0 auto;
+  color: #fff;
+  width: 160px;
+  height: 50px;
+  line-height: 50px;
+  background: #181818;
+  font-size: 22px;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 5px 5px -5px #333;
+  transition: background 0.3s ease-in;
+}
+.modal-container .modal-btn:hover {
+  background: #000000;
+}
+.modal-container .modal-content,
+.modal-container .modal-backdrop {
+  height: 0;
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in;
+}
+.modal-container .modal-close {
+  color: #aaa;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  padding-top: 3px;
+  background: #fff;
+  font-size: 16px;
+  width: 25px;
+  height: 25px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+.modal-container .modal-close:hover {
+  color: #333;
+}
+.modal-container .modal-content-btn {
+  position: absolute;
+  text-align: center;
+  cursor: pointer;
+  bottom: 20px;
+  right: 30px;
+  background: #181818;
+  color: #fff;
+  width: 50px;
+  border-radius: 2px;
+  font-size: 14px;
+  height: 32px;
+  padding-top: 9px;
+  font-weight: normal;
+}
+.modal-container .modal-content-btn:hover {
+  color: #fff;
+  background: #000000;
+}
+.modal-container #modal-toggle {
+  display: none;
+}
+.modal-container #modal-toggle.active ~ .modal-backdrop, .modal-container #modal-toggle:checked ~ .modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+.modal-container #modal-toggle.active ~ .modal-content, .modal-container #modal-toggle:checked ~ .modal-content {
+  opacity: 1;
+  background-color: #fff;
+  max-width: 400px;
+  width: 400px;
+  height: 280px;
+  padding: 10px 30px;
+  position: fixed;
+  left: calc(50% - 200px);
+  top: 12%;
+  border-radius: 4px;
+  z-index: 999;
+  pointer-events: auto;
+  cursor: auto;
+  visibility: visible;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);
+}
+@media (max-width: 400px) {
+  .modal-container #modal-toggle.active ~ .modal-content, .modal-container #modal-toggle:checked ~ .modal-content {
+    left: 0;
+  }
+}
+
+.tooltip-container {
+  margin: 60px auto;
+  padding-top: 0px;
+  position: relative;
+  width: 160px;
+}
+.tooltip-container .tooltip-btn {
+  display: block;
+  margin: 0 auto;
+  color: #fff;
+  width: 160px;
+  height: 50px;
+  line-height: 50px;
+  background: #181818;
+  font-size: 22px;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 5px 5px -5px #333;
+  transition: background 0.3s ease-in;
+}
+.tooltip-container .tooltip-btn:hover {
+  background: #000000;
+}
+.tooltip-container .tooltip-btn.tooltip-toggle:hover ~ .tooltip-content {
+  opacity: 1;
+  background-color: #fff;
+  max-width: 400px;
+  width: 200px;
+  min-height: 70px;
+  padding: 0px 20px;
+  position: absolute;
+  left: calc(50% - 100px);
+  top: 145%;
+  border-radius: 4px;
+  z-index: 999;
+  pointer-events: auto;
+  cursor: auto;
+  visibility: visible;
+  overflow: visible;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);
+}
+@media (max-width: 400px) {
+  .tooltip-container .tooltip-btn.tooltip-toggle:hover ~ .tooltip-content {
+    left: 0;
+  }
+}
+.tooltip-container .tooltip-btn.tooltip-toggle:hover ~ .tooltip-content:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #ffffff transparent;
+  position: absolute;
+  top: -10px;
+  left: 30px;
+}
+.tooltip-container .tooltip-content,
+.tooltip-container .tooltip-backdrop {
+  height: 0;
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: opacity 0.2s ease-in;
+}
+.tooltip-container #tooltip-toggle {
+  display: none;
+}
+.tooltip-container #tooltip-toggle.active ~ .tooltip-backdrop, .tooltip-container #tooltip-toggle:checked ~ .tooltip-backdrop {
+  background-color: transparent;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+.tooltip-container #tooltip-toggle.active ~ .tooltip-content, .tooltip-container #tooltip-toggle:checked ~ .tooltip-content {
+  opacity: 1;
+  background-color: #fff;
+  max-width: 400px;
+  width: 200px;
+  min-height: 70px;
+  padding: 0px 20px;
+  position: absolute;
+  left: calc(50% - 100px);
+  top: 145%;
+  border-radius: 4px;
+  z-index: 999;
+  pointer-events: auto;
+  visibility: visible;
+  overflow: visible;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);
+}
+@media (max-width: 400px) {
+  .tooltip-container #tooltip-toggle.active ~ .tooltip-content, .tooltip-container #tooltip-toggle:checked ~ .tooltip-content {
+    left: 0;
+  }
+}
+.tooltip-container #tooltip-toggle.active ~ .tooltip-content:before, .tooltip-container #tooltip-toggle:checked ~ .tooltip-content:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #ffffff transparent;
+  position: absolute;
+  top: -10px;
+  left: 30px;
+}
+
+.star-container {
+  text-align: center;
+  font-size: 0;
+}
+.star-container label {
+  display: inline-block;
+  cursor: pointer;
+}
+.star-container label:after {
+  content: "★";
+  font-size: 46px;
+  color: #999;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+.star-container label:hover:after {
+  color: #F89406;
+}
+.star-container input {
+  display: none;
+}
+.star-container #one:checked ~ label[for=one]:after,
+.star-container #two:checked ~ label[for=two]:after,
+.star-container #three:checked ~ label[for=three]:after,
+.star-container #four:checked ~ label[for=four]:after,
+.star-container #five:checked ~ label[for=five]:after {
+  color: #F89406;
+}
+.star-container #two:checked ~ label[for=one]:after {
+  color: #F89406;
+}
+.star-container #three:checked ~ label[for=one]:after, .star-container #three:checked ~ label[for=two]:after {
+  color: #F89406;
+}
+.star-container #four:checked ~ label[for=one]:after, .star-container #four:checked ~ label[for=two]:after, .star-container #four:checked ~ label[for=three]:after {
+  color: #F89406;
+}
+.star-container #five:checked ~ label[for=one]:after, .star-container #five:checked ~ label[for=two]:after, .star-container #five:checked ~ label[for=three]:after, .star-container #five:checked ~ label[for=four]:after {
+  color: #F89406;
+}
+
+.readmo {
+  width: 400px;
+  border: 2px solid #181818;
+  margin: 30px auto;
+  padding: 0px 0 30px;
+  background: white;
+  position: relative;
+}
+.readmo p {
+  padding: 0px 10px 0px;
+  margin-bottom: 10px;
+  max-height: 50px;
+  overflow: hidden;
+  transition: max-height 0.1s ease-in;
+}
+.readmo label {
+  display: block;
+  cursor: pointer;
+  text-align: center;
+  padding: 0px 0 0px;
+  margin: 0px 0 0 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 5%, rgba(255, 255, 255, 0.94) 95%, white 100%);
+  /* w3c */
+}
+.readmo label:after {
+  content: "›";
+  color: #999;
+  position: relative;
+  width: 100%;
+  font-size: 32px;
+  padding: 0;
+  display: block;
+  transform: rotate(90deg);
+}
+.readmo label:hover:after {
+  color: #333;
+}
+.readmo input[type=checkbox] {
+  display: none;
+}
+.readmo input[type=checkbox]:checked + label:after {
+  transform: rotate(270deg);
+}
+.readmo input[type=checkbox]:checked ~ p {
+  max-height: 200px;
+  transition: max-height 0.1s ease-in;
+}
+
+.step-container {
+  width: 400px;
+  margin: 30px auto;
+  min-height: 200px;
+  position: relative;
+}
+.step-container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.step-container .step-content {
+  display: none;
+  border: 2px solid #181818;
+  border-radius: 2px;
+  background: #fff;
+  min-height: 150px;
+  position: absolute;
+  top: 70px;
+}
+.step-container .step-content .text {
+  padding: 15px;
+}
+.step-container .step-dot {
+  float: left;
+  width: 33.333%;
+  text-align: center;
+  padding-top: 40px;
+  position: relative;
+}
+.step-container .step-dot:after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  color: #666;
+  display: block;
+  border-radius: 50%;
+  border: 2px solid #219150;
+  padding-top: 5px;
+  position: absolute;
+  top: 0px;
+  left: 41%;
+  z-index: 99;
+  box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.3);
+  transition: 0.1s ease-in;
+}
+.step-container .step-dot.one:after {
+  content: "1";
+}
+.step-container .step-dot.two:after {
+  content: "2";
+}
+.step-container .step-dot.three:after {
+  content: "3";
+}
+.step-container .step-dot.one:before {
+  display: none;
+}
+.step-container .step-dot:before {
+  content: "";
+  width: 100%;
+  height: 4px;
+  background: #999;
+  display: block;
+  position: absolute;
+  top: 12px;
+  left: -41%;
+  box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.3);
+  transition: 0.1s ease-in;
+}
+.step-container label {
+  cursor: pointer;
+  padding: 10px 0;
+  display: block;
+  width: 100px;
+  float: right;
+  user-select: none;
+  -webkit-user-select: none;
+  text-align: center;
+  background: #181818;
+  color: #fff;
+  margin-left: 15px;
+  border-bottom-left-radius: 2px;
+}
+.step-container label:hover {
+  background: #000000;
+}
+.step-container input[name=toggler] {
+  display: none;
+}
+.step-container input[name=toggler]:checked + .step-dot + .step-content {
+  display: block;
+}
+.step-container input[name=toggler]:checked + .step-dot:after {
+  background: #219150;
+  color: #fff;
+}
+.step-container input[name=toggler]:checked ~ input:checked + .step-dot:before {
+  background: #219150;
+}
+.step-container input[name=toggler]:checked ~ input:not(:checked) + .step-dot {
+  color: #888;
+}
+.step-container input[name=toggler]:checked ~ input:not(:checked) + .step-dot:after {
+  border-color: #888;
+  color: #888;
+}
+  </style>
+</head>
+
+<body>
+  <ul class="nav-mobile check">
+    <li>CSS-only Playground</li>
+    <li class="menu-container">
+      <input id="menu-toggle" type="checkbox">
+      <label for="menu-toggle" class="menu-button">
+        <svg class="icon-open" viewBox="0 0 24 24">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+        </svg>
+        <svg class="icon-close" viewBox="0 0 100 100">
+          <path d="M83.288 88.13c-2.114 2.112-5.575 2.112-7.69 0L53.66 66.188c-2.113-2.112-5.572-2.112-7.686 0l-21.72 21.72c-2.114 2.113-5.572 2.113-7.687 0l-4.693-4.692c-2.114-2.114-2.114-5.573 0-7.688l21.72-21.72c2.112-2.115 2.112-5.574 0-7.687L11.87 24.4c-2.114-2.113-2.114-5.57 0-7.686l4.842-4.842c2.113-2.114 5.57-2.114 7.686 0l21.72 21.72c2.114 2.113 5.572 2.113 7.688 0l21.72-21.72c2.115-2.114 5.574-2.114 7.688 0l4.695 4.695c2.112 2.113 2.112 5.57-.002 7.686l-21.72 21.72c-2.112 2.114-2.112 5.573 0 7.686L88.13 75.6c2.112 2.11 2.112 5.572 0 7.687l-4.842 4.84z" />
+        </svg>
+      </label>
+      <ul class="menu-sidebar">
+        <li><a href="#">Item</a></li>
+        <li><a href="#">Item</a></li>
+        <li><a href="#">Item</a></li>
+        <li>
+          <input type="checkbox" id="sub-one" class="submenu-toggle">
+          <label class="submenu-label" for="sub-one">Category</label>
+          <div class="arrow right">&#8250;</div>
+          <ul class="menu-sub">
+            <li class="menu-sub-title">
+              <label class="submenu-label" for="sub-one">Back</label>
+              <div class="arrow left">&#8249;</div>
+            </li>
+            <li><a href="#">Sub-item</a></li>
+            <li><a href="#">Sub-item</a></li>
+            <li><a href="#">Sub-item</a></li>
+            <li><a href="#">Sub-item</a></li>
+          </ul>
+        </li>
+        <li>
+          <input type="checkbox" id="sub-two" class="submenu-toggle">
+          <label class="submenu-label" for="sub-two">Category</label>
+          <div class="arrow right">&#8250;</div>
+          <ul class="menu-sub">
+            <li class="menu-sub-title">
+              <label class="submenu-label" for="sub-two">Back</label>
+              <div class="arrow left">&#8249;</div>
+            </li>
+            <li><a href="#">Sub-item</a></li>
+            <li><a href="#">Sub-item</a></li>
+            <li><a href="#">Sub-item</a></li>
+            <li><a href="#">Sub-item</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br /><br /><br />
+  <ul class="carousel-container radio">
+    <li>
+      <input class="carousel-toggle" id="slide-1" type="radio" name="c-toggle" checked />
+      <label class="dot" for="slide-1"></label>
+      <ul class="carousel-content">
+        <li>
+          <!-- <img src="http://lorempixel.com/output/abstract-q-c-550-412-3.jpg" /> -->
+          <label class="arrow back" for="slide-2">&#8250; </label>
+          <label class="arrow next" for="slide-4">&#8249;</label>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <input class="carousel-toggle" id="slide-2" type="radio" name="c-toggle" />
+      <label class="dot" for="slide-2"></label>
+      <ul class="carousel-content">
+        <li>
+          <!-- <img src="http://lorempixel.com/output/animals-q-c-550-412-9.jpg" /> -->
+          <label class="arrow back" for="slide-3">&#8250; </label>
+          <label class="arrow next" for="slide-1">&#8249;</label>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <input class="carousel-toggle" id="slide-3" type="radio" name="c-toggle" />
+      <label class="dot" for="slide-3"></label>
+      <ul class="carousel-content">
+        <li>
+          <!-- <img src="http://lorempixel.com/output/food-q-c-550-412-10.jpg" /> -->
+          <label class="arrow back" for="slide-4">&#8250; </label>
+          <label class="arrow next" for="slide-2">&#8249;</label>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <input class="carousel-toggle" id="slide-4" type="radio" name="c-toggle" />
+      <label class="dot" for="slide-4"></label>
+      <ul class="carousel-content">
+        <!-- <img src="http://lorempixel.com/output/abstract-q-c-550-412-9.jpg" /> -->
+        <label class="arrow back" for="slide-1">&#8250; </label>
+        <label class="arrow next" for="slide-3">&#8249;</label>
+      </ul>
+    </li>
+  </ul>
+  <hr />
+  <ul class="tab-container radio">
+    <li>
+      <input class="tab-toggle" id="tab-1" type="radio" name="toggle" checked />
+      <label data-title="Tab 1" class="tab l-b" for="tab-1">Tabs</label>
+      <ul class="tab-content-container">
+        <li class="tab-content">
+          This is a testing text to test the tab content container. Lorem Ipsum dolor sit amet! Consectetur adipiscing
+          elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          This is a testing text to test the tab content container. Lorem Ipsum dolor sit amet!
+          <div class="arrows">
+            <label class="back" for="tab-4">&#8249;</label>
+            <label class="next" for="tab-2">&#8250; </label>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <input class="tab-toggle" id="tab-2" type="radio" name="toggle" />
+      <label class="tab" for="tab-2">Are</label>
+      <ul class="tab-content-container">
+        <li class="tab-content">
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+          laborum.
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+          laborum.
+          <div class="arrows">
+            <label class="back" for="tab-1">&#8249;</label>
+            <label class="next" for="tab-3">&#8250; </label>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <input class="tab-toggle" id="tab-3" type="radio" name="toggle" />
+      <label class="tab" for="tab-3">Pretty</label>
+      <ul class="tab-content-container">
+        <li class="tab-content">
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          <div class="arrows">
+            <label class="back" for="tab-2">&#8249;</label>
+            <label class="next" for="tab-4">&#8250; </label>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <input class="tab-toggle" id="tab-4" type="radio" name="toggle" />
+      <label class="tab" for="tab-4">Cool</label>
+      <ul class="tab-content-container">
+        <li class="tab-content">
+          This is the final content for the tab example.
+          <div class="arrows">
+            <label class="back" for="tab-3">&#8249;</label>
+            <label class="next" for="tab-1">&#8250; </label>
+          </div>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br /><br /><br /><br /><br /><br /><br /><br />
+  <hr />
+  <ul class="accordion-container radio">
+    <li class="accordion-category">
+      <input type="radio" name="a-toggle" id="one" checked>
+      <label for="one" class="accordion-title">Accordions</label>
+      <ul class="accordion-items">
+        <li>Item One</li>
+        <li>Item Two</li>
+        <li>Item Three</li>
+      </ul>
+    </li>
+    <li class="accordion-category">
+      <input id="two" type="radio" name="a-toggle">
+      <label for="two" class="accordion-title">Condense</label>
+      <ul class="accordion-items">
+        <li>Item A</li>
+        <li>Item B</li>
+      </ul>
+    </li>
+    <li class="accordion-category">
+      <input id="tre" type="radio" name="a-toggle">
+      <label for="tre" class="accordion-title">Stuff</label>
+      <ul class="accordion-items">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+      </ul>
+  </ul>
+  </div>
+  <hr />
+  <div class="modal-container check">
+    <input id="modal-toggle" type="checkbox">
+    <label class="modal-btn" for="modal-toggle">Modal</label>
+    <label class="modal-backdrop" for="modal-toggle"></label>
+    <div class="modal-content">
+      <label class="modal-close" for="modal-toggle">&#x2715;</label>
+      <h2>Modal title</h2>
+      <hr />
+      <p>Hello from inside the modal!</p>
+      <label class="modal-content-btn" for="modal-toggle">OK</label>
+    </div>
+  </div>
+  <hr />
+  <div class="tooltip-container check">
+    <input id="tooltip-toggle" type="checkbox">
+    <label class="tooltip-btn" for="tooltip-toggle">Tooltip click</label>
+    <label class="tooltip-backdrop" for="tooltip-toggle"></label>
+    <div class="tooltip-content">
+      <p>Hello from inside the CSS tooltip!</p>
+    </div>
+  </div>
+  <div class="tooltip-container">
+    <div class="tooltip-btn tooltip-toggle">Tooltip hover</div>
+    <div class="tooltip-content">
+      <p>Hello from inside the CSS tooltip!</p>
+    </div>
+  </div>
+  <hr />
+  <br />
+  <div class="star-container">
+    <input type="radio" name="starred" id="five" />
+    <input type="radio" name="starred" id="four" />
+    <input type="radio" name="starred" id="three" />
+    <input type="radio" name="starred" id="two" />
+    <input type="radio" name="starred" id="one" />
+    <label for="one"></label>
+    <label for="two"></label>
+    <label for="three"></label>
+    <label for="four"></label>
+    <label for="five"></label>
+  </div>
+  <br />
+  <hr />
+  <div class="step-container">
+    <input type="checkbox" id="step-1" name="toggler" checked />
+    <div class="step-dot one">Ready</div>
+    <div class="step-content">
+      <label for="step-2">Next</label>
+      <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo. </div>
+    </div>
+    <input type="checkbox" id="step-2" name="toggler" />
+    <div class="step-dot two">Set</div>
+    <div class="step-content">
+      <label for="step-3">Next</label>
+      <div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.</div>
+    </div>
+    <input type="checkbox" id="step-3" name="toggler" />
+    <div class="step-dot three">Go!</div>
+    <div class="step-content">
+      <div class="text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+        dicta sunt explicabo.</div>
+    </div>
+  </div>
+  <br />
+  <hr />
+  <div class="readmo">
+    <input type="checkbox" id="toggler" />
+    <label for="toggler"></label>
+    <p>This is a filler text filler text filler text lorem ipsum dolor sit ametThis is a filler text filler text filler
+      text lorem ipsum dolor sit amet. filler text filler text filler text lorem ipsum dolor sit ametThis is a filler
+      text filler text filler text lorem ipsum dolor sit amet. filler text filler text filler text lorem ipsum dolor
+      sit ametThis is a filler text filler text filler text lorem ipsum dolor sit amet</p>
+  </div>
+</body>
+
+</html>

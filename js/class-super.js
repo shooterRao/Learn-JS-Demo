@@ -15,7 +15,7 @@ class B extends A{
     }
 };
 // new A();
-new B();//super执行时，super内的this指向B，A.prototype.constructor.call(this), A.call(this)
+const b = new B();//super执行时，super内的this指向b，A.prototype.constructor.call(this), A.call(this)
 // Object.prototype.constructor 返回创建实例对象的 Object 构造函数的引用
 
 //2.super用在对象时,在普通方法中，指向父类的原型，在静态方法中，指向父类
