@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .love {
+      display: block;
+      width: 100px;
+      height: 100px;
+      background: url('https://www.zhangxinxu.com/study/201512/web_heart_animation.png') 0 0 no-repeat;
+      background-size: 2900%;
+      animation: heart-burst steps(28) 0.8s infinite both;
+    }
+
+    .stop {
+      animation-play-state: paused;
+    }
+
+    @keyframes heart-burst {
+      0% {
+        background-position: 0%;
+      }
+
+      100% {
+        background-position: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <i class="love"></i>
+</body>
+
+</html>

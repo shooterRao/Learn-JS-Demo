@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,31 +11,66 @@
       padding: 0;
       margin: 0;
     }
-    html, body {
+
+    html,
+    body {
       height: 100%;
       width: 100%;
     }
+
     #scroll-wrapper {
       width: 600px;
       height: 100%;
       margin: 0 auto;
       overflow: scroll;
     }
+
     .scroller {
       width: 100%;
       height: 3500px;
       background: orange;
     }
+
     .item {
       height: 300px;
     }
+
+    /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 0px;
+      background-color: transparent;
+    }
+
+    /*定义滚动条轨道 内阴影+圆角*/
+    ::-webkit-scrollbar-track {
+      width: 0;
+      border-radius: 0;
+      background-color: transparent;
+    }
+
+    /*定义滑块 内阴影+圆角*/
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      width: 5px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: #e7ecf2;
+    }
+
+    /*滑块效果*/
+    ::-webkit-scrollbar-thumb:hover {
+      border-radius: 5px;
+      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.4);
+    }
   </style>
 </head>
+
 <body>
   <div id="scroll-wrapper">
     <div class="scroller">
       <div class="item item-1">
-          <p>1</p>
+        <p>1</p>
       </div>
       <div class="item item-2">
         <p>2</p>
@@ -48,18 +84,18 @@
     Array.from(itemList).forEach(v => {
       console.log(v.offsetTop);
     })
-    
-    scroller.addEventListener('scroll', function(e) {
+
+    scroller.addEventListener('scroll', function (e) {
       e.preventDefault();
       // 判断到了那个节点
       Array.from(itemList).forEach((v, i) => {
-        if(v.offsetTop <= this.scrollTop && this.scrollTop <= (v.clientHeight + v.offsetTop)) {
-          console.log(`当前是${i+1}节点`);
+        if (v.offsetTop <= this.scrollTop && this.scrollTop <= (v.clientHeight + v.offsetTop)) {
+          console.log(`当前是${i + 1}节点`);
         }
       })
       checkIsBottom(this) ? console.log('到底了') : null;
     })
-    
+
     function checkIsBottom(node) {
       return node.scrollHeight - node.scrollTop === node.clientHeight;
     }
@@ -76,4 +112,5 @@
     */
   </script>
 </body>
+
 </html>
