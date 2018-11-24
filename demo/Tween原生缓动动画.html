@@ -361,7 +361,6 @@
             // 例如我们可以设置DOM.style.left = value + 'px'实现定位
             //推荐使用transform
             var value = Tween.Quad.easeIn(t, b, c, d);
-            console.log(value);
             if (history.pushState) {
                 this.style.transform = 'translateX(' + value + 'px)';
             } else {
@@ -380,7 +379,7 @@
 
         var ball2 = document.getElementById('ball2');
         ball2.onclick = function () {
-            Math.animation(0, 1000, 2000,'Quad.easeIn',(value,isEnding) => {
+            Math.animation(0, 100, 300,'Quad.easeIn',(value,isEnding) => {
                 if (history.pushState) {
                     this.style.transform = 'translateX(' + value + 'px)';
                 } else {

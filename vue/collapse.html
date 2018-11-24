@@ -41,9 +41,9 @@
     <div class="header" @click="toggle">
     </div>
       <Collapse>
-        <div v-show="open">
-          <div class="node">
-          </div>
+        <div v-show="open" class="node">
+          <!-- <div class="node">
+          </div> -->
         </div>
       </Collapse>
   </div>
@@ -54,7 +54,6 @@
       'before-enter'(el) {
         el.style.transition = elTransition
         if (!el.dataset) el.dataset = {}
-
         el.dataset.oldPaddingTop = el.style.paddingTop
         el.dataset.oldPaddingBottom = el.style.paddingBottom
 

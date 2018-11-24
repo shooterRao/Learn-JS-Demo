@@ -15,13 +15,15 @@
     .content {
       height: 100%;
       width: 100%;
-      background: green;
+      background: skyblue;
     }
   </style>
 </head>
 <body>
   <div class="content">
-
+    <button id="btn">
+      关闭iframe
+    </button>
   </div>
   <script>
     function getMessage() {
@@ -33,7 +35,12 @@
     }
     getMessage().then(res => {
       //...加载
-      console.log(res.data)
+      console.log(res)
+      // 发一条消息
+      // window.top.postMessage({ message: '我是iframe页面'}, "*")
+    })
+    document.getElementById('btn').addEventListener('click', function() {
+      window.top.postMessage({ message: '我是iframe页面'}, "*")
     })
   </script>
 </body>
