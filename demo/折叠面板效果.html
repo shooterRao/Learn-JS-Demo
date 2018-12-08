@@ -1,82 +1,236 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>JS Bin</title>
+    <style>
+      .panel {
+        border-radius: 4px;
+        overflow: hidden;
+      }
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
-  <style>
-    .panel {
-      border-radius: 4px;
-      overflow: hidden;
-    }
+      .panel-header {
+        background-color: #2196f3;
+        padding: 5px 10px;
+        -webkit-user-select: none;
+      }
 
-    .panel-header {
-      background-color: #2196F3;
-      padding: 5px 10px;
-      -webkit-user-select: none;
-    }
+      .panel-body {
+        background-color: #e2dede;
+        transition: all 0.3s;
+        box-sizing: border-box;
+      }
 
-    .panel-body {
-      background-color: #e2dede;
-      transition: height .3s;
-      box-sizing: border-box;
-    }
+      .panel-inner {
+        padding: 5px 10px;
+      }
 
-    .panel-inner {
-      padding: 5px 10px;
-    }
-  </style>
-</head>
+      .panel2 .panel-body.hidden {
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 0;
+      }
 
-<body>
-  <div class="panel">
-    <div class="panel-header" id="header">
-      Lorem ipsum dolor sit.
-    </div>
-    <div class="panel-body" id="body">
-      <div class="panel-inner">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque dignissimos, nisi quo cumque sed ab quod nobis voluptatum
-        iusto rem, quis velit explicabo dolore adipisci. Nam culpa, minima earum odit! Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Voluptates corrupti labore velit, facere quas tenetur repellendus quae, minima incidunt exercitationem,
-        nulla sequi ducimus itaque in explicabo. In est deleniti architecto.
+      .panel2 .panel-body {
+        padding: 20px;
+      }
+
+      .panel3 .panel-body {
+        display: none;
+        transition: 0.3s height, 0.3s padding-top,
+          0.3s padding-bottom;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>方法一，通过js赋值height实现</h1>
+    <div class="panel panel1">
+      <div class="panel-header">Lorem ipsum dolor sit.</div>
+      <div class="panel-body">
+        <div class="panel-inner">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque
+          dignissimos, nisi quo cumque sed ab quod nobis voluptatum iusto rem,
+          quis velit explicabo dolore adipisci. Nam culpa, minima earum odit!
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates
+          corrupti labore velit, facere quas tenetur repellendus quae, minima
+          incidunt exercitationem, nulla sequi ducimus itaque in explicabo. In
+          est deleniti architecto.
+        </div>
       </div>
     </div>
-  </div>
-  <script>
-    var header = document.querySelector('#header')
-    var body = document.querySelector('#body')
+    <h1>方法二， className实现</h1>
+    <div class="panel panel2">
+      <div class="panel-header">Lorem ipsum dolor sit.</div>
+      <div class="panel-body">
+        <div class="panel-inner">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque
+          dignissimos, nisi quo cumque sed ab quod nobis voluptatum iusto rem,
+          quis velit explicabo dolore adipisci. Nam culpa, minima earum odit!
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates
+          corrupti labore velit, facere quas tenetur repellendus quae, minima
+          incidunt exercitationem, nulla sequi ducimus itaque in explicabo. In
+          est deleniti architecto.
+        </div>
+      </div>
+    </div>
+    <h2>方法三，参考eleui</h2>
+    <div class="panel panel3">
+      <div class="panel-header">Lorem ipsum dolor sit.</div>
+      <div class="panel-body">
+        <div class="panel-inner">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque
+          dignissimos, nisi quo cumque sed ab quod nobis voluptatum iusto rem,
+          quis velit explicabo dolore adipisci. Nam culpa, minima earum odit!
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates
+          corrupti labore velit, facere quas tenetur repellendus quae, minima
+          incidunt exercitationem, nulla sequi ducimus itaque in explicabo. In
+          est deleniti architecto.
+        </div>
+      </div>
+    </div>
+    <script>
+      const header1 = document.querySelector(".panel1 .panel-header");
+      const body1 = document.querySelector(".panel1 .panel-body");
+      const header2 = document.querySelector(".panel2 .panel-header");
+      const body2 = document.querySelector(".panel2 .panel-body");
+      header1.addEventListener("click", function() {
+        let height = body1.getBoundingClientRect().height;
+        if (!!height) {
+          body1.style.height = height + "px";
+          // body1.dataset.paddingTop = body1.style.paddingTop;
+          // body1.dataset.paddingBottom = body1.style.paddingBottom;
+          // console.log(body1.dataset.paddingTop)
+          // var f = document.body.offsetHeight
+          // 上述操作是告诉浏览具体高度，才触发css的过渡动画
+          // 方法1
+          setTimeout(() => {
+            // 下一个tick中执行，会有动画
+            body1.style.height = "0px";
+          }, 0);
+          // 方法2
+          // var f = document.body.clientHeight; // 清空tick
+          // body.style.height = '0'
+        } else {
+          // 设为auto/''后，才能计算出实际的高度
+          body1.style.height = "";
+          height = body1.getBoundingClientRect().height;
+          body1.style.height = "0";
+          // 更上述一样
+          // console.log(document.body.clientHeight)
+          // body.style.height = height + 'px'
+          // var a = document.body.offsetHeight
+          setTimeout(() => {
+            body1.style.height = height + "px";
+          }, 0);
+        }
+      });
 
-    header.addEventListener('click', function () {
-      var height = body.getBoundingClientRect().height
-      console.log(height);
-      if (!!height) {
-        body.style.height = height + 'px'
-        // var f = document.body.offsetHeight 
-        // 上述操作是告诉浏览具体高度，才触发css的过渡动画
-        // 方法1
-        setTimeout(() => {
-          // 下一个tick中执行，会有动画
-          body.style.height = '0px'
-        }, 0)
-        // 方法2
-        // var f = document.body.clientHeight; // 清空tick
-        // body.style.height = '0'
-      } else {
-        // 设为auto/''后，才能计算出实际的高度
-        body.style.height = ''
-        height = body.getBoundingClientRect().height
-        body.style.height = '0'
-        // 更上述一样
-        // console.log(document.body.clientHeight)
-        // body.style.height = height + 'px'
-        // var a = document.body.offsetHeight
-        setTimeout(() => {
-          body.style.height = height + 'px'
-        }, 0)
+      header2.addEventListener("click", () => {
+        if (body2.classList.contains("hidden")) {
+          body2.classList.remove("hidden");
+        } else {
+          body2.classList.add("hidden");
+        }
+      });
+
+      const header3 = document.querySelector(".panel3 .panel-header");
+      const body3 = document.querySelector(".panel3 .panel-body");
+      let enterTimer;
+      let leaveTimer;
+      header3.addEventListener("click", () => {
+        // body3.style.display = 'block'
+        // 清空队列，才可以触发css动画
+        // block之后只有scrollHeight能取到高度值
+        // console.log(body3.scrollHeight);
+        // 为0，无法计算出
+        // console.log(body3.offsetHeight);
+        clearTimeout(enterTimer);
+        clearTimeout(leaveTimer);
+        let isShow = body3.style.display === "block" ? true : false;
+        console.log(isShow);
+        if (!isShow) {
+          beforeEnter(body3);
+          enter(body3);
+          return;
+        }
+        beforeLeave(body3);
+        leave(body3);
+      });
+
+      function beforeEnter(ref) {
+        const el = ref;
+        //prepare
+        el.dataset.oldPaddingTop = el.style.paddingTop;
+        el.dataset.oldPaddingBottom = el.style.paddingBottom;
+        el.dataset.oldOverflow = el.style.overflow;
+        el.style.height = "0";
+        el.style.paddingTop = 0;
+        el.style.paddingBottom = 0;
       }
-    })
-  </script>
-</body>
 
+      function enter(ref) {
+        const el = ref;
+        //start
+        el.style.display = "block";
+        if (el.scrollHeight !== 0) {
+          el.style.height = el.scrollHeight + "px";
+          el.style.paddingTop = el.dataset.oldPaddingTop;
+          el.style.paddingBottom = el.dataset.oldPaddingBottom;
+        } else {
+          el.style.height = "";
+          el.style.paddingTop = el.dataset.oldPaddingTop;
+          el.style.paddingBottom = el.dataset.oldPaddingBottom;
+        }
+
+        el.style.overflow = "hidden";
+        enterTimer = setTimeout(() => afterEnter(el), 300);
+      }
+
+      function afterEnter(ref) {
+        const el = ref;
+        el.style.display = "block";
+        el.style.height = "";
+        el.style.overflow = el.dataset.oldOverflow;
+      }
+
+      function beforeLeave(ref) {
+        const el = ref;
+        el.dataset.oldPaddingTop = el.style.paddingTop;
+        el.dataset.oldPaddingBottom = el.style.paddingBottom;
+        el.dataset.oldOverflow = el.style.overflow;
+
+        el.style.display = "block";
+        if (el.scrollHeight !== 0) {
+          el.style.height = el.scrollHeight + "px";
+        }
+        el.style.overflow = "hidden";
+      }
+
+      function leave(ref) {
+        const el = ref;
+        if (el.scrollHeight !== 0) {
+          el.style.height = 0;
+          el.style.paddingTop = 0;
+          el.style.paddingBottom = 0;
+        }
+        leaveTimer = setTimeout(
+          () => afterLeave(el),
+          300
+        );
+      }
+
+      function afterLeave(ref) {
+        const el = ref;
+        if (!el) return;
+
+        el.style.display = "none";
+        el.style.height = "";
+        el.style.overflow = el.dataset.oldOverflow;
+        el.style.paddingTop = el.dataset.oldPaddingTop;
+        el.style.paddingBottom = el.dataset.oldPaddingBottom;
+      }
+    </script>
+  </body>
 </html>
