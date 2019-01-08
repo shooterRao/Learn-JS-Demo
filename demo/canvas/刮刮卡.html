@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .bg {
+      width: 600px;
+      height: 300px;
+      background: orange;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" id="canvas"></div>
+  <script>
+    window.onload = () => {
+      function initCanvas() {
+      let width = null;
+      let height = null;
+      const canvas = document.createElement('canvas');
+      const bg = document.querySelector('.bg');
+      width = bg.offsetWidth;
+      height = bg.offsetHeight;
+      canvas.width = width;
+      canvas.height = height;
+      canvas.id = 'myCanvas';
+      bg.appendChild(canvas);
+
+      const context = canvas.getContext('2d');
+      context.fillStyle= 'green';
+      context.fillRect(0,0,width,height);
+
+      let isDown = false; // 鼠标是否按下标志
+      let pointerArr = []; // 鼠标移动坐标数组
+      let xPointer = 0;// 鼠标当前x坐标
+      let yPointer = 0;// 鼠标当前y坐标  
+
+      let hastouch = "ontouchstart" in window ? true : false;
+      let start = hastouch ? 'touchstart' : 'mousedown';
+      let move = hastouch ? 'touchmove' : 'mousemove';
+      let end = hastouch ? 'touchend' : 'mouseup';
+
+      canvas.addEventListener(start,onStart);
+      
+      function onStart(e) {
+        e.preventDefault();
+        this.style.cursor = 'move';
+        isDown = true;
+        // 鼠标距离div边缘的距离
+        xPointer = hastouch ? e.targetTouches[0].pageX : e.clientX - this.offsetLeft;
+        yPointer = hastouch ? e.targetTouches[0].pageY : e.clientY - this.offsetTop;
+        pointerArr.push([xPointer, yPointer]);
+        clean(context);
+        canvas.addEventListener(move, onMove);
+        canvas.addEventListener(end, onEnd);
+      }
+
+      function onMove(e) {
+        e.preventDefault();
+        if(isDown) {
+          xPointer = hastouch ? e.targetTouches[0].pageX : e.clientX - this.offsetLeft;
+          yPointer = hastouch ? e.targetTouches[0].pageY : e.clientY - this.offsetTop;
+          pointerArr.push([xPointer, yPointer]);
+        }
+        clean(context);
+      }
+      
+      function onEnd(e) {
+        e.preventDefault();
+        isDown = false;
+        pointerArr = [];
+        this.style.cursor = '';
+        canvas.removeEventListener(move, onMove);
+        canvas.removeEventListener(end, onEnd);
+      }
+
+      
+
+      // 橡皮檫
+      function clean(context) {
+        context.restore();
+        context.beginPath();
+        context.moveTo(pointerArr[0][0], pointerArr[0][1]);
+        context.lineCap = "round";　　 // 设置线条两端为圆弧
+        context.lineJoin = "round";　　// 设置线条转折为圆弧
+        context.lineWidth = 60;
+        context.globalCompositeOperation = "destination-out";
+        if (pointerArr.length == 1) {
+            context.lineTo(pointerArr[0][0] + 1, pointerArr[0][1] + 1);
+        } else {
+            for (let i=1;i<pointerArr.length;i++) {
+                context.lineTo(pointerArr[i][0], pointerArr[i][1]);
+                context.moveTo(pointerArr[i][0], pointerArr[i][1]);
+            }
+        }
+        context.closePath();
+        context.stroke();
+        context.save();
+      }
+
+    }
+      initCanvas();
+  }
+  </script>
+</body>
+</html>

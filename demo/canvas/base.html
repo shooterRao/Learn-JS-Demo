@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="canvasId" width="800" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('canvasId');
+    const ctx = canvas.getContext('2d');
+    // 矩形
+    ctx.fillStyle = '#FF0000';// 填充颜色
+    ctx.fillRect(0, 0, 80, 100);// 画线
+    ctx.save();
+
+    ctx.strokeStyle = '#FF0000';
+    ctx.strokeRect(100, 0, 80, 100);// 空心
+    ctx.save();
+    // 圆
+    // ctx.arc(x, y, radius, starAngle, endAngle, anticlockwise)
+    /* 
+      x: 圆心的x坐标
+      y: 圆心的y坐标
+      radius: 半径
+      starAngle: 开始的角度
+      endAngle: 结束的角度
+      anticlockwise: true为逆时针，false为顺时针
+     */
+    // 开始画圆(实心圆)
+    // Math.PI可以定义为单位圆的周长的一半
+    
+    ctx.beginPath();// 开始路径
+    ctx.arc(50, 200, 50, 0, Math.PI * 2, true);
+    ctx.fillStyle = '#FF0000';
+    ctx.fill();
+    ctx.closePath();// 结束路径
+    ctx.save();
+
+    //  console.log(ctx);
+
+    // 空心圆
+    
+    ctx.strokeStyle = 'blue';
+    ctx.beginPath();
+    ctx.arc(180, 200, 50, 0, Math.PI * 2, true);
+    ctx.stroke();// 填线
+    ctx.closePath();
+    ctx.save();
+    
+    // 绘制线段   
+    /* 
+      moveTo(x, y): 把路径移动到画布中的指定点，不创建线条
+      lineTo(x, y): 添加一个新点，然后在画布中创建从该点到最后指定点的线条
+     */
+    ctx.beginPath();
+    ctx.moveTo(0, 400);
+    ctx.lineTo(600, 0);
+    ctx.closePath();
+    ctx.strokeStyle = 'orange';
+    // ctx.restore();
+    ctx.stroke();
+    
+
+  </script>
+</body>
+
+</html>

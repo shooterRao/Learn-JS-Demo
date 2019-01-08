@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+      }
+      .cropper {
+        position: relative;
+        height: 500px;
+        width: 750px;
+      }
+      .cropper .cropper-box {
+        position: absolute;
+        border: 1px dashed #fff;
+        cursor: move;
+        /* left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0; */
+        height: 200px;
+        width: 200px;
+        overflow: hidden;
+        transform: translateX(100px);
+      }
+      .cropper .cropper-box img {
+        height: 500px;
+        width: 750px;
+        transform: translateX(-100px);
+      }
+      .cropper .cropper-modal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="cropper">
+        <div class="cropper-modal"></div>
+        <div class="cropper-box">
+          <img
+            crossOrigin="Anonymous"
+            src="https://d3o1694hluedf9.cloudfront.net/sierra-750.jpg"
+            alt=""
+            id="clipImg"
+          />
+        </div>
+        <img
+          src="https://d3o1694hluedf9.cloudfront.net/sierra-750.jpg"
+          alt=""
+        />
+      </div>
+      <button id="btn">生成图片</button>
+      <h1>预览图片</h1>
+    </div>
+    <script>
+      // ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+      // sx 需要绘制到目标上下文中的，源图像的矩形选择框的左上角 X 坐标
+      // sy 需要绘制到目标上下文中的，源图像的矩形选择框的左上角 Y 坐标
+      // sWidth 需要绘制到目标上下文中的，源图像的矩形选择框的宽度
+      // sHeight 需要绘制到目标上下文中的，源图像的矩形选择框的高度
+      // dx 目标画布的左上角在目标canvas上 X 轴的位置
+      // dy 目标画布的左上角在目标canvas上 Y 轴的位置
+      // dWidth 在目标画布上绘制图像的宽度 --绘制多宽的图片
+      // dHeight 在目标画布上绘制图像的高度 --绘制多高的图片
+      const con = document.querySelector(".content");
+      const btn = document.querySelector("#btn");
+      btn.addEventListener("click", function() {
+        const x = 100;
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        // 必须要指定高宽
+        canvas.width = 200;
+        canvas.height = 200;
+        const img = document.getElementById("clipImg");
+        // ctx.drawImage(img, 100, 0, 200, 200, 0, 0, 200, 200);
+        // const data = canvas.toDataURL();
+        // document.getElementById('showCrop').src = data;
+        genImg(ctx, img);
+        function genImg(ctx, img) {
+          const value = 200;
+          const imgs = [value, value / 2, value / 4];
+          imgs.forEach(v => {
+            const imgNode = document.createElement("img");
+            ctx.clearRect(0, 0, 200, 200);
+            ctx.drawImage(img, 100, 0, 200, 200, 0, 0, v, v);
+            const data = canvas.toDataURL();
+            imgNode.style.display = 'block';
+            imgNode.src = data;
+            con.appendChild(imgNode);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
