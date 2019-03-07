@@ -4,7 +4,7 @@ var obj1 = {
     c:{ d:3 }
 };
 
-// ES5抢拷贝方法
+// ES5浅拷贝方法
 function assign(obj) {
     var dist = {};
     if(typeof obj === 'object') {
