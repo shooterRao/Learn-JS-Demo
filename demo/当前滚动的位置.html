@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    #scroll-wrap {
+      width: 100%;
+      height: 100%;
+    }
+
+    #scroll {
+      height: 100%;
+      width: 100%;
+      overflow: scroll;
+    }
+
+    .node {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="scroll-wrap">
+    <div id="scroll">
+      <div class="node">
+        <h1>节点1</h1>
+      </div>
+      <div class="node">
+        <h1>节点2</h1>
+      </div>
+      <div class="node">
+        <h1>节点3</h1>
+      </div>
+      <div class="node">
+        <h1>节点4</h1>
+      </div>
+      <div class="node">
+        <h1>节点5</h1>
+      </div>
+    </div>
+  </div>
+  <script>
+    const nodeHeights = [];
+    let height = 0;
+    let index = 0;
+    nodeHeights.push(height);
+    [...document.querySelectorAll('.node')].forEach(node => {
+      console.log(node.offsetTop);
+      height += node.clientHeight;
+      nodeHeights.push(height);
+    })
+
+    const scroll = document.querySelector('#scroll');
+    scroll.addEventListener('scroll', onScroll);
+    function onScroll() {
+      
+      const { scrollTop } = scroll;
+      console.log(scrollTop);
+      for (let i = 0; i < nodeHeights.length; i++) {
+        let height = nodeHeights[i];
+        let height2 = nodeHeights[i + 1];
+        if (!height2 || (scrollTop >= height && scrollTop < height2)) {
+          console.log(i + 1);
+          return index = i;
+        }
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>
