@@ -9,10 +9,6 @@ export default function diff(current, pre) {
     return result
 }
 
-function type(obj) {
-  return Object.prototype.toString.call(obj)
-}
-
 function syncKeys(current, pre) {
     if (current === pre) return
     const rootCurrentType = type(current)
@@ -95,12 +91,11 @@ function _diff(current, pre, path, result) {
 }
 
 function setResult(result, k, v) {
-    const t = type(v)
-    if (t != FUNCTIONTYPE) {
-        //if (t != OBJECTTYPE && t != ARRAYTYPE) {
+    if (type(v) != FUNCTIONTYPE) {
         result[k] = v
-        // } else {
-        //     result[k] = JSON.parse(JSON.stringify(v))
-        // }
     }
+}
+
+function type(obj) {
+    return Object.prototype.toString.call(obj)
 }

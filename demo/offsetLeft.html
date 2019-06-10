@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #box {
+      width: 500px;
+      height: 300px;
+      border: 1px solid black;
+      margin: 0 auto;
+      position: relative;
+    }
+    #box header {
+      height: 50px;
+      background-color: beige;
+    }
+  </style>
+</head>
+<body>
+  <div id="box">
+    <header id="header">
+      header
+    </header>
+  </div>
+
+  <script>
+    document.querySelector('#header').addEventListener('click', function(e) {
+      const offsetLeft = getElementLeft(this);
+      console.log(offsetLeft);
+    })
+
+    function getElementLeft(element) {
+　　　　var actualLeft = element.offsetLeft;
+　　　　var current = element.offsetParent;
+
+　　　　while (current !== null){
+　　　　　　actualLeft += current.offsetLeft;
+　　　　　　current = current.offsetParent;
+　　　　}
+
+　　　　return actualLeft;
+　　}
+  </script>
+</body>
+</html>
