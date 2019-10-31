@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 渲染是在microtask执行完后进行,但是这里 performance.now() 执行是同步的
+    document.write('尚未alert的时间：' + performance.now())
+    setTimeout(() => {
+      alert(performance.now()) // 放在回调函数里才是异步
+    }, 0)
+    // setTimeout(
+    //   alert(performance.now()) // 这种情况是同步的，不是传的回调
+    // , 0)
+
+    // 记住渲染时序
+    // macrotask -> 清空microtask -> render
+    // 如果setTimeout里面不是回调函数，只是一句alert()，那么执行顺序是 alert() -> setTimeout(undefined, 0)
+    // 所以会出现先alert，再渲染视图
+
+    // 如果是放到setTimeout回调函数里，则是在下一个task里执行alert，所以会先渲染视图，再alert
+  </script>
+</body>
+
+</html>

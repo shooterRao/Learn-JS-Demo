@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>仿Echarts图表</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    #getcharts {
+      position: relative;
+      width: 510px;
+      height: 510px;
+
+    }
+
+    #wrapcharts {
+      list-style: none;
+      height: 500px;
+      width: 500px;
+      border: 2px solid #aaa;
+      border-radius: 50%;
+      position: relative;
+      margin: 20px auto;
+    }
+
+    #wrapcharts li {
+      height: 10px;
+      width: 10px;
+      display: block;
+      position: absolute;
+      cursor: pointer;
+      left: 247px;
+      top: 2px;
+      height: 10px;
+      width: 10px;
+      transition: 0.2s;
+      background: red;
+      border-radius: 50%;
+    }
+
+    #boxshadow {
+      position: absolute;
+      background: blue;
+      opacity: 0.2;
+      height: 0;
+      width: 0;
+      left: 0;
+      top: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <ul id="wrapcharts"></ul>
+  <div id="boxshadow"></div>
+
+  <script>
+    /*
+     **模拟从后端取值过来的【角度】和相对应的【人名】数组
+     **/
+    var degArr = [25, 88, 252, 323, 33, 28, 30, 90, 290, 100, 300, 50, 180, 205, 220, 331, 195, 97, 102, 77, 62, 38, 32, 79];
+    var nameArr = ['内衣天使', '小恶魔', '金正恩', '奥巴马', 'duolaA梦', '午夜激情', '梁静茹', '刘亦菲', '琪琪', '大熊', '小静', '小屁孩', '张三', '李四', '王五', '麻六', '小明', '小张', '丽丽', '多多', '瑾瑾', 'biubiu', 'Mr.boluo', 'Hanson'];
+    /*
+     **声明 getPos(param)函数: 利用三角函数定理根据传入的角度值获取对边和临边的x，y值
+     **/
+    function getPos(deg) {
+      var X = Math.sin(deg * Math.PI / 180) * 250 + 245;
+      var Y = -Math.cos(deg * Math.PI / 180) * 250 + 245;
+      return { x: X, y: Y };
+    }
+    /*
+     **这里不用说吧，获取页面中的ul，和ul中的li对象，以及框选时的那个任意变动大小的小方块对象
+     **/
+    var oWrap = document.getElementById('wrapcharts');
+    var aLi = oWrap.getElementsByTagName('li');
+    var oBox = document.getElementById('boxshadow');
+    var allLi = '';
+    var posArr = [];
+    /*
+     **for循环中调用getPos(param)来获取degArr数组中的所有角度对应的x,y值（就是每个角度对应的x，y坐标），并传入到一个数组中保存，方便取用
+     **/
+    for (var i = 0; i < degArr.length; i++) {
+      posArr.push(getPos(degArr[i]));
+    }
+    /*
+     **for循环根据度数数组degArr的长度插入li小圆点到ul中，并将之前获取的每个点对应的x,y左边插入到行内样式
+     **/
+    for (var i = 0; i < degArr.length; i++) {
+      allLi += '<li style="left:' + posArr[i].x + 'px;top:' + posArr[i].y + 'px;" title="' + degArr[i] + '°；姓名：' + nameArr[i] + '"></li>';
+    }
+    oWrap.innerHTML = allLi;
+    /*
+     **遍历最终得到的ul中的li
+     **/
+    for (var i = 0; i < aLi.length; i++) {
+      aLi[i].index = i;
+      /*
+       **封装鼠标移入每个小圆点时的放大事件，这里用到了matrix矩阵，为的事想兼容ie9以下浏览器，但是好像出了点问题
+       */
+      function focusOn(_this, color, size) {
+        _this.style.background = color;
+        _this.style.WebkitTransform = 'matrix(' + size + ', 0, 0, ' + size + ', 0, 0)';
+        _this.style.MozTransform = 'matrix(' + size + ', 0, 0, ' + size + ', 0, 0)';
+        _this.style.transform = 'matrix(' + size + ', 0, 0, ' + size + ', 0, 0)';
+        _this.style.filter = "progid:DXImageTransform.Microsoft.Matrix( M11= " + size + ", M12= 0, M21= 0 , M22=" + size + ",SizingMethod='auto expend')";
+      }
+      aLi[i].onmouseover = function () {
+        //alert(this.offsetLeft);
+        _this = this;
+        focusOn(_this, 'blue', 2);
+      }
+      aLi[i].onmouseout = function () {
+        //alert(this.offsetLeft);
+        _this = this;
+        focusOn(_this, 'red', 1);
+
+      }
+    }
+    /***框选***/
+    /*
+     **拖拽框选代码区域，这个我就不解释了，明白人都一眼知道什么意思，这就像是公式，
+     */
+    var allSelect = {};
+    document.onmousedown = function (ev) {
+      var ev = ev || window.event;
+      var disX = ev.clientX;
+      var disY = ev.clientY;
+      var H = W = clientleft = clienttop = clientright = clientbottom = 0;
+      oBox.style.cssText = 'left:' + disX + 'px;top:' + disY + 'px;';
+      //console.log(disX+';'+disY);
+      function again(f) {
+        for (var i = 0; i < posArr.length; i++) {
+          if (posArr[i].x > clientleft && posArr[i].y > clienttop && (posArr[i].x + 10) < clientright && (posArr[i].y + 10) < clientbottom) {
+            //console.log(clientleft+';'+ clienttop +';'+ clientright +';' +  clientbottom);
+            if (f) { allSelect[i] = i; } else {
+              aLi[i].style.background = 'blue';
+            }
+          } else {
+            aLi[i].style.background = 'red';
+          }
+        }
+
+      }
+
+      document.onmousemove = function (ev) {
+        var ev = ev || window.event;
+        /*
+         **当鼠标向四个方向拖拉的时候进行方向判断，并相应的改变小方块的left，top以及width，height
+         **其实我这里有个问题，那就是，代码重复了一些，本想着合并一下，但是作者有点懒，嘿嘿，你们也可以尝试一下
+         **修改后你们拿去当做你们的发布，作者不会介意的
+         */
+        if (ev.clientX > disX && ev.clientY > disY) {
+          W = ev.clientX - disX;
+          H = ev.clientY - disY;
+
+          oBox.style.width = W + 'px';
+          oBox.style.height = H + 'px';
+
+          clienttop = disY - oWrap.offsetTop;
+          clientleft = disX - oWrap.offsetLeft;
+
+        } else if (ev.clientX < disX && ev.clientY < disY) {
+          W = disX - ev.clientX;
+          H = disY - ev.clientY;
+
+          oBox.style.top = ev.clientY + 'px';
+          oBox.style.left = ev.clientX + 'px';
+
+          oBox.style.width = W + 'px';
+          oBox.style.height = H + 'px';
+
+          clienttop = ev.clientY - oWrap.offsetTop;
+          clientleft = ev.clientX - oWrap.offsetLeft;
+
+        } else if (ev.clientX > disX && ev.clientY < disY) {
+          W = ev.clientX - disX;
+          H = disY - ev.clientY;
+
+          oBox.style.top = ev.clientY + 'px';
+
+          oBox.style.width = W + 'px';
+          oBox.style.height = H + 'px';
+
+          clienttop = ev.clientY - oWrap.offsetTop;
+          clientleft = disX - oWrap.offsetLeft;
+
+        } else if (ev.clientX < disX && ev.clientY > disY) {
+          W = disX - ev.clientX;
+          H = ev.clientY - disY;
+
+          oBox.style.left = ev.clientX + 'px';
+
+          oBox.style.width = W + 'px';
+          oBox.style.height = H + 'px';
+
+          clienttop = disY - oWrap.offsetTop;
+          clientleft = ev.clientX - oWrap.offsetLeft;
+        }
+
+
+        clientright = clientleft + W;
+        clientbottom = clienttop + H;
+
+        W = '';
+        H = '';
+
+        again();
+
+      }
+      document.onmouseup = function () {
+        again(1);
+
+        document.onmouseup = document.onmousemove = null;
+        oBox.style.cssText = 'height:0;width:0;';
+        if (JSON.stringify(allSelect) == '{}') { return; }
+        console.log(allSelect);
+
+        var lastSelect = [];
+        for (var attr in allSelect) {
+          lastSelect.push(nameArr[attr]);
+        }
+        allSelect = {};
+
+        console.log(lastSelect);
+        alert('你选中的人是：\n\n' + lastSelect + '\n\n');
+
+        for (var i = 0; i < aLi.length; i++) {
+          aLi[i].style.background = 'red';
+        }
+      }
+      return false;
+    }
+  </script>
+</body>
+
+</html>

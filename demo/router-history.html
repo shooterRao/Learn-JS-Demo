@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul>
+    <li><a href="/">/</a></li>
+    <li><a href="/page1">page1</a></li>
+    <li><a href="/page2">page2</a></li>
+  </ul>
+  <div class='content-div'></div>
+
+  <script>
+    class Router {
+      constructor(path) {
+        this.routes = {}
+        history.replaceState({ path }, null, path)
+        this.routes[path] && this.routes[path]()
+        // 前进 || 后退
+        window.addEventListener('popstate', e => {
+          console.log(e)
+          const path = e.state && e.state.path
+          this.routes[path] && this.routes[path]()
+        })
+      }
+
+      route(path, cb) {
+        this.routes[path] = cb || function () { }
+      }
+
+      go(path) {
+        history.pushState({ path }, null, path)
+        this.routes[path] && this.routes[path]()
+      }
+    }
+
+    const router = new Router(location.pathname)
+
+    const ul = document.querySelector('ul')
+    const ContentDom = document.querySelector('.content-div')
+    const changeContent = content => ContentDom.innerHTML = content
+
+    router.route('/', () => changeContent('默认页面'))
+    router.route('/page1', () => changeContent('page1页面'))
+    router.route('/page2', () => changeContent('page2页面'))
+
+
+    ul.addEventListener('click', e => {
+      if (e.target.tagName === 'A') {
+        e.preventDefault()
+        router.go(e.target.getAttribute('href'))
+      }
+    })
+
+
+  </script>
+</body>
+
+</html>

@@ -36,6 +36,8 @@
     getMessage().then(res => {
       //...加载
       console.log(res)
+      console.log(window.parent === window)
+      console.log(document.referrer)
       // 发一条消息
       // window.top.postMessage({ message: '我是iframe页面'}, "*")
     })

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #node {
+      width: 300px;
+      border: 1px solid salmon;
+    }
+
+    #expand {
+      height: 50px;
+      background-color: blanchedalmond;
+      cursor: pointer;
+    }
+
+    #expand-body {
+      width: 100%;
+      transition: all .3s ease;
+    }
+
+    #expand-body div {
+      height: 500px;
+      background-color: cadetblue;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="node">
+    <div id="expand">
+      点我测试折叠
+    </div>
+    <div id="expand-body">
+      <div></div>
+    </div>
+  </div>
+
+  <script>
+    const exp = document.querySelector('#expand');
+    const expb = document.querySelector('#expand-body');
+    const nextFrame = (fn) => window.requestAnimationFrame(fn)
+    exp.addEventListener('click', function () {
+      const height = expb.offsetHeight
+
+      if (height === 0) {
+        expb.style.display = ''
+        expb.style.height = ''
+        const height = expb.offsetHeight
+        expb.style.height = 0
+        nextFrame(() => expb.style.height = `${height}px`)
+
+      } else {
+        expb.style.height = `${height}px`
+        expb.style.overflow = 'hidden'
+        nextFrame(() => expb.style.height = 0)
+      }
+
+    })
+
+    expb.addEventListener('transitionend', function () {
+      if (expb.style.height) {
+        // expb.style.height = ''
+      } else {
+        expb.style.display = 'none'
+        expb.style.overflow = ''
+      }
+    })
+  </script>
+</body>
+
+</html>

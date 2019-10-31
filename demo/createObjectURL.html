@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+  <a href="#" id="fileSelect">Select some files</a>
+  <div id="fileList">
+    <p>No files selected!</p>
+  </div>
+
+  <script>
+    const URL = window.URL || window.webkitURL;
+    const fileSelect = document.querySelector('#fileSelect'),
+      fileElem = document.querySelector('#fileElem'),
+      fileList = document.querySelector('#fileList')
+
+    fileSelect.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (fileElem) {
+        fileElem.click();
+      }
+    }, false)
+
+    function handleFiles(files) {
+      if (!files.length) {
+        return fileList.innerHTML = "<p>No files selected!</p>";
+      }
+      fileList.innerHTML = ''
+      for (const file of files) {
+        const img = document.createElement('img')
+        img.src = URL.createObjectURL(file)
+        img.height = 600
+        img.width = 800
+        img.onload = function () {
+          // 若释放则不能通过a标签下载
+          URL.revokeObjectURL(this.src)
+        }
+        const div = document.createElement('div')
+        div.appendChild(img)
+        fileList.appendChild(div)
+
+        img.addEventListener('click', function () {
+          const a = document.createElement('a')
+          a.download = 'img.jpg'
+          a.href = this.src; // href 流下载
+          a.click()
+        }, false)
+      }
+      // fileReader 试试
+      // 这种是把 blob 转换为 base64
+      // fileReader是异步的，不会按图片选中的顺序来读取，而是按文件大小顺序来排
+      for (const file of files) {
+        const img = document.createElement('img')
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = function () {
+          img.src = this.result
+          img.height = 600
+          img.width = 800
+          const div = document.createElement('div')
+          div.appendChild(img)
+          fileList.appendChild(div)
+
+          img.addEventListener('click', function () {
+            const a = document.createElement('a')
+            a.download = 'img.jpg'
+            a.href = this.src; // href 流下载
+            a.click()
+          }, false)
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

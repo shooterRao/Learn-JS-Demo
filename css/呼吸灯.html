@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .bln {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      /* 内圈 */
+      /* 外圈 */
+    }
+
+    .bln .inner {
+      width: 32px;
+      height: 32px;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      display: block;
+      border-radius: 50%;
+      background-color: #7f8c8d;
+      box-shadow: 0 0 2px rgba(0, 0, 0, .1);
+      animation: ease-in-out zommLess 3000ms infinite alternate;
+    }
+
+    .bln .outer {
+      width: 40px;
+      height: 40px;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: visible;
+      border-radius: 50%;
+      background-color: #9aa4a5;
+      animation: ease-in-out breath 3000ms infinite alternate;
+    }
+
+    @keyframes breath {
+      0% {
+        opacity: 0.2;
+        box-shadow: 0 0 2px rgba(0, 0, 0, .1);
+      }
+
+      100% {
+        opacity: 0.6;
+        box-shadow: 0 0 30px 2px #808d8e;
+      }
+    }
+
+    @keyframes zommLess {
+      0% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(0.95);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bln">
+    <div class='inner'></div>
+    <div class='outer'></div>
+  </div>
+</body>
+
+</html>

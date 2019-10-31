@@ -30,7 +30,7 @@ const arr = [
 
 const filterBy = (arr, ...args) => {
   const { length } = args;
-  let fn = length > 1 && args[length - 1 ];
+  let fn = length > 1 && args[length - 1];
   fn = typeof fn === 'function' ? (args.pop(), fn) : () => {};
   const argState = (Array.isArray(args[0]) ? args[0] : args).map(val => fn(val));
   return arr.filter(v => argState.includes(fn(v)));

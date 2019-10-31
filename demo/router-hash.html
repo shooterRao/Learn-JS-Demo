@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li><a href="#/">/</a></li>
+    <li><a href="#/page1">page1</a></li>
+    <li><a href="#/page2">page2</a></li>
+  </ul>
+  <div class='content-div'></div>
+  <button>back</button>
+
+  <script>
+    class Router {
+      constructor() {
+        this.isBack = false
+        this.routes = {}
+        this.currentUrl = ''
+        this.historyStack = []
+        window.addEventListener('load', () => this.render())
+        window.addEventListener('hashchange', () => this.render())
+      }
+
+      // static init() {
+      //   window.Router = new Router()
+      // }
+
+      route(path, cb) {
+        this.routes[path] = cb || function () {}
+      }
+
+      render() {
+        console.log(location.hash)
+        if (this.isBack) {
+          this.isBack = false
+          return
+        }
+
+        this.currentUrl = location.hash.slice(1) || '/'
+        this.historyStack.push(this.currentUrl)
+        this.routes[this.currentUrl]()
+
+      }
+
+      back() {
+        this.historyStack.pop()
+
+        const { length } = this.historyStack
+        if (!length) return
+
+        this.isBack = true
+        
+        const prev = this.historyStack[length - 1]
+        location.hash = `#${prev}`
+        
+        this.currentUrl = prev
+        this.routes[prev]()
+
+      }
+    }
+
+    const router = new Router();
+
+    const BtnDom = document.querySelector('button')
+    const ContentDom = document.querySelector('.content-div')
+    const changeContent = content => ContentDom.innerHTML = content
+
+    router.route('/', () => changeContent('默认页面'))
+    router.route('/page1', () => changeContent('page1'))
+    router.route('/page2', () => changeContent('page2'))
+
+    BtnDom.addEventListener('click', router.back.bind(router), false)
+  </script>
+</body>
+</html>
