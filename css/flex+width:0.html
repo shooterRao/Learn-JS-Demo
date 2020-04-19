@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #main {
+      display: flex;
+      width: 1200px;
+      height: 800px;
+    }
+
+    #left {
+      width: 200px;
+      height: 100%;
+      background-color: aqua;
+    }
+
+    #right {
+      flex: 1;
+      /* 当子 div 宽度超过此层级时，会挤压兄弟节点，即 left 节点 */
+      /* 设置 width: 0 可以解决 */
+      /* 如果没有设置 width，当内部元素的内容大小超过平均分配的剩余空间时，元素的宽度等于内容大小 */
+      /* 如果设置了 width 并且这个 width 的大小小于平均分配的剩余空间大小时，取平均分配的剩余空间; */
+      width: 0;
+      background-color: bisque;
+      overflow: auto;
+    }
+
+    .content {
+      width: 1500px;
+      height: 100%;
+      background-color: blueviolet;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main">
+    <div id="left"></div>
+    <div id="right">
+      <div class="content"></div>
+    </div>
+  </div>
+</body>
+
+</html>

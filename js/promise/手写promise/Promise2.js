@@ -3,23 +3,23 @@ class Promise {
   constructor(executor) {
     // console.log("被调用了");
     let _this = this; // 缓存实例的this
-    _this.status = "pending"; // 默认状态为等待状态
+    _this.status = 'pending'; // 默认状态为等待状态
     _this.value = undefined; // 成功时要传递给成功回调的数据，默认undefined
     _this.reason = undefined; // 失败时要传递给失败回调的原因，默认undefined
     _this.onResolvedCallbacks = []; // 存放then成功的回调
     _this.onRejectedCallbacks = []; // 存放then失败的回调
 
     const resolve = value => {
-      if (_this.status === "pending") {
-        _this.status = "resolved";
+      if (_this.status === 'pending') {
+        _this.status = 'resolved';
         _this.value = value; // 更新value值
         // 调用缓存的回调
         _this.onResolvedCallbacks.forEach(fn => fn && fn());
       }
     };
     const reject = reason => {
-      if (_this.status === "pending") {
-        _this.status = "rejected";
+      if (_this.status === 'pending') {
+        _this.status = 'rejected';
         _this.reason = reason; // 更新reason值
         _this.onRejectedCallbacks.forEach(fn => fn && fn());
       }
@@ -35,20 +35,20 @@ class Promise {
   then(onFulfilled, onRjected) {
     // 成功和失败默认不传给一个函数
     onFulfilled =
-      typeof onFulfilled === "function"
+      typeof onFulfilled === 'function'
         ? onFulfilled
         : function(value) {
             return value;
           };
     onRjected =
-      typeof onRjected === "function"
+      typeof onRjected === 'function'
         ? onRjected
         : function(err) {
             throw err;
           };
     let _this = this;
     let promise2; // 返回的promise
-    if (_this.status === "pending") {
+    if (_this.status === 'pending') {
       promise2 = new Promise((resolve, reject) => {
         _this.onResolvedCallbacks.push(function() {
           setTimeout(() => {
@@ -79,7 +79,7 @@ class Promise {
       //   onRjected(_this.reason);
       // });
     }
-    if (_this.status === "resolved") {
+    if (_this.status === 'resolved') {
       // 如果是成功态，执行用户传递的成功回调，传入数据
       promise2 = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -92,7 +92,7 @@ class Promise {
         });
       });
     }
-    if (_this.status === "rejected") {
+    if (_this.status === 'rejected') {
       promise2 = new Promise((resolve, reject) => {
         setTimeout(() => {
           try {
@@ -109,15 +109,15 @@ class Promise {
       // 有可能这里返回的x是别人的promise
       // 尽可能允许其他乱写
       if (promise2 === x) {
-        return reject(new TypeError("循环引用了"));
+        return reject(new TypeError('循环引用了'));
       }
       // 看x是不是一个promise，promise应该是一个对象
       let called; // 表示是否调用过成功或者失败
-      if (x !== null && (typeof x === "object" || typeof x === "function")) {
+      if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
         // 可能是promise,判断是否有then方法
         try {
           let then = x.then; // 保存一下x的then方法
-          if (typeof then === "function") {
+          if (typeof then === 'function') {
             then.call(
               x,
               function(y) {
@@ -193,17 +193,22 @@ class Promise {
 }
 
 const P = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve("done");
-  }, 2000);
+  // setTimeout(() => {
+  //   resolve('done');
+  //   reject('error');
+  // }, 0);
+  resolve('done');
+  reject('error');
 });
 
 P.then(
   data => {
-    console.log("触发啦");
+    console.log('触发啦');
     console.log(data);
   },
-  error => {
-    console.log(error);
-  }
-);
+  // error => {
+  //   console.log(error);
+  // }
+).catch(error => {
+  console.log(error);
+});

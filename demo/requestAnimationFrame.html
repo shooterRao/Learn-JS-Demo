@@ -43,13 +43,16 @@
             ele.style.width = progress + '%';
             ele.innerHTML = progress + '%';
             if (progress < 100) {
-                setTimeout(() => requestAnimationFrame(() => step(timestamp)), timestamp);
+                // setTimeout(() => requestAnimationFrame(() => step(timestamp)), timestamp);
+                requestAnimationFrame(step);
             }
         };
         function run() {
             progress = 0;
-            requestAnimationFrame(() => step(16.7));
+            requestAnimationFrame(step);
         }
+
+        // setTimeout(function test ()  { ele.style.width = '90%' }, 2000)
 
     </script>
 </body>

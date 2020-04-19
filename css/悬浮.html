@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .wrap {
+      /* perspective: 800px;
+      height: 180px;
+      width: 225px;
+      margin: 300px auto; */
+      height: 400px;
+      position: relative;
+      left: 0px;
+      transform-style: preserve-3d;
+      transform-origin: 50% 100%;
+      transform: scale(1) rotateY(-30deg) rotateX(45deg);
+      transition: transform 0.5s ease, left 0.5s ease;
+    }
+
+    .block {
+      height: 180px;
+      width: 225px;
+      background: orange;
+      transition: .2s ease-in-out;
+      /* position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      transform: rotateX(60deg) */
+    }
+
+    .block:first-child {
+      /* transform: rotateX(60deg) translateZ(100px); */
+      transform: translateZ(100px);
+    }
+
+    .block:last-child {
+      background: skyblue;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="block">
+      我是第一个区块
+    </div>
+    <div class="block">
+      我是第二个区块
+    </div>
+  </div>
+
+</body>
+
+</html>

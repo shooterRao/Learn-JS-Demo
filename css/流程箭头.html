@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    .flex-table-header {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .flex-table-header .flex-row {
+      background-color: #3498db;
+      color: #fff;
+      line-height: 44px;
+      font-size: 1em;
+      /* float: left; */
+      text-align: center;
+      /* padding: 0 8px 0 0; */
+      position: relative;
+      margin-right: 8px;
+    }
+
+    .flex-table-header .flex-row::after, .flex-table-header .flex-row::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      border-left: 22px solid #3498db;
+      border-top: 22px solid transparent;
+      border-bottom: 22px solid transparent;
+    }
+
+    .flex-table-header .flex-row::before {
+      left: 0;
+      border-left-color: #fff;
+    }
+
+    .flex-table-header .flex-row::after {
+      right: -22px;
+      z-index: 1;
+    }
+
+    .flex-table-header .flex-row:first-child::before {
+      display: none;
+    }
+
+    .flex-table-header .flex-row:first-child {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="flex-table-header">
+    <div class="flex-row cell first" style="width: calc(10% - 10px);"> 源码管理
+    </div>
+    <div class="flex-row cell first" style="width: calc(10% - 10px);"> 源码管理
+    </div>
+    <div class="flex-row cell first" style="width: calc(10% - 10px);"> 源码管理
+    </div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="https://cdn.bootcss.com/axios/0.19.0/axios.js"></script>
+
+  <script>
+    (async function () {
+      const res = await axios.post("http://52.83.103.252:8086/dgp-server-web-nr/rest/pas/private/dataform/v2/download", 
+      { "formCodes": { "指标数据": ["6e8ec875-4b38-477b-af8b-ce2fce4a669e"] }, "pageIds": [] },
+      {
+        responseType: 'blob'
+      }
+      );
+      // const res = await axios.post("http://52.83.103.252:8086/dgp-server-web-nr/rest/monitor/v1/monitor/list/export/excel", {
+      //   "code": "330000000000", "fileName": "永久基本农田保护面积2018预警清单", "indicatorId": 500564, "name": "永久基本农田保护面积", "ownRegion": "330000000000", "type": "baseNum", "year": "2018", "systemName": "市县国土空间开发保护现状评估指标体系"
+      // }, {
+      //   responseType: 'blob'
+      // })
+      console.log(res);
+      const url = URL.createObjectURL(res.data);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '123.zip';
+      a.click();
+    })()
+
+    const reg = /filename=(\S.*?\.\w+)$/
+
+  </script>
+</body>
+
+</html>

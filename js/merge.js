@@ -1,8 +1,7 @@
 function merge() {
   const result = {};
   function assignValue(val, key) {
-    console.log(key)
-    // 先通过 result[key] 判断是否已经存在 
+    // 先通过 result[key] 判断是否已经存在
     if (typeof result[key] === 'object' && typeof val === 'object') {
       // 递归 merge 对象
       result[key] = merge(result[key], val);
@@ -11,7 +10,7 @@ function merge() {
     }
   }
 
-  for (let i = 0, l = arguments.length; i< l; i++) {
+  for (let i = 0, l = arguments.length; i < l; i++) {
     forEach(arguments[i], assignValue);
   }
 
@@ -42,7 +41,75 @@ function forEach(obj, fn) {
   }
 }
 
-const m = merge(
+// const m = merge(
+//   {
+//     foo: 1,
+//     pe: {
+//       n: 'abc',
+//       obj: {
+//         m: 123
+//       }
+//     }
+//   },
+//   {
+//     foo: 2,
+//     pe: {
+//       n: 'efg',
+//       obj: {
+//         m: 666,
+//         n: 666
+//       }
+//     },
+//     bar: {
+//       b1: 456
+//     }
+//   },
+//   {
+//     foo: 3
+//   }
+// );
+
+// console.log(m);
+
+// 另一种写法
+
+const isObject = val => {
+  return (
+    typeof val === 'function' ||
+    (typeof val === 'object' && val !== null && !Array.isArray(val))
+  );
+};
+
+const isValidKey = key => {
+  return key !== '__proto__' && key !== 'constructor' && key !== 'prototype';
+};
+
+const mixinDeep = (target, ...rest) => {
+  for (let obj of rest) {
+    if (isObject(obj)) {
+      for (let key in obj) {
+        if (isValidKey(key)) {
+          mixin(target, obj[key], key);
+        }
+      }
+    }
+  }
+  return target;
+};
+
+function mixin(target, val, key) {
+  // 这里需要取值来进行递归
+  // 同一级有值，需要递归，无则赋值
+  let obj = target[key];
+  if (isObject(val) && isObject(obj)) {
+    // 同级继续合并
+    mixinDeep(obj, val);
+  } else {
+    target[key] = val;
+  }
+}
+
+const a = mixinDeep(
   {
     foo: 1,
     pe: {
@@ -57,7 +124,7 @@ const m = merge(
     pe: {
       n: 'efg',
       obj: {
-        m: 666
+        n: 666
       }
     },
     bar: {
@@ -69,4 +136,4 @@ const m = merge(
   }
 );
 
-console.log(m);
+console.log(a);

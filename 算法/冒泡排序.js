@@ -19,14 +19,20 @@ console.log([...arr]);
 // 更好理解的版本
 function bubble(array) {
   const len = array.length;
+  let shouldSwap = false; // 如果已经排好序，只需要内循环一次
   for (let i = len - 1; i > 0; i--) {
     for (let j = 0; j < i; j++) {
       if (array[j] > array[j + 1]) {
         [array[j], array[j + 1]] = [array[j + 1], array[j]];
+        shouldSwap = true;
       }
+    }
+    if (shouldSwap === false) {
+      break;
     }
 	}
 	return array;
 }
 
 console.log(bubble([6,5,4,3,2,1]))
+console.log(bubble([1,2,3,4,5,6]))

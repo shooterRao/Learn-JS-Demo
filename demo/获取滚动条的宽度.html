@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #scroll-wrap {
+      height: 2000px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="scroll-wrap"></div>
+
+  <script>
+    const calculateScrollbarWidth = function () {
+
+      const outer = document.createElement('div');
+      outer.style.visibility = 'hidden';
+      outer.style.overflow = 'scroll';
+
+      document.body.appendChild(outer);
+
+      const inner = document.createElement('div');
+      outer.appendChild(inner);
+
+      // 里外宽度相减得出滚动条的宽度
+      const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+
+      document.body.removeChild(outer);
+
+      return scrollbarWidth;
+    };
+
+    console.log(calculateScrollbarWidth());
+
+  </script>
+</body>
+
+</html>

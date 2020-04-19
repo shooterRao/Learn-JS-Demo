@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    drag/drop 基础知识
+
+    1、DataTransfer: 拖拽对象用来传递的媒介，Event.dataTransfer
+    2、draggable: 设置标签为可拖拽
+    3、ondragstart: 拖拽元素开始被拖拽触发的事件，事件作用在 被拖拽元素 上
+    4、ondragenter: 拖拽元素进入目标元素的时候触发的事件，事件作用在 目标元素 上
+    5、ondragover: 拖拽元素在目标元素上移动时触发的事件，事件作用于 目标元素 上
+    6、ondragleave: 拖拽元素在目标元素上离开时触发的事件，事件作用于 目标元素 上
+    7、ondrop: 被拖拽的元素在目标元素上同时鼠标放开触发的事件，事件作用于 目标元素 上
+    8、ondragend: 拖拽完成后触发的事件，事件作用在 被拖拽元素 上
+
+    9、Event.preventDefault: 在 ondragover 中一定要执行改方法，才能保证 ondrop 事件生效
+
+   -->
+
+   <img id="dimg" src="https://gw.alipayobjects.com/zos/rmsportal/XuVpGqBFxXplzvLjJBZB.svg" draggable="true">
+
+   <div id="drag" style="width: 600px;height: 600px;background-color: aliceblue;">
+
+   </div>
+
+   <script>
+     const drag = document.querySelector('#drag');
+     const dimg = document.querySelector('#dimg');
+
+     let dragged = null;
+
+    //  drag.addEventListener('dragstart', function(evt) {
+    //   console.log(evt);
+    //  })
+
+    // 一直拖着会一直触发
+    dimg.addEventListener('drag', function(evt) {
+      // console.log(evt);
+    }, false);
+
+    // document.addEventListener('dragstart', function(evt) {
+    //   console.log(evt);
+    // })
+
+    dimg.addEventListener('dragstart', function(evt) {
+      dragged = evt.target;
+      console.log(evt.dataTransfer);
+      evt.dataTransfer.setData('itemValue', JSON.stringify({a: 123}));
+    });
+
+    // 移入，变色
+    drag.addEventListener('dragenter', function(evt) {
+      evt.target.style.background = 'gray';
+    });
+
+    // 移出，还原
+    drag.addEventListener('dragleave', function(evt) {
+      evt.target.style.background = 'aliceblue';
+    });
+
+    drag.addEventListener('dragover', function(evt) {
+      // 阻止默认行为，才可以触发 drop 事件
+      evt.preventDefault();
+    });
+
+    drag.addEventListener('drop', function(evt) {
+      // 阻止默认动作（如打开一些元素的链接）
+      event.preventDefault();
+      const data = evt.dataTransfer.getData('itemValue');
+      console.log(JSON.parse(data));
+      evt.target.style.background = 'aliceblue';
+      const cloneNode = dragged.cloneNode(dragged);
+      evt.target.appendChild(cloneNode);
+    })
+
+
+   </script>
+</body>
+</html>
